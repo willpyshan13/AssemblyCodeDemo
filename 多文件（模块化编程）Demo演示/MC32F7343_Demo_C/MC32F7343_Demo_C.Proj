@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project MCU="MC32F7343(试用版)" ID="0x7343" MCU_Type="CRISC" Date="2012-08-28" VS="1.01">
+  <ProWindows>
+    <Explorer fName="MC32F7343_Demo_C">
+      <SouceCode fName="SourceCode">
+        <asmFile fName="MC32F7343_Demo_C.c" fPath="\MC32F7343_Demo_C.c" />
+        <asmFile fName="UART.C" fPath="\UART.C" />
+        <asmFile fName="IIC.C" fPath="\IIC.C" />
+      </SouceCode>
+      <SouceCode fName="Output" />
+      <SouceCode fName="Debug" />
+      <SouceCode fName="test">
+        <asmFile fName="User_Def.h" fPath="\User_Def.h" />
+        <asmFile fName="UART.h" fPath="\UART.h" />
+        <asmFile fName="IIC.h" fPath="\IIC.h" />
+      </SouceCode>
+    </Explorer>
+  </ProWindows>
+  <Option Value="0" Value0="10" Value1="2" Value2="88" Value3="1" Value4="" Value5="" FOSC_7041="1" Value6="" Value7="" Value8="" Value9="" Value10="" />
+  <Compiler Name="gpasm.exe" />
+  <Language Name="C" />
+  <WatchSymbol Name="Num" Addr="004C" Value="??" BitFlag="False" Bit="0" DataRes="1" Array="False" />
+</Project>
