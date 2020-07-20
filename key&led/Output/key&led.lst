@@ -1,0 +1,50 @@
+gplink-1.6.1 (Jan 23 2014)
+Listing File Generated: 2015-1-4  10:08:40
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;====P00为OUT,P10为IN===
+                                           #include <mc30p011.inc>
+                                                   LIST
+                                           ;MC30P01A.INC  Standard Header File, Version 1.00 by Sinomcu
+                                                   NOLIST
+                                           #define		led		P0,0
+                                           #define		key		P1,0
+                                           
+                                            org	0x03ff
+0003ff   2801     goto    0x1               goto	start	
+                                            org	0x00
+000000   2801     goto    0x1               goto	start
+                                           
+                                           start:
+000001   1d85     clrr    0x5               	clrr	P0
+000002   1d86     clrr    0x6                  clrr	P1			;清P0和P1口
+000003   0b00     movai   0                  	movai		0x00			
+000004   15c5     movra   0x45                 movra	DDR0		;设置P0口的端口方向
+000005   0b01     movai   0x1                  movai	0x01
+000006   15c6     movra   0x46                 movra	DDR1		;设置P1口的端口方向
+000007   0bfe     movai   0xfe                 movai	0xfe
+000008   158d     movra   0xd                  movra	PUCON		;设置上拉电阻
+                                           check:
+000009   3406     jbclr   0x6, 0               jbclr	key			;这里只是简单的判断按键有没有按下，未进行消抖
+00000a   280c     goto    0xc                  goto	close
+00000b   280e     goto    0xe                  goto	open
+                                           close:    
+00000c   3c05     bclr    0x5, 0               bclr	led
+00000d   2809     goto    0x9                  goto	check
+                                           open:
+00000e   3805     bset    0x5, 0            	bset	led
+00000f   2809     goto    0x9              	goto	check
+                                           	end	
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX ---------------- ----------------
+07C0 : ---------------- ---------------- ---------------- --------------XX
+
+All other memory blocks unused.
+
+Program Memory Words Used:    17
+

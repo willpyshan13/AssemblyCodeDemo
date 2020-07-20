@@ -1,0 +1,188 @@
+gpasm-1.6.1 (Jan 23 2014)    timer.asm          2015-1-6  14:59:05           PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;使用定时器定时，
+                      00002 #include <mc30p011.inc>
+                      00001         LIST
+                      00002 ;MC30P01A.INC  Standard Header File, Version 1.00 by Sinomcu
+                      00190         LIST
+                      00003 ;
+                      00004 cblock  0x10
+                      00005 acctemp                 ;表示0x10地址，等同于 acctemp     equ           0x10
+                      00006 statustemp              ;表示0x11地址，等同于 statustemp  equ   0x11
+                      00007 endc
+                      00008 
+                      00009  org  0x3ff
+03FF   2800           00010  goto start        
+                      00011  org  00h
+0000   2800           00012  goto start        
+                      00013  org  08h       
+0008   1590           00014 timer0int: movra  acctemp
+0009   1103           00015            swapar STATUS
+000A   1591           00016            movra  statustemp
+000B   3C0F           00017            bclr   T0IF
+000C   0B06           00018            movai  6
+000D   1581           00019            movra  T0CNT
+000E   1C86           00020            comr   P1
+                      00021         
+000F   1111           00022 timer0exit: swapar statustemp
+0010   1583           00023             movra  STATUS
+0011   1190           00024             swapr  acctemp
+0012   1110           00025             swapar acctemp
+0013   000D           00026             retie
+                      00027             
+0014                  00028 start:
+                      00029 ;========清除0x10到0x3F（通用寄存器）里的数据=======
+0014   0B3F           00030           movai       0x3f
+0015   1584           00031           movra       FSR
+0016   0B2F           00032           movai       47
+0017   1587           00033           movra       GPR
+0018   1B84           00034           decr        FSR
+0019   1D80           00035           clrr        INDF
+001A   1A87           00036           djzr        GPR
+001B   2800           00037           goto        $-3
+001C   1D80           00038           clrr        INDF
+001D   1D87           00039           clrr        GPR
+                      00040 ;=============I/O====================== 
+001E   1D86           00041                   clrr          P1
+001F   0B00           00042                 movai             0x00
+0020   15C6           00043                   movra         DDR1
+                      00044 ;==============timer===================
+0021   0B06           00045                    movai                  6
+0022   1581           00046                   movra           T0CNT
+0023   0B07           00047                   movai         0x07
+0024   15C1           00048                   movra           T0CR
+                      00049 ;==============开中断=====================
+0025   3B8E           00050                   bset            GIE           ;开总中断
+0026   380E           00051                 bset              T0IE          ;开定时器中断
+0027                  00052 main:
+0027   2800           00053                   goto          $                       ;一直在此循环
+                      00054    en
+gpasm-1.6.1 (Jan 23 2014)    timer.asm          2015-1-6  14:59:05           PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+DDR0                              00000045
+DDR1                              00000046
+FSR                               00000004
+GPR                               00000007
+INDF                              00000000
+INTECON                           0000000E
+INTEFLAG                          0000000F
+KBIM                              00000009
+MCR                               00000008
+ODCON                             0000000C
+P0                                00000005
+P1                                00000006
+P5IOC                             00000045
+P6IOC                             00000046
+PCL                               00000002
+PCLATH                            0000000A
+PDCON                             0000000B
+PR0                               00000000
+PR1                               00000001
+PR2                               00000002
+PTA                               00000003
+PUCON                             0000000D
+STATUS                            00000003
+T0CNT                             00000001
+T0CR                              00000041
+T0CS                              00000005
+T0SE                              00000004
+T1CNT                             0000004D
+T1CR                              0000004C
+T1DATA                            0000004F
+T1LOAD                            0000004E
+TMCR                              0000004B
+_.org_8_001B                      0000001B
+_.org_8_0027                      00000027
+_BOR_15                           00003FF8
+_BOR_18                           00003FF9
+_BOR_20                           00003FFA
+_BOR_22                           00003FFB
+_BOR_24                           00003FFC
+_BOR_26                           00003FFD
+_BOR_36                           00003FFF
+_CONFIG1                          00002000
+_CONFIG2                          00002001
+_CP_OFF                           00003FFF
+_CP_ON                            00001FFF
+_FCPU_2T                          00003F7F
+_FCPU_4T                          00003FFF
+_FOSC_1M                          00003FCF
+_FOSC_2M                          00003FDF
+_FOSC_32K                         00003F9F
+_FOSC_455K                        00003FAF
+_FOSC_4M                          00003FEF
+_FOSC_500K                        00003FBF
+_FOSC_62P5K                       00003F8F
+_FOSC_8M                          00003FFF
+_MCLR_OFF                         00003FF7
+_MCLR_ON                          00003FFF
+_MCU_EMC                          00003BFF
+_MCU_FEL                          00003FFF
+_OSCM_HS                          00003FFF
+_OSCM_IRC                         000037FF
+_OSCM_LP                          00003FFF
+_RDPORT_PIN                       00003FFF
+_RDPORT_REG                       00003EFF
+_ROTP_100N                        00001FFF
+_ROTP_200N                        00002FFF
+_ROTP_300N                        00000FFF
+_ROTP_HALFCPU                     00003FFF
+_SMT_OFF                          00003DFF
+_SMT_ON                           00003EFF
+_TWDT_18_18                       00003FFF
+_TWDT_288_288                     00003DFF
+_TWDT_4P5_4P5                     00003EFF
+_TWDT_72_72                       00003CFF
+_TWDT_P140_18                     00003BFF
+_TWDT_P140_288                    000039FF
+_TWDT_P140_4P5                    00003AFF
+_TWDT_P140_72                     000038FF
+_WDT_OFF                          000037FF
+_WDT_ON                           00003FFF
+__30P011                          00000001
+acctemp                           00000010
+main                              00000027
+start                             00000014
+statustemp                        00000011
+timer0exit                        0000000F
+timer0int                         00000008
+BUZOUT                            T1CR,5
+C                                 STATUS,0
+DC                                STATUS,1
+EIS                               MCR,6
+GIE                               INTECON,7
+GPR0                              STATUS,5
+GPR1                              STATUS,6
+INT0IE                            INTECON,2
+INT0IF                            INTF,2
+INT0M                             T0CR,6
+INTE                              INTECON
+INTF                              INTEFLAG
+KBIE                              INTECON,1
+KBIF                              INTF,1
+PD                                STATUS,3
+PWMOUT                            T1CR,6
+RST                               STATUS,7
+T0IE                              INTECON,0
+T0IF                              INTF,0
+T1IE                              TMCR,1
+T1IF                              TMCR,0
+TBS                               TMCR,7
+TMR1EN                            T1CR,7
+TO                                STATUS,4
+WDTEN                             MCR,7
+Z                                 STATUS,2
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

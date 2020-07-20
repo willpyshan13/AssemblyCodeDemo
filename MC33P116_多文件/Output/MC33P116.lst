@@ -1,0 +1,464 @@
+gplink-1.6.1 (Jan 23 2014)
+Listing File Generated: 2015-1-6  10:57:46
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;*********************************
+                                           ;程序功能：
+                                           ;作者：
+                                           ;创建时间：
+                                           ;版本：
+                                           ;*********************************
+                                           #include "mc33p116.inc"
+                                           INDF0 EQU 0x1B0
+                                           INDF1 EQU 0x1B1
+                                           INDF2 EQU 0x1B2
+                                           HIBYTE EQU 0x1B3
+                                           FSR0 EQU 0x1B4
+                                           FSR1 EQU 0x1B5
+                                           PCL EQU 0x1B6
+                                           PFLAG EQU 0x1B7
+                                           STATUS EQU 0x1B7
+                                           MCR EQU 0x1B8
+                                           INDF3 EQU 0x1B9
+                                           INTE EQU 0x1BA
+                                           INTF EQU 0x1BB
+                                           OSCM EQU 0x1BC
+                                           LVDCR EQU 0x1BD
+                                           LXTCR EQU 0x1BE
+                                           LXTCP EQU 0x1BF
+                                           IOP0 EQU 0x1C0
+                                           OEP0 EQU 0x1C1
+                                           PUP0 EQU 0x1C2
+                                           DKWP0 EQU 0x1C3
+                                           IOP1 EQU 0x1C4
+                                           OEP1 EQU 0x1C5
+                                           PUP1 EQU 0x1C6
+                                           LCDIOSP1 EQU 0x1C7
+                                           IOP2 EQU 0x1C8
+                                           OEP2 EQU 0x1C9
+                                           PUP2 EQU 0x1CA
+                                           LCDIOSP2 EQU 0x1CB
+                                           IOP3 EQU 0x1CC
+                                           OEP3 EQU 0x1CD
+                                           PUP3 EQU 0x1CE
+                                           LCDIOSP3 EQU 0x1CF
+                                           IOP4 EQU 0x1D0
+                                           OEP4 EQU 0x1D1
+                                           PUP4 EQU 0x1D2
+                                           LCDIOSP4 EQU 0x1D3
+                                           IOP5 EQU 0x1D4
+                                           OEP5 EQU 0x1D5
+                                           PUP5 EQU 0x1D6
+                                           LCDIOSP5 EQU 0x1D7
+                                           T0CR0 EQU 0x1D8
+                                           T0CR1 EQU 0x1D9
+                                           T0LOADH EQU 0x1DC
+                                           T0LOADL EQU 0x1DD
+                                           T0DATAH EQU 0x1DE
+                                           T0DATAL EQU 0x1DF
+                                           T0LATRH EQU 0x1E0
+                                           T0LATRL EQU 0x1E1
+                                           T0LATFH EQU 0x1E2
+                                           T0LATFL EQU 0x1E3
+                                           T1CR EQU 0x1E4
+                                           T1DATA EQU 0x1E5
+                                           T1LOAD EQU 0x1E6
+                                           ADCR0 EQU 0x1E8
+                                           ADCR1 EQU 0x1E9
+                                           ADCR2 EQU 0x1EA
+                                           ADDRH EQU 0x1EC
+                                           ADDRL EQU 0x1ED
+                                           OPCR0 EQU 0x1F0
+                                           OPCR1 EQU 0x1F1
+                                           LCDCR0 EQU 0x1F2
+                                           LCDCR1 EQU 0x1F3
+                                           DWK EQU 0x1F4
+                                           KBCR EQU 0x1F5
+                                           LCDDRV EQU 0x1F6
+                                           
+                                           #define GIE MCR,7
+                                           #define Z PFLAG,2
+                                           #define DC PFLAG,1
+                                           #define C PFLAG,0
+                                           #include "macro.inc"
+                                           M_DISGIE macro
+                                               bclr MCR,7         ;关总中断
+                                               endm
+                                               
+                                           M_GIE macro
+                                               bset MCR,7         ;开总中断
+                                               endm    
+                                           #include "IntISR.asm"
+                                           
+                                           ;---------------------------------
+                                           ;复位向量
+                                           ;---------------------------------
+                                               org 0x0
+000000   000e     clrwdt                       clrwdt
+000001   a05e     goto    0x5e                 goto    START
+                                           ;---------------------------------
+                                           ;中断向量
+                                           ;---------------------------------   
+                                               org 0x8
+                                           INT:
+000008   5600     movra   0                    movra   _AccTemp         ;save the ACC status
+000009   45b7     swapar  0x1b7                swapar  STATUS              ;save the CPU status
+00000a   5601     movra   0x1                  movra   _StatusTemp 
+                                           
+00000b   59ba     movar   0x1ba                movar INTE
+00000c   79bb     andar   0x1bb                andar INTF
+00000d   5603     movra   0x3                  movra _IntReg
+                                           
+00000e   f003     jbclr   0x3, 0               jbclr _IntReg,0
+00000f   a057     goto    0x57                 goto T0_INT
+000010   f203     jbclr   0x3, 0x1             jbclr _IntReg,1
+000011   a05a     goto    0x5a                 goto T1_INT
+000012   f403     jbclr   0x3, 0x2             jbclr _IntReg,2
+000013   a053     goto    0x53                 goto EXT_INT0
+000014   f603     jbclr   0x3, 0x3             jbclr _IntReg,3
+000015   a055     goto    0x55                 goto EXT_INT1
+                                           
+                                           INT_EXIT:        
+000016   4401     swapar  0x1                  swapar  _StatusTemp
+000017   57b7     movra   0x1b7                movra   STATUS
+000018   4600     swapr   0                    swapr   _AccTemp
+000019   4400     swapar  0                    swapar  _AccTemp 
+00001a   000d     retie                        retie    
+                                           
+                                               
+                                           
+                                            
+                                            
+                                           
+                                           
+                                           
+                                           
+                                                   
+                                           
+                                                
+                                           #include "TestFun.asm"
+                                           
+                                           ;---------------------------------
+                                           ;函数名:
+                                           ;功能:
+                                           ;参数:
+                                           ;---------------------------------  
+                                           
+                                           FunTest1:
+00001b   0000     nop                          NOP
+00001c   0000     nop                          NOP
+00001d   0000     nop                          NOP
+00001e   0000     nop                          NOP
+00001f   0000     nop                          NOP
+000020   0000     nop                          NOP  
+000021   000c     return                       return    
+                                           ;---------------------------------
+                                           ;函数名:
+                                           ;功能:
+                                           ;参数:
+                                           ;---------------------------------    
+                                           
+                                           FunTest2:
+000022   0000     nop                          NOP
+000023   0000     nop                          NOP
+000024   0000     nop                          NOP
+000025   0000     nop                          NOP
+000026   0000     nop                          NOP
+000027   0000     nop                          NOP  
+000028   000c     return                       return        
+                                           ;---------------------------------
+                                           ;函数名:
+                                           ;功能:
+                                           ;参数:
+                                           ;---------------------------------   
+                                           
+                                           FunTest3:
+000029   0000     nop                          NOP
+00002a   0000     nop                          NOP
+00002b   0000     nop                          NOP
+00002c   0000     nop                          NOP
+00002d   0000     nop                          NOP
+00002e   0000     nop                          NOP  
+00002f   000c     return                       return   
+                                           ;---------------------------------
+                                           ;函数名:
+                                           ;功能:
+                                           ;参数:
+                                           ;---------------------------------   
+                                           
+                                           FunTest4:
+000030   0000     nop                          NOP
+000031   0000     nop                          NOP
+000032   0000     nop                          NOP
+000033   0000     nop                          NOP
+000034   0000     nop                          NOP
+000035   0000     nop                          NOP  
+000036   000c     return                       return   
+                                           ;---------------------------------
+                                           ;函数名:KeyInit
+                                           ;功能:
+                                           ;参数:
+                                           ;---------------------------------
+                                           
+                                           FunTest5:
+000037   0000     nop                          NOP
+000038   0000     nop                          NOP
+000039   0000     nop                          NOP
+00003a   0000     nop                          NOP
+00003b   0000     nop                          NOP
+00003c   0000     nop                          NOP  
+00003d   000c     return                       return   
+                                           ;---------------------------------
+                                           ;函数名:
+                                           ;功能:
+                                           ;参数:
+                                           ;--------------------------------- 
+                                           
+                                           FunTest6:
+00003e   0000     nop                          NOP
+00003f   0000     nop                          NOP
+000040   0000     nop                          NOP
+000041   0000     nop                          NOP
+000042   0000     nop                          NOP
+000043   0000     nop                          NOP  
+000044   000c     return                       return   
+                                           ;---------------------------------
+                                           ;函数名:
+                                           ;功能:
+                                           ;参数:
+                                           ;---------------------------------     
+                                           
+                                           FunTest7:
+000045   0000     nop                          NOP
+000046   0000     nop                          NOP
+000047   0000     nop                          NOP
+000048   0000     nop                          NOP
+000049   0000     nop                          NOP
+00004a   0000     nop                          NOP  
+00004b   000c     return                       return   
+                                           ;---------------------------------
+                                           ;函数名:
+                                           ;功能:
+                                           ;参数: [0,99]
+                                           ;---------------------------------    
+                                           
+                                           FunTest8:
+00004c   0000     nop                          NOP
+00004d   0000     nop                          NOP
+00004e   0000     nop                          NOP
+00004f   0000     nop                          NOP
+000050   0000     nop                          NOP
+000051   0000     nop                          NOP  
+000052   000c     return                       return   
+                                           
+                                               
+                                           
+                                            
+                                            
+                                           
+                                           
+                                           
+                                           
+                                                   
+                                           
+                                                
+                                           ;---------------------------------
+                                           ;常量定义
+                                           ;---------------------------------
+                                           #define SYS_HIGH_SPEED 0x1
+                                           #define SYS_LOW_SPEED 0x2
+                                           #define SYS_SLEEP 0x3
+                                           #define SYS_HOLD1 0x4
+                                           #define SYS_HOLD2 0x5
+                                           
+                                           ;------- _SysFlag bit位定义 -------
+                                           #define FLAG_SYS_TIME_1MS 0
+                                           
+                                           ;-------------按键---------------
+                                           #define KEY_PORT_P0N 0x1F         ;\  按键口定义
+                                           #define KEY_PORT_P0N_CNT 0x5      ;/  按键口个数，要与按键口定义对应
+                                           #define KEY_SUM (1+KEY_PORT_P0N_CNT)*KEY_PORT_P0N_CNT/2
+                                           #define KEY_DBC_CNT 0x01
+                                           #define KEY_LONG_CNT 0xF0
+                                           #define KEY_GND_MASK 0x7C             ;GND 按键状态在"KeyStatBufTemp+1" 中所占的bit
+                                           
+                                           ;------- _IRFlag bit 位定义 -------
+                                           #define FLAG_IR_SEND_CODE_START 7
+                                           #define FLAG_IR_SENDING_CODE_D 0        ; 起始码标志位
+                                           
+                                           ;------- IR 常量定义 ----------
+                                           #define CODE_S_CAR_CNT_H 0x00           ;\ 起始码高电平
+                                           #define CODE_S_CAR_CNT_L 0xA7           ;/
+                                           #define CODE_S_NO_CAR_CNT_H 0x00        ;\ 起始码低电平,4470us
+                                           #define CODE_S_NO_CAR_CNT_L 0xAA        ;/
+                                           
+                                           #define CODE_D_0_CAR_CNT_H 0x00         ; 数据码 "0"
+                                           #define CODE_D_0_CAR_CNT_L 0x17
+                                           #define CODE_D_0_NO_CAR_CNT_H 0x00
+                                           #define CODE_D_0_NO_CAR_CNT_L 0x12
+                                           
+                                           #define CODE_D_1_CAR_CNT_H 0x00         ; 数据码 "1"
+                                           #define CODE_D_1_CAR_CNT_L 0x17   
+                                           #define CODE_D_1_NO_CAR_CNT_H 0x00
+                                           #define CODE_D_1_NO_CAR_CNT_L 0x3C
+                                           
+                                           #define CODE_C_CAR_CNT_H 0x00           ; 连接码
+                                           #define CODE_C_CAR_CNT_L 0x18
+                                           #define CODE_C_NO_CAR_CNT_H 0x03
+                                           #define CODE_C_NO_CAR_CNT_L 0x20
+                                           
+                                           #define CODE_P_CAR_CNT_H 0x00            ; 结束码
+                                           #define CODE_P_CAR_CNT_L 0x17
+                                           #define CODE_P_NO_CAR_CNT_H 0x00
+                                           #define CODE_P_NO_CAR_CNT_L 0xC5
+                                           
+                                           
+                                           #define CODE_D_BIT_PART1_CNT 0x30   ; 连接码之前的数据码 bit 数
+                                           #define CODE_D_BIT_SUM_CNT 0x30     ; 全部数据码bit 数
+                                           
+                                           ;-------- UserFlag bit 位定义 -----
+                                           #define FLAG_TIME_1MS 0
+                                           
+                                           
+                                           ;-------- KeyFlag bit 位定义 ------
+                                           #define FLAG_SCAN_GND_KEY_DOWN 0    ; 扫描GND时，扫描到按键按下则置1，否则置0
+                                           #define FLAG_SCAN_GND 1             ; 扫描GND时置1，否则置0
+                                           
+                                           ;-------- 遥控码定义 ---------
+                                           #define CODE_TEMP_INDEX_BASE 0           ; 温度遥控码索引起始值
+                                           #define CODE_MODE_INDEX_BASE 1           ; 模式遥控码索引起始值
+                                           
+                                           
+                                           ;---------------------------------
+                                           ;变量定义
+                                           ;---------------------------------
+                                           cblock 0x00
+                                           
+                                           ;----- SYS define -----
+                                               _AccTemp           ; 中断专用
+                                               _StatusTemp        ; 中断专用
+                                               _WorkMode          ; 记录系统运行的模式
+                                               _IntReg            ; 中断专用
+                                               _ParaBuf:4         ; 存放函数参数及返回值
+                                               _ParaCnt           ; 存放参数及返回值个数
+                                               _R0                ; 通用寄存器,函数或宏中使用
+                                               _R1                ; 通用寄存器,函数或宏中使用
+                                               _R2                ; 通用寄存器,函数或宏中使用
+                                               _R3                ; 通用寄存器,函数或宏中使用
+                                               _SysFlag  
+                                               _IRFlag
+                                               _IRSendState       ; 记录发码阶段
+                                               _IRSendCodeBuf:10  ; 红外码发送 buffer
+                                               _IRCarCnt:4        ; 发码时计数载波周期，高2字节记录载波时间，低2字节记录无载波时间
+                                               _IRBitCnt         
+                                           ;--- Scan Key define---
+                                           
+                                               KeyBufTemp:2       ; 记录按键端口状态
+                                               KeyBuf:2
+                                               KeyStatBufTemp:2     
+                                               KeyFlag
+                                               KeyChange:2        ; 记录按键状态变化
+                                               TempCnt
+                                               
+                                               RowScanBit
+                                               ColScanBit
+                                               DBCCnt
+                                           
+                                           ;---- user define -----    
+                                               R0
+                                               R1
+                                               R2
+                                               
+                                               UserFlag
+                                               CurTemp                  ; 温度
+                                               CurMode    
+                                           endc
+                                           
+                                           ;---------------------------------
+                                           ;外部中断0
+                                           ;---------------------------------     
+                                           EXT_INT0:
+000053   d5bb     bclr    0x1bb, 0x2           bclr INTF,2         ; 清 外部中断0 标志
+                                           
+000054   a016     goto    0x16                 goto INT_EXIT
+                                           ;---------------------------------
+                                           ;外部中断1
+                                           ;--------------------------------- 
+                                           EXT_INT1:
+000055   d7bb     bclr    0x1bb, 0x3           bclr INTF,3         ;清 外部中断1 标志
+                                           
+000056   a016     goto    0x16                 goto INT_EXIT
+                                           ;---------------------------------
+                                           ;Timer0 中断
+                                           ;--------------------------------- 
+                                           T0_INT:
+000057   d1bb     bclr    0x1bb, 0             bclr INTF,0         ;清 T0 中断标志
+000058   c00d     bset    0xd, 0               bset _SysFlag,FLAG_SYS_TIME_1MS
+                                                         
+000059   a016     goto    0x16                 goto INT_EXIT
+                                           ;---------------------------------
+                                           ;Timer1 中断
+                                           ;--------------------------------- 
+                                           T1_INT:                 ;每中断1次，说明1个载波周期完毕。通过载波周期个数来计算时间。
+00005a   d3bb     bclr    0x1bb, 0x1           bclr INTF,1         ;清 T1 中断标志      
+                                           
+00005b   a016     goto    0x16                 goto INT_EXIT
+                                           ;---------------------------------
+                                           ;T0RF 中断
+                                           ;--------------------------------- 
+                                           T0RF_INT: 
+00005c   ddbb     bclr    0x1bb, 0x6           bclr INTF,6         ; 清 T0RF 中断标志
+                                           
+00005d   a016     goto    0x16                 goto INT_EXIT
+                                               
+                                           ;---------------------------------
+                                           ;程序开始
+                                           ;--------------------------------- 
+                                           START:  
+00005e   0000     nop                          NOP
+00005f   0000     nop                          NOP
+                                           
+                                           MAIN:
+000060   801b     call    0x1b                 call FunTest1
+000061   8022     call    0x22                 call FunTest2
+000062   8029     call    0x29                 call FunTest3
+000063   8030     call    0x30                 call FunTest4
+000064   8037     call    0x37                 call FunTest5
+000065   803e     call    0x3e                 call FunTest6
+000066   8045     call    0x45                 call FunTest7
+000067   804c     call    0x4c                 call FunTest8
+                                               
+000068   a060     goto    0x60                 goto MAIN
+                                                   
+                                           
+                                           
+                                           
+                                           
+                                           
+                                           
+                                               end
+                                           
+                                            
+                                            
+                                           
+                                           
+                                           
+                                           
+                                                   
+                                           
+                                                
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXX------------ XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XX-------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    99
+

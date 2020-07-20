@@ -1,0 +1,250 @@
+
+0x1B0
+   at 0x01B1  xxxx.x  0000 to 0000
+0x1B1
+   at 0x01B2  xxxx.x  0000 to 0000
+0x1B2
+   at 0x01B3  xxxx.x  0000 to 0000
+0x1B3
+   at 0x01B4  xxxx.x  0000 to 0000
+0x1B4
+   at 0x01B5  xxxx.x  0000 to 0000
+0x1B5
+   at 0x01B6  xxxx.x  0000 to 0000
+0x1B6
+   at 0x01B7  xxxx.x  0000 to 0000
+0x1B7
+   at 0x01B7  xxxx.x  0000 to 0000
+0x1B7
+   at 0x01B8  xxxx.x  0000 to 0000
+0x1B8
+   at 0x01B9  xxxx.x  0000 to 0000
+0x1B9
+   at 0x01BA  xxxx.x  0000 to 0000
+0x1BA
+   at 0x01BB  xxxx.x  0000 to 0000
+0x1BB
+   at 0x01BC  xxxx.x  0000 to 0000
+0x1BC
+   at 0x01BD  xxxx.x  0000 to 0000
+0x1BD
+   at 0x01BE  xxxx.x  0000 to 0000
+0x1BE
+   at 0x01BF  xxxx.x  0000 to 0000
+0x1BF
+   at 0x01C0  xxxx.x  0000 to 0000
+0x1C0
+   at 0x01C1  xxxx.x  0000 to 0000
+0x1C1
+   at 0x01C2  xxxx.x  0000 to 0000
+0x1C2
+   at 0x01C3  xxxx.x  0000 to 0000
+0x1C3
+   at 0x01C4  xxxx.x  0000 to 0000
+0x1C4
+   at 0x01C5  xxxx.x  0000 to 0000
+0x1C5
+   at 0x01C6  xxxx.x  0000 to 0000
+0x1C6
+   at 0x01C7  xxxx.x  0000 to 0000
+0x1C7
+   at 0x01C8  xxxx.x  0000 to 0000
+0x1C8
+   at 0x01C9  xxxx.x  0000 to 0000
+0x1C9
+   at 0x01CA  xxxx.x  0000 to 0000
+0x1CA
+   at 0x01CB  xxxx.x  0000 to 0000
+0x1CB
+   at 0x01CC  xxxx.x  0000 to 0000
+0x1CC
+   at 0x01CD  xxxx.x  0000 to 0000
+0x1CD
+   at 0x01CE  xxxx.x  0000 to 0000
+0x1CE
+   at 0x01CF  xxxx.x  0000 to 0000
+0x1CF
+   at 0x01D0  xxxx.x  0000 to 0000
+0x1D0
+   at 0x01D1  xxxx.x  0000 to 0000
+0x1D1
+   at 0x01D2  xxxx.x  0000 to 0000
+0x1D2
+   at 0x01D3  xxxx.x  0000 to 0000
+0x1D3
+   at 0x01D4  xxxx.x  0000 to 0000
+0x1D4
+   at 0x01D5  xxxx.x  0000 to 0000
+0x1D5
+   at 0x01D6  xxxx.x  0000 to 0000
+0x1D6
+   at 0x01D7  xxxx.x  0000 to 0000
+0x1D7
+   at 0x01D8  xxxx.x  0000 to 0000
+0x1D8
+   at 0x01D9  xxxx.x  0000 to 0000
+0x1D9
+   at 0x01DC  xxxx.x  0000 to 0000
+0x1DC
+   at 0x01DD  xxxx.x  0000 to 0000
+0x1DD
+   at 0x01DE  xxxx.x  0000 to 0000
+0x1DE
+   at 0x01DF  xxxx.x  0000 to 0000
+0x1DF
+   at 0x01E0  xxxx.x  0000 to 0000
+0x1E0
+   at 0x01E1  xxxx.x  0000 to 0000
+0x1E1
+   at 0x01E2  xxxx.x  0000 to 0000
+0x1E2
+   at 0x01E3  xxxx.x  0000 to 0000
+0x1E3
+   at 0x01E4  xxxx.x  0000 to 0000
+0x1E4
+   at 0x01E5  xxxx.x  0000 to 0000
+0x1E5
+   at 0x01E6  xxxx.x  0000 to 0000
+0x1E6
+   at 0x01E8  xxxx.x  0000 to 0000
+0x1E8
+   at 0x01E9  xxxx.x  0000 to 0000
+0x1E9
+   at 0x01EA  xxxx.x  0000 to 0000
+0x1EA
+   at 0x01EC  xxxx.x  0000 to 0000
+0x1EC
+   at 0x01ED  xxxx.x  0000 to 0000
+0x1ED
+   at 0x01F0  xxxx.x  0000 to 0000
+0x1F0
+   at 0x01F1  xxxx.x  0000 to 0000
+0x1F1
+   at 0x01F2  xxxx.x  0000 to 0000
+0x1F2
+   at 0x01F3  xxxx.x  0000 to 0000
+0x1F3
+   at 0x01F4  xxxx.x  0000 to 0000
+0x1F4
+   at 0x01F5  xxxx.x  0000 to 0000
+0x1F5
+   at 0x01F6  xxxx.x  0000 to 0000
+ADCR0                              at 0x01E8  xxxx.x  0000 to 0000
+ADCR1                              at 0x01E9  xxxx.x  0000 to 0000
+ADCR2                              at 0x01EA  xxxx.x  0000 to 0000
+ADDRH                              at 0x01EC  xxxx.x  0000 to 0000
+ADDRL                              at 0x01ED  xxxx.x  0000 to 0000
+ColScanBit                         at 0x002A  xxxx.x  0000 to 0000
+CurMode                            at 0x0031  xxxx.x  0000 to 0000
+CurTemp                            at 0x0030  xxxx.x  0000 to 0000
+DBCCnt                             at 0x002B  xxxx.x  0000 to 0000
+DKWP0                              at 0x01C3  xxxx.x  0000 to 0000
+DWK                                at 0x01F4  xxxx.x  0000 to 0000
+EXT_INT0                           at 0x0053  xxxx.x  0000 to 0000
+EXT_INT1                           at 0x0055  xxxx.x  0000 to 0000
+FSR0                               at 0x01B4  xxxx.x  0000 to 0000
+FSR1                               at 0x01B5  xxxx.x  0000 to 0000
+FunTest1                           at 0x001B  xxxx.x  0000 to 0000
+FunTest2                           at 0x0022  xxxx.x  0000 to 0000
+FunTest3                           at 0x0029  xxxx.x  0000 to 0000
+FunTest4                           at 0x0030  xxxx.x  0000 to 0000
+FunTest5                           at 0x0037  xxxx.x  0000 to 0000
+FunTest6                           at 0x003E  xxxx.x  0000 to 0000
+FunTest7                           at 0x0045  xxxx.x  0000 to 0000
+FunTest8                           at 0x004C  xxxx.x  0000 to 0000
+HIBYTE                             at 0x01B3  xxxx.x  0000 to 0000
+INDF0                              at 0x01B0  xxxx.x  0000 to 0000
+INDF1                              at 0x01B1  xxxx.x  0000 to 0000
+INDF2                              at 0x01B2  xxxx.x  0000 to 0000
+INDF3                              at 0x01B9  xxxx.x  0000 to 0000
+INT                                at 0x0008  xxxx.x  0000 to 0000
+INTE                               at 0x01BA  xxxx.x  0000 to 0000
+INTF                               at 0x01BB  xxxx.x  0000 to 0000
+INT_EXIT                           at 0x0016  xxxx.x  0000 to 0000
+IOP0                               at 0x01C0  xxxx.x  0000 to 0000
+IOP1                               at 0x01C4  xxxx.x  0000 to 0000
+IOP2                               at 0x01C8  xxxx.x  0000 to 0000
+IOP3                               at 0x01CC  xxxx.x  0000 to 0000
+IOP4                               at 0x01D0  xxxx.x  0000 to 0000
+IOP5                               at 0x01D4  xxxx.x  0000 to 0000
+KBCR                               at 0x01F5  xxxx.x  0000 to 0000
+KeyBuf                             at 0x0021  xxxx.x  0000 to 0000
+KeyBufTemp                         at 0x001F  xxxx.x  0000 to 0000
+KeyChange                          at 0x0026  xxxx.x  0000 to 0000
+KeyFlag                            at 0x0025  xxxx.x  0000 to 0000
+KeyStatBufTemp                     at 0x0023  xxxx.x  0000 to 0000
+LCDCR0                             at 0x01F2  xxxx.x  0000 to 0000
+LCDCR1                             at 0x01F3  xxxx.x  0000 to 0000
+LCDDRV                             at 0x01F6  xxxx.x  0000 to 0000
+LCDIOSP1                           at 0x01C7  xxxx.x  0000 to 0000
+LCDIOSP2                           at 0x01CB  xxxx.x  0000 to 0000
+LCDIOSP3                           at 0x01CF  xxxx.x  0000 to 0000
+LCDIOSP4                           at 0x01D3  xxxx.x  0000 to 0000
+LCDIOSP5                           at 0x01D7  xxxx.x  0000 to 0000
+LVDCR                              at 0x01BD  xxxx.x  0000 to 0000
+LXTCP                              at 0x01BF  xxxx.x  0000 to 0000
+LXTCR                              at 0x01BE  xxxx.x  0000 to 0000
+MAIN                               at 0x0060  xxxx.x  0000 to 0000
+MCR                                at 0x01B8  xxxx.x  0000 to 0000
+OEP0                               at 0x01C1  xxxx.x  0000 to 0000
+OEP1                               at 0x01C5  xxxx.x  0000 to 0000
+OEP2                               at 0x01C9  xxxx.x  0000 to 0000
+OEP3                               at 0x01CD  xxxx.x  0000 to 0000
+OEP4                               at 0x01D1  xxxx.x  0000 to 0000
+OEP5                               at 0x01D5  xxxx.x  0000 to 0000
+OPCR0                              at 0x01F0  xxxx.x  0000 to 0000
+OPCR1                              at 0x01F1  xxxx.x  0000 to 0000
+OSCM                               at 0x01BC  xxxx.x  0000 to 0000
+PCL                                at 0x01B6  xxxx.x  0000 to 0000
+PFLAG                              at 0x01B7  xxxx.x  0000 to 0000
+PUP0                               at 0x01C2  xxxx.x  0000 to 0000
+PUP1                               at 0x01C6  xxxx.x  0000 to 0000
+PUP2                               at 0x01CA  xxxx.x  0000 to 0000
+PUP3                               at 0x01CE  xxxx.x  0000 to 0000
+PUP4                               at 0x01D2  xxxx.x  0000 to 0000
+PUP5                               at 0x01D6  xxxx.x  0000 to 0000
+R0                                 at 0x002C  xxxx.x  0000 to 0000
+R1                                 at 0x002D  xxxx.x  0000 to 0000
+R2                                 at 0x002E  xxxx.x  0000 to 0000
+RowScanBit                         at 0x0029  xxxx.x  0000 to 0000
+START                              at 0x005E  xxxx.x  0000 to 0000
+STATUS                             at 0x01B7  xxxx.x  0000 to 0000
+T0CR0                              at 0x01D8  xxxx.x  0000 to 0000
+T0CR1                              at 0x01D9  xxxx.x  0000 to 0000
+T0DATAH                            at 0x01DE  xxxx.x  0000 to 0000
+T0DATAL                            at 0x01DF  xxxx.x  0000 to 0000
+T0LATFH                            at 0x01E2  xxxx.x  0000 to 0000
+T0LATFL                            at 0x01E3  xxxx.x  0000 to 0000
+T0LATRH                            at 0x01E0  xxxx.x  0000 to 0000
+T0LATRL                            at 0x01E1  xxxx.x  0000 to 0000
+T0LOADH                            at 0x01DC  xxxx.x  0000 to 0000
+T0LOADL                            at 0x01DD  xxxx.x  0000 to 0000
+T0RF_INT                           at 0x005C  xxxx.x  0000 to 0000
+T0_INT                             at 0x0057  xxxx.x  0000 to 0000
+T1CR                               at 0x01E4  xxxx.x  0000 to 0000
+T1DATA                             at 0x01E5  xxxx.x  0000 to 0000
+T1LOAD                             at 0x01E6  xxxx.x  0000 to 0000
+T1_INT                             at 0x005A  xxxx.x  0000 to 0000
+TempCnt                            at 0x0028  xxxx.x  0000 to 0000
+UserFlag                           at 0x002F  xxxx.x  0000 to 0000
+_AccTemp                           at 0x0000  xxxx.x  0000 to 0000
+_IRBitCnt                          at 0x001E  xxxx.x  0000 to 0000
+_IRCarCnt                          at 0x001A  xxxx.x  0000 to 0000
+_IRFlag                            at 0x000E  xxxx.x  0000 to 0000
+_IRSendCodeBuf                     at 0x0010  xxxx.x  0000 to 0000
+_IRSendState                       at 0x000F  xxxx.x  0000 to 0000
+_IntReg                            at 0x0003  xxxx.x  0000 to 0000
+_ParaBuf                           at 0x0004  xxxx.x  0000 to 0000
+_ParaCnt                           at 0x0008  xxxx.x  0000 to 0000
+_R0                                at 0x0009  xxxx.x  0000 to 0000
+_R1                                at 0x000A  xxxx.x  0000 to 0000
+_R2                                at 0x000B  xxxx.x  0000 to 0000
+_R3                                at 0x000C  xxxx.x  0000 to 0000
+_StatusTemp                        at 0x0001  xxxx.x  0000 to 0000
+_SysFlag                           at 0x000D  xxxx.x  0000 to 0000
+_WorkMode                          at 0x0002  xxxx.x  0000 to 0000
+__33P116                           at 0x0001  xxxx.x  0000 to 0000
+#define GIE MCR.bitn.bit7
+#define Z PFLAG.bitn.bit2
+#define DC PFLAG.bitn.bit1
+#define C PFLAG.bitn.bit0

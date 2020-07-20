@@ -1,0 +1,41 @@
+gplink-1.6.1 (Jan 23 2014)
+Listing File Generated: 2015-3-6  10:11:50
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;4M,4T
+                                           #include <mc30p011.inc>
+                                                   LIST
+                                           ;MC30P01A.INC  Standard Header File, Version 1.00 by Sinomcu
+                                                   NOLIST
+                                           
+                                            org		0x3ff
+0003ff   2801     goto    0x1               goto		start        
+                                            org		00h
+000000   2801     goto    0x1               goto		start 
+                                           
+                                           start:
+000001   0b00     movai   0                 movai		0x00
+000002   15c6     movra   0x46              movra		DDR1;P12一定要设置为输出
+000003   0bc0     movai   0xc0              movai		0xC0;110 00 000,开T1和PWM，Fcpu，1分频
+000004   15cc     movra   0x4c              movra		T1CR
+                                            
+000005   0bc7     movai   0xc7              movai		199;199+1
+000006   15ce     movra   0x4e              movra		T1LOAD
+000007   0b64     movai   0x64              movai		100
+000008   15cf     movra   0x4f              movra		T1DATA
+                                            
+000009   2809     goto    0x9               goto		$
+                                            end
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXX------------ ---------------- ----------------
+07C0 : ---------------- ---------------- ---------------- --------------XX
+
+All other memory blocks unused.
+
+Program Memory Words Used:    11
+

@@ -1,0 +1,75 @@
+gplink-1.6.1 (Jan 23 2014)
+Listing File Generated: 2015-1-6  14:59:05
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;使用定时器定时，
+                                           #include <mc30p011.inc>
+                                                   LIST
+                                           ;MC30P01A.INC  Standard Header File, Version 1.00 by Sinomcu
+                                                   NOLIST
+                                           ;
+                                           cblock  0x10
+                                           acctemp			;表示0x10地址，等同于 acctemp     equ		0x10
+                                           statustemp		;表示0x11地址，等同于 statustemp  equ	0x11
+                                           endc
+                                           
+                                            org  0x3ff
+0003ff   2814     goto    0x14              goto start        
+                                            org  00h
+000000   2814     goto    0x14              goto start        
+                                            org  08h      	
+000008   1590     movra   0x10             timer0int: movra  acctemp
+000009   1103     swapar  0x3                     	   swapar STATUS
+00000a   1591     movra   0x11                    	   movra  statustemp
+00000b   3c0f     bclr    0xf, 0                 	   bclr   T0IF
+00000c   0b06     movai   0x6                         movai  6
+00000d   1581     movra   0x1                         movra  T0CNT
+00000e   1c86     comr    0x6                         comr	  P1
+                                                   
+00000f   1111     swapar  0x11             timer0exit: swapar statustemp
+000010   1583     movra   0x3                          movra  STATUS
+000011   1190     swapr   0x10                    	    swapr  acctemp
+000012   1110     swapar  0x10                    	    swapar acctemp
+000013   000d     retie                                retie
+                                                       
+                                           start:
+                                           ;========清除0x10到0x3F（通用寄存器）里的数据=======
+000014   0b3f     movai   0x3f                       movai       0x3f
+000015   1584     movra   0x4                        movra       FSR
+000016   0b2f     movai   0x2f                       movai       47
+000017   1587     movra   0x7                        movra       GPR
+000018   1b84     decr    0x4                        decr        FSR
+000019   1d80     clrr    0                          clrr        INDF
+00001a   1a87     djzr    0x7                        djzr        GPR
+00001b   2818     goto    0x18                       goto        $-3
+00001c   1d80     clrr    0                          clrr        INDF
+00001d   1d87     clrr    0x7                        clrr        GPR
+                                           ;=============I/O====================== 
+00001e   1d86     clrr    0x6              		  clrr		P1
+00001f   0b00     movai   0                   		movai		  0x00
+000020   15c6     movra   0x46                		  movra		DDR1
+                                           ;==============timer===================
+000021   0b06     movai   0x6                		   movai		  6
+000022   1581     movra   0x1                		  movra		  T0CNT
+000023   0b07     movai   0x7                 		  movai		0x07
+000024   15c1     movra   0x41                		  movra		  T0CR
+                                           ;==============开中断=====================
+000025   3b8e     bset    0xe, 0x7         		  bset		  GIE		;开总中断
+000026   380e     bset    0xe, 0           		bset		  T0IE   	;开定时器中断
+                                           main:
+000027   2827     goto    0x27                		  goto		$			;一直在此循环
+                                              end
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XX-------------- XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX ---------------- ---------------- ----------------
+07C0 : ---------------- ---------------- ---------------- --------------XX
+
+All other memory blocks unused.
+
+Program Memory Words Used:    34
+

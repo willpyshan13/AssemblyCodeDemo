@@ -1,0 +1,522 @@
+
+ADCR0                              at 0x01B0  xxxx.x  0000 to 0000
+ADCR1                              at 0x01B1  xxxx.x  0000 to 0000
+ADCR2                              at 0x01B2  xxxx.x  0000 to 0000
+ADRH                               at 0x01B4  xxxx.x  0000 to 0000
+ADRL                               at 0x01B5  xxxx.x  0000 to 0000
+ANSEL0                             at 0x01B6  xxxx.x  0000 to 0000
+ANSEL1                             at 0x01B7  xxxx.x  0000 to 0000
+Array                              at 0x0023  xxxx.x  0000 to 0000
+ArrayCnt                           at 0x00A4  xxxx.x  0000 to 0000
+DRVCR                              at 0x018C  xxxx.x  0000 to 0000
+DataStorage                        at 0x0023  xxxx.x  0000 to 0000
+Data_0                             at 0x0045  xxxx.x  0000 to 0000
+Data_1                             at 0x004A  xxxx.x  0000 to 0000
+Data_2                             at 0x004F  xxxx.x  0000 to 0000
+Data_3                             at 0x0054  xxxx.x  0000 to 0000
+Data_4                             at 0x0059  xxxx.x  0000 to 0000
+ExitInterrupt                      at 0x000E  xxxx.x  0000 to 0000
+FSR0                               at 0x0184  xxxx.x  0000 to 0000
+FSR1                               at 0x0185  xxxx.x  0000 to 0000
+GPR                                at 0x0007  xxxx.x  0000 to 0000
+HIBYTE                             at 0x0183  xxxx.x  0000 to 0000
+INDF0                              at 0x0180  xxxx.x  0000 to 0000
+INDF1                              at 0x0181  xxxx.x  0000 to 0000
+INDF2                              at 0x0182  xxxx.x  0000 to 0000
+INDF3                              at 0x0189  xxxx.x  0000 to 0000
+INTE                               at 0x018A  xxxx.x  0000 to 0000
+INTF                               at 0x018B  xxxx.x  0000 to 0000
+IOP0                               at 0x0190  xxxx.x  0000 to 0000
+IOP1                               at 0x0194  xxxx.x  0000 to 0000
+IOPortInit                         at 0x005E  xxxx.x  0000 to 0000
+InterruptVector                    at 0x0008  xxxx.x  0000 to 0000
+KBCR                               at 0x018E  xxxx.x  0000 to 0000
+KeyFlag                            at 0x0017  xxxx.x  0000 to 0000
+LVDCR                              at 0x01AF  xxxx.x  0000 to 0000
+MAIN                               at 0x001A  xxxx.x  0000 to 0000
+MCR                                at 0x0188  xxxx.x  0000 to 0000
+OEP0                               at 0x0191  xxxx.x  0000 to 0000
+OEP1                               at 0x0195  xxxx.x  0000 to 0000
+OSCCALH                            at 0x01FB  xxxx.x  0000 to 0000
+OSCCALL                            at 0x01FC  xxxx.x  0000 to 0000
+OSCM                               at 0x01AE  xxxx.x  0000 to 0000
+PCL                                at 0x0186  xxxx.x  0000 to 0000
+PDP0                               at 0x0193  xxxx.x  0000 to 0000
+PDP1                               at 0x0197  xxxx.x  0000 to 0000
+PFLAG                              at 0x0187  xxxx.x  0000 to 0000
+PUP0                               at 0x0192  xxxx.x  0000 to 0000
+PUP1                               at 0x0196  xxxx.x  0000 to 0000
+PWM0DE                             at 0x01A8  xxxx.x  0000 to 0000
+PWM1DE                             at 0x01A9  xxxx.x  0000 to 0000
+PWM2DE                             at 0x01AA  xxxx.x  0000 to 0000
+PWMCR0                             at 0x01AC  xxxx.x  0000 to 0000
+PWMCR1                             at 0x01AD  xxxx.x  0000 to 0000
+R1                                 at 0x00A5  xxxx.x  0000 to 0000
+R2                                 at 0x00A6  xxxx.x  0000 to 0000
+R3                                 at 0x00A7  xxxx.x  0000 to 0000
+R7                                 at 0x00A8  xxxx.x  0000 to 0000
+R8                                 at 0x00A9  xxxx.x  0000 to 0000
+R9                                 at 0x00AA  xxxx.x  0000 to 0000
+RA                                 at 0x00AB  xxxx.x  0000 to 0000
+RB                                 at 0x00AC  xxxx.x  0000 to 0000
+RC                                 at 0x00AD  xxxx.x  0000 to 0000
+RD                                 at 0x00AE  xxxx.x  0000 to 0000
+RE                                 at 0x00AF  xxxx.x  0000 to 0000
+RF                                 at 0x00B0  xxxx.x  0000 to 0000
+RamInit                            at 0x0067  xxxx.x  0000 to 0000
+ReadValue                          at 0x001F  xxxx.x  0000 to 0000
+START                              at 0x0014  xxxx.x  0000 to 0000
+SysInit                            at 0x006E  xxxx.x  0000 to 0000
+T0CNT                              at 0x0199  xxxx.x  0000 to 0000
+T0CR                               at 0x0198  xxxx.x  0000 to 0000
+T0DATA                             at 0x019B  xxxx.x  0000 to 0000
+T0LOAD                             at 0x019A  xxxx.x  0000 to 0000
+T1CNT                              at 0x019D  xxxx.x  0000 to 0000
+T1CR                               at 0x019C  xxxx.x  0000 to 0000
+T1DATA                             at 0x019F  xxxx.x  0000 to 0000
+T1LOAD                             at 0x019E  xxxx.x  0000 to 0000
+T2CNT                              at 0x01A1  xxxx.x  0000 to 0000
+T2CR                               at 0x01A0  xxxx.x  0000 to 0000
+T2DATA                             at 0x01A3  xxxx.x  0000 to 0000
+T2LOAD                             at 0x01A2  xxxx.x  0000 to 0000
+T3CNT                              at 0x01A5  xxxx.x  0000 to 0000
+T3CR                               at 0x01A4  xxxx.x  0000 to 0000
+T3LOAD                             at 0x01A6  xxxx.x  0000 to 0000
+TIM0_IRQ                           at 0x000B  xxxx.x  0000 to 0000
+VBGCAL                             at 0x01F8  xxxx.x  0000 to 0000
+WriteValue                         at 0x0075  xxxx.x  0000 to 0000
+Xout_L                             at 0x00A1  xxxx.x  0000 to 0000
+Xout_M                             at 0x00A0  xxxx.x  0000 to 0000
+Yout_L                             at 0x00A3  xxxx.x  0000 to 0000
+Yout_M                             at 0x00A2  xxxx.x  0000 to 0000
+_.org_8_00F5                       at 0x00F5  xxxx.x  0000 to 0000
+_.org_8_00F7                       at 0x00F7  xxxx.x  0000 to 0000
+_.org_8_0111                       at 0x0111  xxxx.x  0000 to 0000
+_.org_8_0112                       at 0x0112  xxxx.x  0000 to 0000
+_.org_8_0114                       at 0x0114  xxxx.x  0000 to 0000
+__32P64                            at 0x0001  xxxx.x  0000 to 0000
+_status                            at 0x009F  xxxx.x  0000 to 0000
+acc_temp                           at 0x0010  xxxx.x  0000 to 0000
+ackSig                             at 0x00CB  xxxx.x  0000 to 0000
+address                            at 0x0018  xxxx.x  0000 to 0000
+clrram_loop                        at 0x006A  xxxx.x  0000 to 0000
+data                               at 0x001C  xxxx.x  0000 to 0000
+delay                              at 0x011E  xxxx.x  0000 to 0000
+delay1                             at 0x0130  xxxx.x  0000 to 0000
+delay11                            at 0x0132  xxxx.x  0000 to 0000
+delay_num                          at 0x0021  xxxx.x  0000 to 0000
+initSig                            at 0x00B8  xxxx.x  0000 to 0000
+key_count1                         at 0x0012  xxxx.x  0000 to 0000
+noackSig                           at 0x00D4  xxxx.x  0000 to 0000
+r8begin                            at 0x0109  xxxx.x  0000 to 0000
+r8end                              at 0x011A  xxxx.x  0000 to 0000
+r8num                              at 0x001F  xxxx.x  0000 to 0000
+read_add                           at 0x0091  xxxx.x  0000 to 0000
+read_back                          at 0x0022  xxxx.x  0000 to 0000
+read_byte                          at 0x0103  xxxx.x  0000 to 0000
+read_temp                          at 0x0020  xxxx.x  0000 to 0000
+read_value                         at 0x001A  xxxx.x  0000 to 0000
+responsCheck                       at 0x00DF  xxxx.x  0000 to 0000
+responsOK                          at 0x00E6  xxxx.x  0000 to 0000
+responsSig                         at 0x00DD  xxxx.x  0000 to 0000
+responsnum                         at 0x001B  xxxx.x  0000 to 0000
+startSig                           at 0x00BD  xxxx.x  0000 to 0000
+status_temp                        at 0x0011  xxxx.x  0000 to 0000
+stopSig                            at 0x00C4  xxxx.x  0000 to 0000
+temp                               at 0x001D  xxxx.x  0000 to 0000
+time_base_100ms                    at 0x0015  xxxx.x  0000 to 0000
+time_base_10ms                     at 0x0016  xxxx.x  0000 to 0000
+time_base_1ms                      at 0x0013  xxxx.x  0000 to 0000
+time_base_30ms                     at 0x0014  xxxx.x  0000 to 0000
+w8begin                            at 0x00EC  xxxx.x  0000 to 0000
+w8end                              at 0x00FD  xxxx.x  0000 to 0000
+w8num                              at 0x001E  xxxx.x  0000 to 0000
+write_add                          at 0x0081  xxxx.x  0000 to 0000
+write_byte                         at 0x00EA  xxxx.x  0000 to 0000
+write_value                        at 0x0019  xxxx.x  0000 to 0000
+#define         STATUS          PFLAG
+#define         INDF              INDF0
+#define         FSR                 FSR0
+#define         P0HCON          PUP0
+#define         P1HCON          PUP1
+#define         INTECON         INTE
+#define         INTFLAG   INTF  
+#define         INDF07          INDF0,7
+#define         INDF06          INDF0,6
+#define         INDF05          INDF0,5
+#define         INDF04          INDF0,4
+#define         INDF03          INDF0,3
+#define         INDF02          INDF0,2
+#define         INDF01          INDF0,1
+#define         INDF00          INDF0,0
+#define         INDF17          INDF1,7
+#define         INDF16          INDF1,6
+#define         INDF15          INDF1,5
+#define         INDF14          INDF1,4
+#define         INDF13          INDF1,3
+#define         INDF12          INDF1,2
+#define         INDF11          INDF1,1
+#define         INDF10          INDF1,0
+#define         INDF27          INDF2,7
+#define         INDF26          INDF2,6
+#define         INDF25          INDF2,5
+#define         INDF24          INDF2,4
+#define         INDF23          INDF2,3
+#define         INDF22          INDF2,2
+#define         INDF21          INDF2,1
+#define         INDF20          INDF2,0
+#define         HIBYTE7         HIBYTE,7
+#define         HIBYTE6         HIBYTE,6
+#define         HIBYTE5         HIBYTE,5
+#define         HIBYTE4         HIBYTE,4
+#define         HIBYTE3         HIBYTE,3
+#define         HIBYTE2         HIBYTE,2
+#define         HIBYTE1         HIBYTE,1
+#define         HIBYTE0         HIBYTE,0
+#define         FSR07           FSR0,7
+#define         FSR06           FSR0,6
+#define         FSR05           FSR0,5
+#define         FSR04           FSR0,4
+#define         FSR03           FSR0,3
+#define         FSR02           FSR0,2
+#define         FSR01           FSR0,1
+#define         FSR00           FSR0,0
+#define         FSR17           FSR1,7
+#define         FSR16           FSR1,6
+#define         FSR15           FSR1,5
+#define         FSR14           FSR1,4
+#define         FSR13           FSR1,3
+#define         FSR12           FSR1,2
+#define         FSR11           FSR1,1
+#define         FSR10           FSR1,0
+#define         PC7             PCL,7
+#define         PC6             PCL,6
+#define         PC5             PCL,5
+#define         PC4             PCL,4
+#define         PC3             PCL,3
+#define         PC2             PCL,2
+#define         PC1             PCL,1
+#define         PC0             PCL,0
+#define         Z               PFLAG,2
+#define         DC              PFLAG,1
+#define         C               PFLAG,0
+#define         GIE             MCR,7
+#define         T0              MCR,5
+#define         PD              MCR,4
+#define         MINT11          MCR,3
+#define         MINT10          MCR,2
+#define         MINT01          MCR,1
+#define         MINT00          MCR,0
+#define         INDF37          INDF3,7
+#define         INDF36          INDF3,6
+#define         INDF35          INDF3,5
+#define         INDF34          INDF3,4
+#define         INDF33          INDF3,3
+#define         INDF32          INDF3,2
+#define         INDF31          INDF3,1
+#define         INDF30          INDF3,0
+#define         T3IE    INTE,7
+#define         ADIE    INTE,6
+#define         T2IE    INTE,5
+#define         KBIE    INTE,4
+#define         INT1IE  INTE,3
+#define         INT0IE  INTE,2
+#define         T1IE    INTE,1
+#define         T0IE    INTE,0
+#define         T3IF    INTFLAG,7
+#define         ADIF    INTFLAG,6 
+#define         T2IF    INTFLAG,5
+#define         KBIF    INTFLAG,4
+#define         INT1IF  INTFLAG,3
+#define         INT0IF  INTFLAG,2
+#define         T1IF    INTFLAG,1
+#define         T0IF    INTFLAG,0
+#define         DRVS    DRVCR,7
+#define         LDRVS   DRVCR,6 
+#define         PDRVS   DRVCR,5
+#define         PDRVS0  DRVCR,4
+#define         PDLYS1  DRVCR,3
+#define         PDLYS0  DRVCR,2
+#define         PSPDS1  DRVCR,1
+#define         PSPDS0  DRVCR,0
+#define         KBCR6   KBCR,6 
+#define         KBCR5   KBCR,5
+#define         KBCR4   KBCR,4
+#define         KBCR3   KBCR,3
+#define         KBCR2   KBCR,2
+#define         KBCR1   KBCR,1
+#define         KBCR0   KBCR,0
+#define         P05D    IOP0,5
+#define         P04D    IOP0,4
+#define         P03D    IOP0,3
+#define         P02D    IOP0,2
+#define         P01D    IOP0,1
+#define         P00D    IOP0,0
+#define         P05OE    OEP0,5
+#define         P04OE    OEP0,4
+#define         P03OE    OEP0,3
+#define         P02OE    OEP0,2
+#define         P01OE    OEP0,1
+#define         P00OE    OEP0,0
+#define         P05PU    PUP0,5
+#define         P04PU    PUP0,4
+#define         P03PU    PUP0,3
+#define         P02PU    PUP0,2
+#define         P01PU    PUP0,1
+#define         P00PU    PUP0,0
+#define         P05PD    PDP0,5
+#define         P04PD    PDP0,4
+#define         P03PD    PDP0,3
+#define         P02PD    PDP0,2
+#define         P01PD    PDP0,1
+#define         P00PD    PDP0,0
+#define         P17D    IOP1,7
+#define         P16D    IOP1,6
+#define         P15D    IOP1,5
+#define         P14D    IOP1,4
+#define         P13D    IOP1,3
+#define         P12D    IOP1,2
+#define         P11D    IOP1,1
+#define         P10D    IOP1,0
+#define         P17OE    OEP1,7
+#define         P16OE    OEP1,6
+#define         P15OE    OEP1,5
+#define         P14OE    OEP1,4
+#define         P13OE    OEP1,3
+#define         P12OE    OEP1,2
+#define         P11OE    OEP1,1
+#define         P10OE    OEP1,0
+#define         P17PU    PUP1,7
+#define         P16PU    PUP1,6
+#define         P15PU    PUP1,5
+#define         P14PU    PUP1,4
+#define         P13PU    PUP1,3
+#define         P12PU    PUP1,2
+#define         P11PU    PUP1,1
+#define         P10PU    PUP1,0
+#define         P17PD    PDP1,7
+#define         P16PD    PDP1,6
+#define         P15PD    PDP1,5
+#define         P14PD    PDP1,4
+#define         P13PD    PDP1,3
+#define         P12PD    PDP1,2
+#define         P11PD    PDP1,1
+#define         P10PD    PDP1,0
+#define         TC0EN           T0CR,7
+#define         PWM0OE          T0CR,6
+#define         BUZ0OE          T0CR,5
+#define         T0PS1           T0CR,4
+#define         T0PS0           T0CR,3
+#define         T0PR2           T0CR,2
+#define         T0PR1           T0CR,1
+#define         T0PR0           T0CR,0
+#define         T0C7    T0CNT,7
+#define         T0C6    T0CNT,6
+#define         T0C5    T0CNT,5
+#define         T0C4    T0CNT,4
+#define         T0C3    T0CNT,3
+#define         T0C2    T0CNT,2
+#define         T0C1    T0CNT,1
+#define         T0C0    T0CNT,0
+#define         T0LOAD7    T0LOAD,7
+#define         T0LOAD6    T0LOAD,6
+#define         T0LOAD5    T0LOAD,5
+#define         T0LOAD4    T0LOAD,4
+#define         T0LOAD3    T0LOAD,3
+#define         T0LOAD2    T0LOAD,2
+#define         T0LOAD1    T0LOAD,1
+#define         T0LOAD0    T0LOAD,0
+#define         T0DATA7    T0DATA,7
+#define         T0DATA6    T0DATA,6
+#define         T0DATA5    T0DATA,5
+#define         T0DATA4    T0DATA,4
+#define         T0DATA3    T0DATA,3
+#define         T0DATA2    T0DATA,2
+#define         T0DATA1    T0DATA,1
+#define         T0DATA0    T0DATA,0
+#define         TC1EN           T1CR,7
+#define         PWM1OE          T1CR,6
+#define         BUZ1OE          T1CR,5
+#define         T1PS1           T1CR,4
+#define         T1PS0           T1CR,3
+#define         T1PR2           T1CR,2
+#define         T1PR1           T1CR,1
+#define         T1PR0           T1CR,0
+#define         T1C7    T1CNT,7
+#define         T1C6    T1CNT,6
+#define         T1C5    T1CNT,5
+#define         T1C4    T1CNT,4
+#define         T1C3    T1CNT,3
+#define         T1C2    T1CNT,2
+#define         T1C1    T1CNT,1
+#define         T1C0    T1CNT,0
+#define         T1LOAD7    T1LOAD,7
+#define         T1LOAD6    T1LOAD,6
+#define         T1LOAD5    T1LOAD,5
+#define         T1LOAD4    T1LOAD,4
+#define         T1LOAD3    T1LOAD,3
+#define         T1LOAD2    T1LOAD,2
+#define         T1LOAD1    T1LOAD,1
+#define         T1LOAD0    T1LOAD,0
+#define         T1DATA7    T1DATA,7
+#define         T1DATA6    T1DATA,6
+#define         T1DATA5    T1DATA,5
+#define         T1DATA4    T1DATA,4
+#define         T1DATA3    T1DATA,3
+#define         T1DATA2    T1DATA,2
+#define         T1DATA1    T1DATA,1
+#define         T1DATA0    T1DATA,0
+#define         TC2EN           T2CR,7
+#define         PWM2OE          T2CR,6
+#define         BUZ2OE          T2CR,5
+#define         T2PS1           T2CR,4
+#define         T2PS0           T2CR,3
+#define         T2PR2           T2CR,2
+#define         T2PR1           T2CR,1
+#define         T2PR0           T2CR,0
+#define         T2C7    T2CNT,7
+#define         T2C6    T2CNT,6
+#define         T2C5    T2CNT,5
+#define         T2C4    T2CNT,4
+#define         T2C3    T2CNT,3
+#define         T2C2    T2CNT,2
+#define         T2C1    T2CNT,1
+#define         T2C0    T2CNT,0
+#define         T2LOAD7    T2LOAD,7
+#define         T2LOAD6    T2LOAD,6
+#define         T2LOAD5    T2LOAD,5
+#define         T2LOAD4    T2LOAD,4
+#define         T2LOAD3    T2LOAD,3
+#define         T2LOAD2    T2LOAD,2
+#define         T2LOAD1    T2LOAD,1
+#define         T2LOAD0    T2LOAD,0
+#define         T2DATA7    T2DATA,7
+#define         T2DATA6    T2DATA,6
+#define         T2DATA5    T2DATA,5
+#define         T2DATA4    T2DATA,4
+#define         T2DATA3    T2DATA,3
+#define         T2DATA2    T2DATA,2
+#define         T2DATA1    T2DATA,1
+#define         T2DATA0    T2DATA,0
+#define         TC3EN           T3CR,7
+#define         T3PS1           T3CR,4
+#define         T3PS0           T3CR,3
+#define         T3PR2           T3CR,2
+#define         T3PR1           T3CR,1
+#define         T3PR0           T3CR,0
+#define         T3C7    T3CNT,7
+#define         T3C6    T3CNT,6
+#define         T3C5    T3CNT,5
+#define         T3C4    T3CNT,4
+#define         T3C3    T3CNT,3
+#define         T3C2    T3CNT,2
+#define         T3C1    T3CNT,1
+#define         T3C0    T3CNT,0
+#define         T3LOAD7    T3LOAD,7
+#define         T3LOAD6    T3LOAD,6
+#define         T3LOAD5    T3LOAD,5
+#define         T3LOAD4    T3LOAD,4
+#define         T3LOAD3    T3LOAD,3
+#define         T3LOAD2    T3LOAD,2
+#define         T3LOAD1    T3LOAD,1
+#define         T3LOAD0    T3LOAD,0
+#define         PWM0DE2    PWM0DE,2
+#define         PWM0DE1    PWM0DE,1
+#define         PWM0DE0    PWM0DE,0
+#define         PWM1DE2    PWM1DE,2
+#define         PWM1DE1    PWM1DE,1
+#define         PWM1DE0    PWM1DE,0
+#define         PWM2DE2    PWM2DE,2
+#define         PWM2DE1    PWM2DE,1
+#define         PWM2DE0    PWM2DE,0
+#define         FPWMEN     PWMCR0,7
+#define         PWM2INV    PWMCR0,6
+#define         PWM1INV    PWMCR0,5
+#define         PWM0INV    PWMCR0,4
+#define         FPWMR1     PWMCR0,3
+#define         FPWMR0     PWMCR0,2
+#define         FPWMF1     PWMCR0,1
+#define         FPWMF0     PWMCR0,0
+#define         TMRCKS1    PWMCR1,4
+#define         TMRCKS0    PWMCR1,3
+#define         PMODE2     PWMCR1,2
+#define         PMODE1     PWMCR1,1
+#define         PMODE0     PWMCR1,0
+#define         STBL    OSCM,5
+#define         STBH    OSCM,4
+#define         CLKS    OSCM,2
+#define         LFEN    OSCM,1
+#define         HFEN    OSCM,0          
+#define         LVDEN    LVDCR,7
+#define         LVDS3    LVDCR,6
+#define         LVDS2    LVDCR,5
+#define         LVDS1    LVDCR,4
+#define         LVDS0    LVDCR,3
+#define         LVDF     LVDCR,0
+#define         ADCHS3    ADCR0,7
+#define         ADCHS2    ADCR0,6
+#define         ADCHS1    ADCR0,5
+#define         ADCHS0    ADCR0,4
+#define         ADLEN     ADCR0,3
+#define         ADEOC     ADCR0,1
+#define         ADON      ADCR0,0
+#define         ADCKS2    ADCR1,7
+#define         ADCKS1    ADCR1,6
+#define         ADCKS0    ADCR1,5
+#define         ADTST     ADCR1,4
+#define         RESS0     ADCR1,3
+#define         VRS2      ADCR1,2
+#define         VRS1      ADCR1,1
+#define         VRS0      ADCR1,0
+#define         ADSMP3    ADCR2,3
+#define         ADSMP2    ADCR2,2
+#define         ADSMP1    ADCR2,1
+#define         ADSMP0    ADCR2,0
+#define         ADR11     ADRH,7
+#define         ADR10     ADRH,6
+#define         ADR9      ADRH,5
+#define         ADR8      ADRH,4
+#define         ADR7      ADRH,3
+#define         ADR6      ADRH,2
+#define         ADR5      ADRH,1
+#define         ADR4      ADRH,0
+#define         ADR3      ADRL,3
+#define         ADR2      ADRL,2
+#define         ADR1      ADRL,1
+#define         ADR0      ADRL,0
+#define         P12ANS    ANSEL0,7
+#define         P11ANS    ANSEL0,6
+#define         P05ANS    ANSEL0,5
+#define         P04ANS    ANSEL0,4
+#define         P03ANS    ANSEL0,3
+#define         P02ANS    ANSEL0,2
+#define         P01ANS    ANSEL0,1
+#define         P00ANS    ANSEL0,0
+#define         P15ANS    ANSEL1,1
+#define         P14ANS    ANSEL1,0
+#define         VBGCAL7    VBGCAL,7
+#define         VBGCAL6    VBGCAL,6
+#define         VBGCAL5    VBGCAL,5
+#define         VBGCAL4    VBGCAL,4
+#define         VBGCAL3    VBGCAL,3
+#define         VBGCAL2    VBGCAL,2
+#define         VBGCAL1    VBGCAL,1
+#define         VBGCAL0    VBGCAL,0
+#define         OSCCAL7    OSCCALL,7
+#define         OSCCAL6    OSCCALL,6
+#define         OSCCAL5    OSCCALL,5
+#define         OSCCAL4    OSCCALL,4
+#define         OSCCAL3    OSCCALL,3
+#define         OSCCAL2    OSCCALL,2
+#define         OSCCAL1    OSCCALL,1
+#define         OSCCAL0    OSCCALL,0
+#define         OSCCAL10   OSCCALH,2
+#define         OSCCAL9    OSCCALH,1
+#define         OSCCAL8    OSCCALH,0
+#define SDA28            IOP0,4
+#define SCL28            IOP1,1
+#define GPIO12_MCU_EN    IOP1,3
+#define SENSOR_SDA       IOP1,5   
+#define SENSOR_SCL       IOP1,6
+#define F_tim_20ms    KeyFlag,0
+#define F_tim_500ms   KeyFlag,1

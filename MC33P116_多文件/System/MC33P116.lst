@@ -1,0 +1,613 @@
+gpasm-1.6.1 (Jan 23 2014)    MC33P116.asm       2015-1-6  10:57:46           PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;*********************************
+                      00002 ;程序功能：
+                      00003 ;作者：
+                      00004 ;创建时间：
+                      00005 ;版本：
+                      00006 ;*********************************
+                      00007 #include "mc33p116.inc"
+  000001B0            00001 INDF0 EQU 0x1B0
+  000001B1            00002 INDF1 EQU 0x1B1
+  000001B2            00003 INDF2 EQU 0x1B2
+  000001B3            00004 HIBYTE EQU 0x1B3
+  000001B4            00005 FSR0 EQU 0x1B4
+  000001B5            00006 FSR1 EQU 0x1B5
+  000001B6            00007 PCL EQU 0x1B6
+  000001B7            00008 PFLAG EQU 0x1B7
+  000001B7            00009 STATUS EQU 0x1B7
+  000001B8            00010 MCR EQU 0x1B8
+  000001B9            00011 INDF3 EQU 0x1B9
+  000001BA            00012 INTE EQU 0x1BA
+  000001BB            00013 INTF EQU 0x1BB
+  000001BC            00014 OSCM EQU 0x1BC
+  000001BD            00015 LVDCR EQU 0x1BD
+  000001BE            00016 LXTCR EQU 0x1BE
+  000001BF            00017 LXTCP EQU 0x1BF
+  000001C0            00018 IOP0 EQU 0x1C0
+  000001C1            00019 OEP0 EQU 0x1C1
+  000001C2            00020 PUP0 EQU 0x1C2
+  000001C3            00021 DKWP0 EQU 0x1C3
+  000001C4            00022 IOP1 EQU 0x1C4
+  000001C5            00023 OEP1 EQU 0x1C5
+  000001C6            00024 PUP1 EQU 0x1C6
+  000001C7            00025 LCDIOSP1 EQU 0x1C7
+  000001C8            00026 IOP2 EQU 0x1C8
+  000001C9            00027 OEP2 EQU 0x1C9
+  000001CA            00028 PUP2 EQU 0x1CA
+  000001CB            00029 LCDIOSP2 EQU 0x1CB
+  000001CC            00030 IOP3 EQU 0x1CC
+  000001CD            00031 OEP3 EQU 0x1CD
+  000001CE            00032 PUP3 EQU 0x1CE
+  000001CF            00033 LCDIOSP3 EQU 0x1CF
+  000001D0            00034 IOP4 EQU 0x1D0
+  000001D1            00035 OEP4 EQU 0x1D1
+  000001D2            00036 PUP4 EQU 0x1D2
+  000001D3            00037 LCDIOSP4 EQU 0x1D3
+  000001D4            00038 IOP5 EQU 0x1D4
+  000001D5            00039 OEP5 EQU 0x1D5
+  000001D6            00040 PUP5 EQU 0x1D6
+  000001D7            00041 LCDIOSP5 EQU 0x1D7
+  000001D8            00042 T0CR0 EQU 0x1D8
+  000001D9            00043 T0CR1 EQU 0x1D9
+  000001DC            00044 T0LOADH EQU 0x1DC
+  000001DD            00045 T0LOADL EQU 0x1DD
+  000001DE            00046 T0DATAH EQU 0x1DE
+  000001DF            00047 T0DATAL EQU 0x1DF
+  000001E0            00048 T0LATRH EQU 0x1E0
+  000001E1            00049 T0LATRL EQU 0x1E1
+  000001E2            00050 T0LATFH EQU 0x1E2
+  000001E3            00051 T0LATFL EQU 0x1E3
+  000001E4            00052 T1CR EQU 0x1E4
+  000001E5            00053 T1DATA EQU 0x1E5
+  000001E6            00054 T1LOAD EQU 0x1E6
+  000001E8            00055 ADCR0 EQU 0x1E8
+  000001E9            00056 ADCR1 EQU 0x1E9
+  000001EA            00057 ADCR2 EQU 0x1EA
+  000001EC            00058 ADDRH EQU 0x1EC
+  000001ED            00059 ADDRL EQU 0x1ED
+  000001F0            00060 OPCR0 EQU 0x1F0
+  000001F1            00061 OPCR1 EQU 0x1F1
+  000001F2            00062 LCDCR0 EQU 0x1F2
+  000001F3            00063 LCDCR1 EQU 0x1F3
+  000001F4            00064 DWK EQU 0x1F4
+  000001F5            00065 KBCR EQU 0x1F5
+  000001F6            00066 LCDDRV EQU 0x1F6
+                      00067 
+                      00068 #define GIE MCR,7
+                      00069 #define Z PFLAG,2
+                      00070 #define DC PFLAG,1
+                      00071 #define C PFLAG,0
+                      00008 #include "macro.inc"
+                      00001 M_DISGIE macro
+                      00002     bclr MCR,7         ;关总中断
+                      00003     endm
+                      00004     
+                      00005 M_GIE macro
+                      00006     bset MCR,7         ;开总中断
+                      00007     endm   
+                      00009 #include "IntISR.asm"
+                      00001 
+                      00002 ;---------------------------------
+                      00003 ;复位向量
+                      00004 ;---------------------------------
+                      00005     org 0x0
+0000   000E           00006     clrwdt
+0001   A000           00007     goto    START
+                      00008 ;---------------------------------
+                      00009 ;中断向量
+                      00010 ;---------------------------------   
+                      00011     org 0x8
+0008                  00012 INT:
+0008   5600           00013     movra   _AccTemp         ;save the ACC status
+0009   45B7           00014     swapar  STATUS              ;save the CPU status
+000A   5601           00015     movra   _StatusTemp 
+                      00016 
+000B   59BA           00017     movar INTE
+000C   79BB           00018     andar INTF
+000D   5603           00019     movra _IntReg
+                      00020 
+000E   F003           00021     jbclr _IntReg,0
+000F   A000           00022     goto T0_INT
+0010   F203           00023     jbclr _IntReg,1
+0011   A000           00024     goto T1_INT
+0012   F403           00025     jbclr _IntReg,2
+0013   A000           00026     goto EXT_INT0
+0014   F603           00027     jbclr _IntReg,3
+0015   A000           00028     goto EXT_INT1
+                      00029 
+0016                  00030 INT_EXIT:        
+0016   4401           00031     swapar  _StatusTemp
+0017   57B7           00032     movra   STATUS
+0018   4600           00033     swapr   _AccTemp
+0019   4400           00034     swapar  _AccTemp 
+001A   000D           00035     retie    
+                      00036 
+                      00037     
+                      00038 
+                      00039  
+                      00040  
+                      00041 
+                      00042 
+                      00043 
+                      00044 
+                      00045         
+                      00046 
+                      00047     
+                      00010 #include "TestFun.asm"
+                      00001 
+                      00002 ;---------------------------------
+                      00003 ;函数名:
+                      00004 ;功能:
+                      00005 ;参数:
+                      00006 ;---------------------------------  
+                      00007 
+001B                  00008 FunTest1:
+001B   0000           00009     NOP
+001C   0000           00010     NOP
+001D   0000           00011     NOP
+001E   0000           00012     NOP
+001F   0000           00013     NOP
+0020   0000           00014     NOP  
+0021   000C           00015     return    
+                      00016 ;---------------------------------
+                      00017 ;函数名:
+                      00018 ;功能:
+                      00019 ;参数:
+                      00020 ;---------------------------------    
+                      00021 
+0022                  00022 FunTest2:
+0022   0000           00023     NOP
+0023   0000           00024     NOP
+0024   0000           00025     NOP
+0025   0000           00026     NOP
+0026   0000           00027     NOP
+0027   0000           00028     NOP  
+0028   000C           00029     return        
+                      00030 ;---------------------------------
+                      00031 ;函数名:
+                      00032 ;功能:
+                      00033 ;参数:
+                      00034 ;---------------------------------   
+                      00035 
+0029                  00036 FunTest3:
+0029   0000           00037     NOP
+002A   0000           00038     NOP
+002B   0000           00039     NOP
+002C   0000           00040     NOP
+002D   0000           00041     NOP
+002E   0000           00042     NOP  
+002F   000C           00043     return   
+                      00044 ;---------------------------------
+                      00045 ;函数名:
+                      00046 ;功能:
+                      00047 ;参数:
+                      00048 ;---------------------------------   
+                      00049 
+0030                  00050 FunTest4:
+0030   0000           00051     NOP
+0031   0000           00052     NOP
+0032   0000           00053     NOP
+0033   0000           00054     NOP
+0034   0000           00055     NOP
+0035   0000           00056     NOP  
+0036   000C           00057     return   
+                      00058 ;---------------------------------
+                      00059 ;函数名:KeyInit
+                      00060 ;功能:
+                      00061 ;参数:
+                      00062 ;---------------------------------
+                      00063 
+0037                  00064 FunTest5:
+0037   0000           00065     NOP
+0038   0000           00066     NOP
+0039   0000           00067     NOP
+003A   0000           00068     NOP
+003B   0000           00069     NOP
+003C   0000           00070     NOP  
+003D   000C           00071     return   
+                      00072 ;---------------------------------
+                      00073 ;函数名:
+                      00074 ;功能:
+                      00075 ;参数:
+                      00076 ;--------------------------------- 
+                      00077 
+003E                  00078 FunTest6:
+003E   0000           00079     NOP
+003F   0000           00080     NOP
+0040   0000           00081     NOP
+0041   0000           00082     NOP
+0042   0000           00083     NOP
+0043   0000           00084     NOP  
+0044   000C           00085     return   
+                      00086 ;---------------------------------
+                      00087 ;函数名:
+                      00088 ;功能:
+                      00089 ;参数:
+                      00090 ;---------------------------------     
+                      00091 
+0045                  00092 FunTest7:
+0045   0000           00093     NOP
+0046   0000           00094     NOP
+0047   0000           00095     NOP
+0048   0000           00096     NOP
+0049   0000           00097     NOP
+004A   0000           00098     NOP  
+004B   000C           00099     return   
+                      00100 ;---------------------------------
+                      00101 ;函数名:
+                      00102 ;功能:
+                      00103 ;参数: [0,99]
+                      00104 ;---------------------------------    
+                      00105 
+004C                  00106 FunTest8:
+004C   0000           00107     NOP
+004D   0000           00108     NOP
+004E   0000           00109     NOP
+004F   0000           00110     NOP
+0050   0000           00111     NOP
+0051   0000           00112     NOP  
+0052   000C           00113     return   
+                      00114 
+                      00115     
+                      00116 
+                      00117  
+                      00118  
+                      00119 
+                      00120 
+                      00121 
+                      00122 
+                      00123         
+                      00124 
+                      00125     
+                      00011 ;---------------------------------
+                      00012 ;常量定义
+                      00013 ;---------------------------------
+                      00014 #define SYS_HIGH_SPEED 0x1
+                      00015 #define SYS_LOW_SPEED 0x2
+                      00016 #define SYS_SLEEP 0x3
+                      00017 #define SYS_HOLD1 0x4
+                      00018 #define SYS_HOLD2 0x5
+                      00019 
+                      00020 ;------- _SysFlag bit位定义 -------
+                      00021 #define FLAG_SYS_TIME_1MS 0
+                      00022 
+                      00023 ;-------------按键---------------
+                      00024 #define KEY_PORT_P0N 0x1F         ;\  按键口定义
+                      00025 #define KEY_PORT_P0N_CNT 0x5      ;/  按键口个数，要与按键口定义对应
+                      00026 #define KEY_SUM (1+KEY_PORT_P0N_CNT)*KEY_PORT_P0N_CNT/2
+                      00027 #define KEY_DBC_CNT 0x01
+                      00028 #define KEY_LONG_CNT 0xF0
+                      00029 #define KEY_GND_MASK 0x7C             ;GND 按键状态在"KeyStatBufTemp+1" 中所占的bit
+                      00030 
+                      00031 ;------- _IRFlag bit 位定义 -------
+                      00032 #define FLAG_IR_SEND_CODE_START 7
+                      00033 #define FLAG_IR_SENDING_CODE_D 0        ; 起始码标志位
+                      00034 
+                      00035 ;------- IR 常量定义 ----------
+                      00036 #define CODE_S_CAR_CNT_H 0x00           ;\ 起始码高电平
+                      00037 #define CODE_S_CAR_CNT_L 0xA7           ;/
+                      00038 #define CODE_S_NO_CAR_CNT_H 0x00        ;\ 起始码低电平,4470us
+                      00039 #define CODE_S_NO_CAR_CNT_L 0xAA        ;/
+                      00040 
+                      00041 #define CODE_D_0_CAR_CNT_H 0x00         ; 数据码 "0"
+                      00042 #define CODE_D_0_CAR_CNT_L 0x17
+                      00043 #define CODE_D_0_NO_CAR_CNT_H 0x00
+                      00044 #define CODE_D_0_NO_CAR_CNT_L 0x12
+                      00045 
+                      00046 #define CODE_D_1_CAR_CNT_H 0x00         ; 数据码 "1"
+                      00047 #define CODE_D_1_CAR_CNT_L 0x17   
+                      00048 #define CODE_D_1_NO_CAR_CNT_H 0x00
+                      00049 #define CODE_D_1_NO_CAR_CNT_L 0x3C
+                      00050 
+                      00051 #define CODE_C_CAR_CNT_H 0x00           ; 连接码
+                      00052 #define CODE_C_CAR_CNT_L 0x18
+                      00053 #define CODE_C_NO_CAR_CNT_H 0x03
+                      00054 #define CODE_C_NO_CAR_CNT_L 0x20
+                      00055 
+                      00056 #define CODE_P_CAR_CNT_H 0x00            ; 结束码
+                      00057 #define CODE_P_CAR_CNT_L 0x17
+                      00058 #define CODE_P_NO_CAR_CNT_H 0x00
+                      00059 #define CODE_P_NO_CAR_CNT_L 0xC5
+                      00060 
+                      00061 
+                      00062 #define CODE_D_BIT_PART1_CNT 0x30   ; 连接码之前的数据码 bit 数
+                      00063 #define CODE_D_BIT_SUM_CNT 0x30     ; 全部数据码bit 数
+                      00064 
+                      00065 ;-------- UserFlag bit 位定义 -----
+                      00066 #define FLAG_TIME_1MS 0
+                      00067 
+                      00068 
+                      00069 ;-------- KeyFlag bit 位定义 ------
+                      00070 #define FLAG_SCAN_GND_KEY_DOWN 0    ; 扫描GND时，扫描到按键按下则置1，否则置0
+                      00071 #define FLAG_SCAN_GND 1             ; 扫描GND时置1，否则置0
+                      00072 
+                      00073 ;-------- 遥控码定义 ---------
+                      00074 #define CODE_TEMP_INDEX_BASE 0           ; 温度遥控码索引起始值
+                      00075 #define CODE_MODE_INDEX_BASE 1           ; 模式遥控码索引起始值
+                      00076 
+                      00077 
+                      00078 ;---------------------------------
+                      00079 ;变量定义
+                      00080 ;---------------------------------
+                      00081 cblock 0x00
+                      00082 
+                      00083 ;----- SYS define -----
+                      00084     _AccTemp           ; 中断专用
+                      00085     _StatusTemp        ; 中断专用
+                      00086     _WorkMode          ; 记录系统运行的模式
+                      00087     _IntReg            ; 中断专用
+                      00088     _ParaBuf:4         ; 存放函数参数及返回值
+                      00089     _ParaCnt           ; 存放参数及返回值个数
+                      00090     _R0                ; 通用寄存器,函数或宏中使用
+                      00091     _R1                ; 通用寄存器,函数或宏中使用
+                      00092     _R2                ; 通用寄存器,函数或宏中使用
+                      00093     _R3                ; 通用寄存器,函数或宏中使用
+                      00094     _SysFlag  
+                      00095     _IRFlag
+                      00096     _IRSendState       ; 记录发码阶段
+                      00097     _IRSendCodeBuf:10  ; 红外码发送 buffer
+                      00098     _IRCarCnt:4        ; 发码时计数载波周期，高2字节记录载波时间，低2字节记录无载波时间
+                      00099     _IRBitCnt         
+                      00100 ;--- Scan Key define---
+                      00101 
+                      00102     KeyBufTemp:2       ; 记录按键端口状态
+                      00103     KeyBuf:2
+                      00104     KeyStatBufTemp:2     
+                      00105     KeyFlag
+                      00106     KeyChange:2        ; 记录按键状态变化
+                      00107     TempCnt
+                      00108     
+                      00109     RowScanBit
+                      00110     ColScanBit
+                      00111     DBCCnt
+                      00112 
+                      00113 ;---- user define -----    
+                      00114     R0
+                      00115     R1
+                      00116     R2
+                      00117     
+                      00118     UserFlag
+                      00119     CurTemp                  ; 温度
+                      00120     CurMode    
+                      00121 endc
+                      00122 
+                      00123 ;---------------------------------
+                      00124 ;外部中断0
+                      00125 ;---------------------------------     
+0053                  00126 EXT_INT0:
+0053   D5BB           00127     bclr INTF,2         ; 清 外部中断0 标志
+                      00128 
+0054   A000           00129     goto INT_EXIT
+                      00130 ;---------------------------------
+                      00131 ;外部中断1
+                      00132 ;--------------------------------- 
+0055                  00133 EXT_INT1:
+0055   D7BB           00134     bclr INTF,3         ;清 外部中断1 标志
+                      00135 
+0056   A000           00136     goto INT_EXIT
+                      00137 ;---------------------------------
+                      00138 ;Timer0 中断
+                      00139 ;--------------------------------- 
+0057                  00140 T0_INT:
+0057   D1BB           00141     bclr INTF,0         ;清 T0 中断标志
+0058   C00D           00142     bset _SysFlag,FLAG_SYS_TIME_1MS
+                      00143               
+0059   A000           00144     goto INT_EXIT
+                      00145 ;---------------------------------
+                      00146 ;Timer1 中断
+                      00147 ;--------------------------------- 
+005A                  00148 T1_INT:                 ;每中断1次，说明1个载波周期完毕。通过载波周期个数来计算时间。
+005A   D3BB           00149     bclr INTF,1         ;清 T1 中断标志      
+                      00150 
+005B   A000           00151     goto INT_EXIT
+                      00152 ;---------------------------------
+                      00153 ;T0RF 中断
+                      00154 ;--------------------------------- 
+005C                  00155 T0RF_INT: 
+005C   DDBB           00156     bclr INTF,6         ; 清 T0RF 中断标志
+                      00157 
+005D   A000           00158     goto INT_EXIT
+                      00159     
+                      00160 ;---------------------------------
+                      00161 ;程序开始
+                      00162 ;--------------------------------- 
+005E                  00163 START:  
+005E   0000           00164     NOP
+005F   0000           00165     NOP
+                      00166 
+0060                  00167 MAIN:
+0060   8000           00168     call FunTest1
+0061   8000           00169     call FunTest2
+0062   8000           00170     call FunTest3
+0063   8000           00171     call FunTest4
+0064   8000           00172     call FunTest5
+0065   8000           00173     call FunTest6
+0066   8000           00174     call FunTest7
+0067   8000           00175     call FunTest8
+                      00176     
+0068   A000           00177     goto MAIN
+                      00178         
+                      00179 
+                      00180 
+                      00181 
+                      00182 
+                      00183 
+                      00184 
+                      00185     end
+gpasm-1.6.1 (Jan 23 2014)    MC33P116.asm       2015-1-6  10:57:46           PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+ADCR0                             000001E8
+ADCR1                             000001E9
+ADCR2                             000001EA
+ADDRH                             000001EC
+ADDRL                             000001ED
+ColScanBit                        0000002A
+CurMode                           00000031
+CurTemp                           00000030
+DBCCnt                            0000002B
+DKWP0                             000001C3
+DWK                               000001F4
+EXT_INT0                          00000053
+EXT_INT1                          00000055
+FSR0                              000001B4
+FSR1                              000001B5
+FunTest1                          0000001B
+FunTest2                          00000022
+FunTest3                          00000029
+FunTest4                          00000030
+FunTest5                          00000037
+FunTest6                          0000003E
+FunTest7                          00000045
+FunTest8                          0000004C
+HIBYTE                            000001B3
+INDF0                             000001B0
+INDF1                             000001B1
+INDF2                             000001B2
+INDF3                             000001B9
+INT                               00000008
+INTE                              000001BA
+INTF                              000001BB
+INT_EXIT                          00000016
+IOP0                              000001C0
+IOP1                              000001C4
+IOP2                              000001C8
+IOP3                              000001CC
+IOP4                              000001D0
+IOP5                              000001D4
+KBCR                              000001F5
+KeyBuf                            00000021
+KeyBufTemp                        0000001F
+KeyChange                         00000026
+KeyFlag                           00000025
+KeyStatBufTemp                    00000023
+LCDCR0                            000001F2
+LCDCR1                            000001F3
+LCDDRV                            000001F6
+LCDIOSP1                          000001C7
+LCDIOSP2                          000001CB
+LCDIOSP3                          000001CF
+LCDIOSP4                          000001D3
+LCDIOSP5                          000001D7
+LVDCR                             000001BD
+LXTCP                             000001BF
+LXTCR                             000001BE
+MAIN                              00000060
+MCR                               000001B8
+OEP0                              000001C1
+OEP1                              000001C5
+OEP2                              000001C9
+OEP3                              000001CD
+OEP4                              000001D1
+OEP5                              000001D5
+OPCR0                             000001F0
+OPCR1                             000001F1
+OSCM                              000001BC
+PCL                               000001B6
+PFLAG                             000001B7
+PUP0                              000001C2
+PUP1                              000001C6
+PUP2                              000001CA
+PUP3                              000001CE
+PUP4                              000001D2
+PUP5                              000001D6
+R0                                0000002C
+R1                                0000002D
+R2                                0000002E
+RowScanBit                        00000029
+START                             0000005E
+STATUS                            000001B7
+T0CR0                             000001D8
+T0CR1                             000001D9
+T0DATAH                           000001DE
+T0DATAL                           000001DF
+T0LATFH                           000001E2
+T0LATFL                           000001E3
+T0LATRH                           000001E0
+T0LATRL                           000001E1
+T0LOADH                           000001DC
+T0LOADL                           000001DD
+T0RF_INT                          0000005C
+T0_INT                            00000057
+T1CR                              000001E4
+T1DATA                            000001E5
+T1LOAD                            000001E6
+T1_INT                            0000005A
+TempCnt                           00000028
+UserFlag                          0000002F
+_AccTemp                          00000000
+_IRBitCnt                         0000001E
+_IRCarCnt                         0000001A
+_IRFlag                           0000000E
+_IRSendCodeBuf                    00000010
+_IRSendState                      0000000F
+_IntReg                           00000003
+_ParaBuf                          00000004
+_ParaCnt                          00000008
+_R0                               00000009
+_R1                               0000000A
+_R2                               0000000B
+_R3                               0000000C
+_StatusTemp                       00000001
+_SysFlag                          0000000D
+_WorkMode                         00000002
+__33P116                          00000001
+C                                 PFLAG,0
+CODE_C_CAR_CNT_H                  0x00
+CODE_C_CAR_CNT_L                  0x18
+CODE_C_NO_CAR_CNT_H               0x03
+CODE_C_NO_CAR_CNT_L               0x20
+CODE_D_0_CAR_CNT_H                0x00
+CODE_D_0_CAR_CNT_L                0x17
+CODE_D_0_NO_CAR_CNT_H             0x00
+CODE_D_0_NO_CAR_CNT_L             0x12
+CODE_D_1_CAR_CNT_H                0x00
+CODE_D_1_CAR_CNT_L                0x17
+CODE_D_1_NO_CAR_CNT_H             0x00
+CODE_D_1_NO_CAR_CNT_L             0x3C
+CODE_D_BIT_PART1_CNT              0x30
+CODE_D_BIT_SUM_CNT                0x30
+CODE_MODE_INDEX_BASE              1
+CODE_P_CAR_CNT_H                  0x00
+CODE_P_CAR_CNT_L                  0x17
+CODE_P_NO_CAR_CNT_H               0x00
+CODE_P_NO_CAR_CNT_L               0xC5
+CODE_S_CAR_CNT_H                  0x00
+CODE_S_CAR_CNT_L                  0xA7
+CODE_S_NO_CAR_CNT_H               0x00
+CODE_S_NO_CAR_CNT_L               0xAA
+CODE_TEMP_INDEX_BASE              0
+DC                                PFLAG,1
+FLAG_IR_SENDING_CODE_D            0
+FLAG_IR_SEND_CODE_START           7
+FLAG_SCAN_GND                     1
+FLAG_SCAN_GND_KEY_DOWN            0
+FLAG_SYS_TIME_1MS                 0
+FLAG_TIME_1MS                     0
+GIE                               MCR,7
+KEY_DBC_CNT                       0x01
+KEY_GND_MASK                      0x7C
+KEY_LONG_CNT                      0xF0
+KEY_PORT_P0N                      0x1F
+KEY_PORT_P0N_CNT                  0x5
+KEY_SUM                           (1+KEY_PORT_P0N_CNT)*KEY_PORT_P0N_CNT/2
+SYS_HIGH_SPEED                    0x1
+SYS_HOLD1                         0x4
+SYS_HOLD2                         0x5
+SYS_LOW_SPEED                     0x2
+SYS_SLEEP                         0x3
+Z                                 PFLAG,2
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

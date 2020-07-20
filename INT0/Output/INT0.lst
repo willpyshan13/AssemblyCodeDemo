@@ -1,0 +1,58 @@
+gplink-1.6.1 (Jan 23 2014)
+Listing File Generated: 2015-3-9  11:04:59
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           #include <mc30p011.inc>
+                                                   LIST
+                                           ;MC30P01A.INC  Standard Header File, Version 1.00 by Sinomcu
+                                                   NOLIST
+                                           cblock  10h
+                                           acctemp
+                                           statustemp
+                                           endc
+                                            org		0x3ff
+0003ff   2812     goto    0x12              goto		start        
+                                            org		00h
+000000   2812     goto    0x12              goto		start
+                                            org		08h
+                                           timer0int: 
+000008   1590     movra   0x10              movra		acctemp
+000009   1103     swapar  0x3               swapar		STATUS
+00000a   1591     movra   0x11              movra		statustemp
+00000b   3d0f     bclr    0xf, 0x2          bclr		INT0IF 
+00000c   1c85     comr    0x5               comr		P0 
+                                           timer0exit: 
+00000d   1111     swapar  0x11              swapar		statustemp
+00000e   1583     movra   0x3               movra		STATUS
+00000f   1190     swapr   0x10              swapr		acctemp
+000010   1110     swapar  0x10              swapar		acctemp
+000011   000d     retie                     retie
+                                            
+                                           start:
+000012   0b01     movai   0x1               movai		0x01;P10设置为输入
+000013   15c6     movra   0x46              movra		DDR1
+000014   0bfe     movai   0xfe              movai		0xFE;1111 1110
+000015   158d     movra   0xd               movra		PUCON
+000016   0b00     movai   0                 movai		0x00;P0口为输出口，控制LED
+000017   15c5     movra   0x45              movra		DDR0
+000018   0b0a     movai   0xa               movai		0x0a;0000 1010
+000019   1585     movra   0x5               movra		P0
+00001a   3f41     bclr    0x41, 0x6         bclr		INT0M
+00001b   3b8e     bset    0xe, 0x7          bset		GIE
+00001c   390e     bset    0xe, 0x2          bset		INT0IE
+00001d   3b08     bset    0x8, 0x6          bset		EIS
+00001e   281e     goto    0x1e              goto		$
+                                            end 
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XX-------------- XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXX--
+07C0 : ---------------- ---------------- ---------------- --------------XX
+
+All other memory blocks unused.
+
+Program Memory Words Used:    25
+

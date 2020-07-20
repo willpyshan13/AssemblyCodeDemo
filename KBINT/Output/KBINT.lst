@@ -1,0 +1,59 @@
+gplink-1.6.1 (Jan 23 2014)
+Listing File Generated: 2015-3-9  15:11:39
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           #include <mc30p011.inc>
+                                                   LIST
+                                           ;MC30P01A.INC  Standard Header File, Version 1.00 by Sinomcu
+                                                   NOLIST
+                                           cblock		10h
+                                           acctemp
+                                           statustemp
+                                           endc
+                                            org  0x3ff
+0003ff   2812     goto    0x12              goto start        
+                                            org  00h
+000000   2812     goto    0x12              goto start 
+                                            org  08h
+                                           KBint: 
+000008   1590     movra   0x10              movra  	acctemp
+000009   1103     swapar  0x3               swapar 	STATUS
+00000a   1591     movra   0x11              movra  	statustemp
+00000b   3c8f     bclr    0xf, 0x1          bclr		KBIF
+00000c   1c85     comr    0x5               comr		P0
+                                            
+                                           KBexit: 
+00000d   1111     swapar  0x11              swapar 	statustemp
+00000e   1583     movra   0x3               movra  	STATUS
+00000f   1190     swapr   0x10              swapr  	acctemp
+000010   1110     swapar  0x10              swapar 	acctemp
+000011   000d     retie                     retie
+                                           
+                                           start:
+000012   0b00     movai   0                 movai		0x00
+000013   15c5     movra   0x45              movra		DDR0;P0全部输出
+000014   0b0a     movai   0xa               movai		0x0a
+000015   1585     movra   0x5               movra		P0
+000016   0bf7     movai   0xf7              movai		0xf7;1111 0111
+000017   15c6     movra   0x46              movra		DDR1;P13输出，其余都输入。因为P13没有内部上拉，电平状态不确定
+000018   0b00     movai   0                 movai		0x00
+000019   158d     movra   0xd               movra		PUCON
+00001a   0bff     movai   0xff              movai		0xff
+00001b   1589     movra   0x9               movra		KBIM
+00001c   388e     bset    0xe, 0x1          bset		KBIE
+00001d   3b8e     bset    0xe, 0x7          bset		GIE
+00001e   281e     goto    0x1e              goto		$
+                                            end
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XX-------------- XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXX--
+07C0 : ---------------- ---------------- ---------------- --------------XX
+
+All other memory blocks unused.
+
+Program Memory Words Used:    25
+

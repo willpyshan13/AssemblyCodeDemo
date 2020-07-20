@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project MCU="mc33p116" ID="0x3316" MCU_Type="RISC" Author="Mike.Mo" Date="2012-08-28" VS="1.01">
+  <ProWindows>
+    <Explorer fName="MC33P116">
+      <SouceCode fName="SourceCode">
+        <asmFile fName="MC33P116.asm" fPath="\MC33P116.asm" />
+      </SouceCode>
+      <SouceCode fName="Output" />
+      <SouceCode fName="Debug" />
+    </Explorer>
+  </ProWindows>
+  <Option Value="7C7C0000" />
+  <Compiler Name="gpasm.exe" />
+  <Language Name="ASM" />
+</Project>

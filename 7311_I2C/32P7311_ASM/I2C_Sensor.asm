@@ -1,0 +1,644 @@
+
+;  ******************************************************************************
+;  * @file    I2C communication
+;  * @author  YB
+;  * @version V1.0
+;  * @date    2016-11-27
+;  * @brief   
+;  ******************************************************************************
+;  * @attention 
+;  *   	 
+;  *  platform:sinomcu MC30P6060  SOP8
+;  *  web: www.sinimcu.com
+;  *
+;  ******************************************************************************
+
+#include "mc32p7311.inc"
+
+
+;---------------------------- I/O define -----------------------------
+;IO-pin define
+GPR   EQU   0x07
+
+#define	I2C_SDA       IOP1,5   ;sda和scl  sensor i2c interface
+#define	I2C_SCL       IOP1,6
+;-------------------------constant define -------------------------
+;Constant
+;--------------------------variable define -------------------------
+;Definition of variable
+
+cblock     0x10
+                  
+   	acc_temp             ;存放ACC的值
+   	status_temp          ;存放 STATES的值 
+   	key_count1    
+    time_base_1ms        ;用于时间的设置
+    time_base_30ms
+   	time_base_100ms
+    time_base_10ms                         	                       	
+   	KeyFlag              ;按键标志位寄存器                        
+   	address              ;从机器件地址
+   	write_value          ;写到24C02里的数值
+   	read_value           ;从24C02读回的数值
+   	responsnum           ;应答等待时长
+   	data                 ;数据缓存区（数据的传送）
+   	temp                 ;数据暂存区（数据的保护）
+   	w8num                ;写8位（一个字节）的循环次数
+   	r8num                ;读8位（一个字节）的循环次数
+   	read_temp            ;读回的数值的暂存
+   	delay_num            ;延时循环次数
+   	read_back            ;读回来的值，可以在“观察窗”中看此值                                                                                               
+
+   	Array:124
+   	_status
+   	Xout_M
+   	Xout_L
+   	Yout_M
+   	Yout_L
+   	ArrayCnt
+   	R1
+   	R2
+   	R3
+   	R7
+   	R8
+   	R9
+   	RA
+   	RB
+   	RC
+   	RD
+   	RE
+   	RF
+  endc
+
+;-------------------------KeyFlag  define -------------------------
+;Flag bit
+
+#define	F_tim_20ms    KeyFlag,0
+#define	F_tim_500ms   KeyFlag,1
+
+;++++++++++++++++++++++++
+;ROM区
+;++++++++++++++++++++++++
+
+   	ORG	   	0x3ff 
+    bclr   	GIE
+   	ORG	   	0x00
+   	goto    START
+
+;/************************************************
+;  * @brief          IRQ
+;  * @param      
+;  * @retval
+;  ***********************************************/
+   	org	   	0x08      
+                   
+InterruptVector:
+
+    movra   acc_temp                                       
+    swapar  STATUS               
+    movra   status_temp                                     
+            
+TIM0_IRQ: 
+                                                                                                                                           
+    jbset   T0IF                          
+    goto    ExitInterrupt
+   	bclr    T0IF 
+                                                                                
+ExitInterrupt:
+
+    swapar  status_temp                               
+    movra   STATUS                                       
+    swapr   acc_temp
+    swapar  acc_temp
+    movar   acc_temp
+    retie
+
+START:   
+   	bclr   	GIE
+    call    IOPortInit
+    call    RamInit
+    call    SysInit
+   	clrr   	ArrayCnt 
+    bset    GIE
+
+MAIN:            
+    call    WriteValue
+   	nop  
+   	call    ReadValue 
+   	call   	DataStorage        	                                              
+    goto    MAIN     
+            
+ReadValue:
+    bclr    GIE
+    call    read_add
+    bset    GIE
+    return
+
+DataStorage:
+
+   	movai  	0x0a ;125
+   	rsubar 	ArrayCnt
+   	jbclr  	C
+   	return
+   	movar  	ArrayCnt
+   	addai  	(Array+0)
+   	movra  	R1
+   	movai  	high(Array+0)
+   	jbclr  	C
+   	addai  	0x01
+   	movra  	R2
+   	movar  	R1
+   	movra  	FSR0
+   	
+   	movai  	0
+   	xorar  	R3
+   	jbclr  	Z
+   	goto   	Data_0
+   	movai  	1
+   	xorar  	R3
+   	jbclr  	Z
+   	goto   	Data_1
+   	movai  	2
+   	xorar  	R3
+   	jbclr  	Z
+   	goto   	Data_2
+   	movai  	3
+   	xorar  	R3
+   	jbclr  	Z
+   	goto   	Data_3
+   	movai  	4
+   	xorar  	R3
+   	jbclr  	Z
+   	goto   	Data_4
+   	return
+
+Data_0:
+   	movar  	_status
+   	movra  	INDF0
+   	incr   	ArrayCnt
+   	incr   	R3
+   	goto   	DataStorage    	
+
+Data_1:
+   ;   	movar  	Xout_M
+   	movai  	1
+   	movra  	INDF0
+   	incr   	ArrayCnt
+   	incr   	R3
+   	goto   	DataStorage
+
+Data_2:
+   	;movar     	Xout_L
+   	movai  	2
+   	movra  	INDF0
+   	incr   	ArrayCnt
+   	incr   	R3
+   	goto   	DataStorage
+
+Data_3:
+   	;movar     	Yout_M
+   	movai  	3
+   	movra  	INDF0
+   	incr   	ArrayCnt
+   	incr   	R3
+   	goto   	DataStorage 
+
+Data_4:
+   	;movar     	Yout_L
+   	movai  	4
+   	movra  	INDF0
+   	incr   	ArrayCnt
+   	clrr   	R3
+   	return 
+
+
+;/************************************************
+;  * @brief   IOPortInit
+;  * @param      
+;  * @retval
+;  ***********************************************/
+IOPortInit:
+
+   	clrr    OEP0      
+    movai   0xf7          ;
+    movra   OEP1          ;P1,3设置为输入，其余P1口全为输出
+    movai   0x00
+    movra   PUP1
+    movai   0x00          
+    movra   ANSEL0
+   	movra  	ANSEL1                               
+    return
+                   
+;/************************************************
+;  * @brief   RamInit
+;  * @param      
+;  * @retval
+;  ***********************************************/ 
+  
+RamInit:
+   	clrr   	FSR1   	       
+   	movai  	0xff
+   	movra  	FSR0
+clrram_loop:
+   	clrr   	INDF
+   	djzr   	FSR0 
+   	goto   	clrram_loop 
+   	return
+       
+;/************************************************
+;  * @brief   SysInit
+;  * @param      
+;  * @retval
+;  ***********************************************/  
+
+SysInit:
+
+    movai  	0x02        ;预分频给T0，分频率为8   
+    movra   T0CR        ;250*2T/4M*8=1ms
+    movai   6
+    movra   T0CNT 
+    bset    T0IE 
+    movai   0x04
+    return                        
+
+;/************************************************
+;  * @brief    WriteValue
+;  * @param      
+;  * @retval
+;  ***********************************************/
+    
+WriteValue:
+   	bclr    GIE
+   	call    initSig
+   	movai   0x0d
+   	movra   address
+   	movai  	0x00
+   	movra   write_value         
+   	call    write_add
+   	call    delay1;如果是先写数据，然后再读数据，这个延时一定是需要的，而且是ms级延时
+   	call   	delay1
+   	call   	delay1
+   	bset    GIE                     
+   	return 
+
+;************************
+;Function Name: 往24C02里面写字节
+;Description: 开始信号之后；先写器件地址+0；再写24C02内存储地址；然后写存储数据；最后写停止信号
+;@register: 
+;@param:          
+;@param:     
+;************************ 
+
+write_add:
+    call   	startSig
+    movai   0xa0;1010 0000
+    movra   data
+    call    write_byte
+    call    ackSig
+    movar   address
+    movra   data
+    call    write_byte
+    call    ackSig
+    movar   write_value
+    movra   data
+    call    write_byte
+    call    ackSig
+    call    stopSig
+   	nop
+    return  
+
+;************************
+;Function Name: 从24C02里面读字节
+;Description: 开始信号之后；先写器件地址+0；再写24C02内存储地址；然后写开始信号
+;             再写器件地址+1；再读字节；最后写停止信号
+;@register: 
+;@param:          
+;@param:     
+;************************ 
+
+read_add:
+    call   	startSig
+    movai   0x2a
+    movra   data
+    call    write_byte
+    call    ackSig
+    movai   0x02
+    movra   address
+    movar   address
+    movra   data       	       	
+    call    write_byte
+    call    ackSig
+    call    startSig
+    movai   0x2b
+    movra   data
+    call    write_byte
+    call    ackSig
+
+    call    read_byte
+    call    ackSig
+    movar   read_temp
+    movra   _status
+
+    call    read_byte
+    call    ackSig
+    movar   read_temp
+    movra   Xout_M
+
+    call    read_byte
+    call    ackSig
+    movar   read_temp
+    movra   Xout_L
+
+    call    read_byte
+    call    ackSig
+    movar   read_temp
+    movra   Yout_M
+
+    call    read_byte
+    ;call    ackSig
+    movar   read_temp
+    movra   Yout_L
+
+    call    noackSig
+    call    stopSig
+   	nop 
+    return                                                          
+;/************************************************
+;  * @brief    initSig
+;  * @param      
+;  * @retval
+;  ***********************************************/ 
+initSig:
+    bset   	I2C_SDA
+    call    delay
+    bset    I2C_SCL
+    call    delay
+    return 
+            
+;************************
+;Function Name: startSig
+;Description: 开始信号
+;@register: 
+;@param:          
+;@param:     
+;************************  
+startSig:
+    bset   	I2C_SDA
+    call    delay
+    bset    I2C_SCL
+    call    delay
+    bclr    I2C_SDA
+    call    delay
+    return
+            
+;************************
+;Function Name: stopSig
+;Description: 停止信号
+;@register: 
+;@param:          
+;@param:     
+;************************  
+
+stopSig:
+    bclr    I2C_SDA
+    call    delay
+    bset    I2C_SCL
+    call    delay
+    bset    I2C_SDA
+    call    delay
+    return
+            
+;************************
+;Function Name: ackSig
+;Description: 停止信号
+;@register: 
+;@param:          
+;@param:     
+;************************
+ackSig:
+    bclr   	I2C_SCL
+    call    delay
+    bclr    I2C_SDA
+    call    delay
+    bset    I2C_SCL
+    call    delay
+    bclr    I2C_SCL
+    call    delay
+    return
+;************************
+;Function Name: noackSig
+;Description: 停止信号
+;@register: 
+;@param:          
+;@param:     
+;************************
+noackSig:
+    bclr    I2C_SCL
+    call    delay
+    bset    I2C_SDA
+    call    delay
+    bset    I2C_SCL
+    call    delay
+    bclr    I2C_SCL
+    call    delay
+    return
+             
+;************************
+;Function Name: responsSig
+;Description: ;应答信号，如果sda信号为低，直接应答；如果sda信号为高，循环一段时间，应答。
+;@register: 
+;@param:          
+;@param:     
+;************************           
+
+responsSig:
+    bset   	I2C_SCL
+    call    delay
+responsCheck:
+    jbset   I2C_SDA
+    goto    responsOK
+    incr    responsnum
+    movai   250
+    rsubar  responsnum
+    jbset   C
+    goto    responsCheck
+responsOK:
+    clrr    responsnum
+    bclr    I2C_SCL
+    call    delay
+    return
+            
+;************************
+;Function Name: write_byte
+;Description: 写字节
+;@register: 
+;@param:          
+;@param:     
+;************************  
+
+write_byte:
+    movar  	data
+    movra   temp
+w8begin:
+    incr    w8num
+    movai   9
+    rsubar  w8num
+    jbclr   C
+    goto    w8end
+    bclr    I2C_SCL
+    call    delay
+    rlr     temp
+    jbclr   C
+    goto    $+3
+    bclr    I2C_SDA
+    goto    $+2
+    bset    I2C_SDA
+    call    delay
+    bset    I2C_SCL
+    call    delay
+    goto    w8begin    	
+w8end:
+    clrr    w8num
+    bclr    I2C_SCL
+    call    delay
+    bset    I2C_SDA
+    call    delay
+    return
+            
+;************************
+;Function Name: read_byte
+;Description: 读字节需要先将P15（sda）设置成输入，结束之后P15再设置成输出
+;@register: 
+;@param:          
+;@param:     
+;************************  
+
+read_byte:
+    movai  	0xD7;
+    movra   OEP1
+
+    bclr   	I2C_SCL
+    call    delay
+    bset    I2C_SDA
+    call    delay
+r8begin: 
+    incr    r8num
+    movai   9
+    rsubar  r8num
+    jbclr   C
+    goto    r8end
+    bset    I2C_SCL
+    call    delay
+    jbset   I2C_SDA
+    goto    $+2
+    goto    $+3
+    bclr    C
+    goto    $+2
+    bset    C
+    rlr     read_temp
+    bclr    I2C_SCL
+    call    delay
+    goto    r8begin
+r8end:
+    clrr    r8num
+    ;movar   read_temp
+    ;movra   read_value
+    movai  	0xF7;
+    movra   OEP1
+    return
+    
+
+            
+  
+
+;************************
+;Function Name: delay
+;Description: us级延时
+;@register: 
+;@param:          
+;@param:     
+;************************             
+
+delay:
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    NOP
+    ;nop
+    ;NOP
+    ;nop
+    nop
+    nop
+    nop
+    return
+    
+;************************
+;Function Name: delay1
+;Description: ms级延时
+;如果是先写数据，然后再读数据，这个延时一定是需要的，而且是ms级延时
+;这个延时占用CPU资源，可以使用定时器，注意定时中断的开关设置
+;@register: 
+;@param:          
+;@param:     
+;************************     
+
+delay1:
+    movai  	255
+    movra   delay_num
+delay11:
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop 
+ 
+    djzr   	delay_num
+    goto    delay11
+    return             	       	          
+                   
+   end
