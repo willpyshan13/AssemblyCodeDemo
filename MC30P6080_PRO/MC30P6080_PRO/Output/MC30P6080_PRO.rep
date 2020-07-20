@@ -1,0 +1,8 @@
+main(0)
+|--HalSysInit(1)
+|--|--InitRam(2)
+|--|--config(2)
+|--HalTim0Init(1)
+|--funInit(1)
+|--control(1)
+|--sleepManage(1)

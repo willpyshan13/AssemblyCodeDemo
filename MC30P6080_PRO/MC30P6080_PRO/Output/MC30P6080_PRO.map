@@ -1,0 +1,142 @@
+gplink-2.2.18 (Apr 13 2020)
+Map File - Created 2020-7-13  13:43:51
+ 
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                  STARTUP       code   00000000    program   0x000002
+              c_interrupt       code   0x000008    program   0x00006c
+       code_MC30P6080_PRO       code   0x00003e    program   0x00004e
+             code_hal_sys       code   0x000065    program   0x000048
+       UD_abs_mc30p6080_0      udata   00000000       data   0x000001
+       UD_abs_mc30p6080_1      udata   0x000001       data   0x000001
+       UD_abs_mc30p6080_2      udata   0x000002       data   0x000001
+       UD_abs_mc30p6080_3      udata   0x000003       data   0x000001
+       UD_abs_mc30p6080_4      udata   0x000004       data   0x000001
+       UD_abs_mc30p6080_5      udata   0x000005       data   0x000001
+       UD_abs_mc30p6080_6      udata   0x000006       data   0x000001
+       UD_MC30P6080_PRO_0      udata   0x000007       data   0x000001
+       UD_abs_mc30p6080_8      udata   0x000008       data   0x000001
+       UD_abs_mc30p6080_9      udata   0x000009       data   0x000001
+       UD_abs_mc30p6080_a      udata   0x00000a       data   0x000001
+       UD_abs_mc30p6080_b      udata   0x00000b       data   0x000001
+       UD_abs_mc30p6080_c      udata   0x00000c       data   0x000001
+       UD_abs_mc30p6080_d      udata   0x00000d       data   0x000001
+       UD_abs_mc30p6080_e      udata   0x00000e       data   0x000001
+       UD_abs_mc30p6080_f      udata   0x00000f       data   0x000001
+                sharebank      udata   0x000010       data   0x000007
+       UD_MC30P6080_PRO_2      udata   0x000017       data   0x000002
+       UD_MC30P6080_PRO_3      udata   0x000019       data   0x000002
+      UDL_MC30P6080_PRO_0      udata   0x00001b       data   0x000002
+       UD_MC30P6080_PRO_1      udata   0x00001d       data   0x000001
+       UD_MC30P6080_PRO_4      udata   0x00001e       data   0x000001
+      UD_abs_mc30p6080_41      udata   0x000041       data   0x000001
+      UD_abs_mc30p6080_45      udata   0x000045       data   0x000001
+      UD_abs_mc30p6080_46      udata   0x000046       data   0x000001
+      UD_abs_mc30p6080_48      udata   0x000048       data   0x000001
+      UD_abs_mc30p6080_49      udata   0x000049       data   0x000001
+      UD_abs_mc30p6080_4a      udata   0x00004a       data   0x000001
+      UD_abs_mc30p6080_4b      udata   0x00004b       data   0x000001
+      UD_abs_mc30p6080_4c      udata   0x00004c       data   0x000001
+      UD_abs_mc30p6080_4d      udata   0x00004d       data   0x000001
+      UD_abs_mc30p6080_4e      udata   0x00004e       data   0x000001
+      UD_abs_mc30p6080_4f      udata   0x00004f       data   0x000001
+ 
+                              Program Memory Usage
+                               Start         End
+                           ---------   ---------
+                            00000000    00000000
+                            0x000008    0x00003d
+                            0x00003e    0x000064
+                            0x000065    0x000088
+ 
+                            130 program addresses used
+ 
+                              Symbols
+                     Name    Address   Location    Storage File
+                ---------  ---------  ---------  --------- ---------
+                    STK06   0x000010       data     extern MC30P6080_PRO.asm
+                    STK05   0x000011       data     extern MC30P6080_PRO.asm
+                    STK04   0x000012       data     extern MC30P6080_PRO.asm
+                    STK03   0x000013       data     extern MC30P6080_PRO.asm
+                    STK02   0x000014       data     extern MC30P6080_PRO.asm
+                    STK01   0x000015       data     extern MC30P6080_PRO.asm
+                    STK00   0x000016       data     extern MC30P6080_PRO.asm
+                    _ABuf   0x000007       data     extern MC30P6080_PRO.asm
+               _StatusBuf   0x00001d       data     extern MC30P6080_PRO.asm
+                   _state   0x000017       data     extern MC30P6080_PRO.asm
+               _sleepTime   0x000019       data     extern MC30P6080_PRO.asm
+                     _bts   0x00001e       data     extern MC30P6080_PRO.asm
+                  r0x1005   0x00001b       data     static MC30P6080_PRO.asm
+                  r0x1006   0x00001c       data     static MC30P6080_PRO.asm
+         __sdcc_interrupt   0x000008    program     static MC30P6080_PRO.asm
+                 _int_isr   0x000008    program     extern MC30P6080_PRO.asm
+               _00130_DS_   0x000034    program     static MC30P6080_PRO.asm
+               _00133_DS_   0x000039    program     static MC30P6080_PRO.asm
+         END_OF_INTERRUPT   0x00003d    program     static MC30P6080_PRO.asm
+                    _main   0x00003e    program     extern MC30P6080_PRO.asm
+               _00124_DS_   0x000041    program     static MC30P6080_PRO.asm
+             _sleepManage   0x000045    program     extern MC30P6080_PRO.asm
+               _00113_DS_   0x000049    program     static MC30P6080_PRO.asm
+               _00114_DS_   0x00004d    program     static MC30P6080_PRO.asm
+               _00118_DS_   0x000061    program     static MC30P6080_PRO.asm
+                 _control   0x000062    program     extern MC30P6080_PRO.asm
+                 _funInit   0x000063    program     extern MC30P6080_PRO.asm
+                 _InitRam   0x000065    program     static hal_sys.asm
+       _code_hal_sys_0007   0x00006c    program     static hal_sys.asm
+                  _config   0x000070    program     static hal_sys.asm
+             _HalTim0Init   0x00007c    program     extern hal_sys.asm
+              _HalSysInit   0x000082    program     extern hal_sys.asm
+                _INDFbits   00000000       data     extern mc30p6080.asm
+                    _INDF   00000000       data     extern mc30p6080.asm
+               _T0CNTbits   0x000001       data     extern mc30p6080.asm
+                   _T0CNT   0x000001       data     extern mc30p6080.asm
+                 _PCLbits   0x000002       data     extern mc30p6080.asm
+                     _PCL   0x000002       data     extern mc30p6080.asm
+              _STATUSbits   0x000003       data     extern mc30p6080.asm
+                  _STATUS   0x000003       data     extern mc30p6080.asm
+                 _FSRbits   0x000004       data     extern mc30p6080.asm
+                     _FSR   0x000004       data     extern mc30p6080.asm
+                  _P0bits   0x000005       data     extern mc30p6080.asm
+                      _P0   0x000005       data     extern mc30p6080.asm
+                  _P1bits   0x000006       data     extern mc30p6080.asm
+                      _P1   0x000006       data     extern mc30p6080.asm
+                 _MCRbits   0x000008       data     extern mc30p6080.asm
+                     _MCR   0x000008       data     extern mc30p6080.asm
+                _KBIMbits   0x000009       data     extern mc30p6080.asm
+                    _KBIM   0x000009       data     extern mc30p6080.asm
+              _PCLATHbits   0x00000a       data     extern mc30p6080.asm
+                  _PCLATH   0x00000a       data     extern mc30p6080.asm
+               _PDCONbits   0x00000b       data     extern mc30p6080.asm
+                   _PDCON   0x00000b       data     extern mc30p6080.asm
+               _ODCONbits   0x00000c       data     extern mc30p6080.asm
+                   _ODCON   0x00000c       data     extern mc30p6080.asm
+               _PUCONbits   0x00000d       data     extern mc30p6080.asm
+                   _PUCON   0x00000d       data     extern mc30p6080.asm
+             _INTECONbits   0x00000e       data     extern mc30p6080.asm
+                 _INTECON   0x00000e       data     extern mc30p6080.asm
+             _INTFLAGbits   0x00000f       data     extern mc30p6080.asm
+                 _INTFLAG   0x00000f       data     extern mc30p6080.asm
+                _T0CRbits   0x000041       data     extern mc30p6080.asm
+                    _T0CR   0x000041       data     extern mc30p6080.asm
+                _DDR0bits   0x000045       data     extern mc30p6080.asm
+                    _DDR0   0x000045       data     extern mc30p6080.asm
+                _DDR1bits   0x000046       data     extern mc30p6080.asm
+                    _DDR1   0x000046       data     extern mc30p6080.asm
+               _PWMCRbits   0x000048       data     extern mc30p6080.asm
+                   _PWMCR   0x000048       data     extern mc30p6080.asm
+              _T1DAT1bits   0x000049       data     extern mc30p6080.asm
+                  _T1DAT1   0x000049       data     extern mc30p6080.asm
+              _T1DAT2bits   0x00004a       data     extern mc30p6080.asm
+                  _T1DAT2   0x00004a       data     extern mc30p6080.asm
+               _TM0CRbits   0x00004b       data     extern mc30p6080.asm
+                   _TM0CR   0x00004b       data     extern mc30p6080.asm
+                _T1CRbits   0x00004c       data     extern mc30p6080.asm
+                    _T1CR   0x00004c       data     extern mc30p6080.asm
+               _T1CNTbits   0x00004d       data     extern mc30p6080.asm
+                   _T1CNT   0x00004d       data     extern mc30p6080.asm
+              _T1LOADbits   0x00004e       data     extern mc30p6080.asm
+                  _T1LOAD   0x00004e       data     extern mc30p6080.asm
+              _T1DAT0bits   0x00004f       data     extern mc30p6080.asm
+                  _T1DAT0   0x00004f       data     extern mc30p6080.asm
+ 

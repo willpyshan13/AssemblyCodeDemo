@@ -1,0 +1,151 @@
+
+0083   0801           00211                                 XORAI   0 at 0x001B  xxxx.x  0000 to 0000
+0087   0802           00215                                 XORAI   0 at 0x010B  xxxx.x  0000 to 0000
+008B   0804           00219                                 XORAI   0 at 0x100B  xxxx.x  0000 to 0000
+00BC   0B04           00279                                 MOVAI   0 at 0x100B  xxxx.x  0000 to 0000
+00EB   0B10           00333                                 MOVAI   0 at 0x000B  xxxx.x  0000 to 0000
+0181   0B38           00509                                 MOVAI   0 at 0x000B  xxxx.x  0000 to 0000
+018A   0BE7           00518                                 MOVAI   1 at 0x111B  xxxx.x  0000 to 0000
+018C   0B80           00520                                 MOVAI   1 at 0x000B  xxxx.x  0000 to 0000
+018E   0B05           00522                                 MOVAI   0 at 0x101B  xxxx.x  0000 to 0000
+0190   0B00           00524                                 MOVAI   0 at 0x000B  xxxx.x  0000 to 0000
+0197   0B38           00531                                 MOVAI   0 at 0x000B  xxxx.x  0000 to 0000
+019B   0B42           00535                                 MOVAI   0 at 0x010B  xxxx.x  0000 to 0000
+01A7   0B03           00547                                 MOVAI   0 at 0x011B  xxxx.x  0000 to 0000
+A_STG1                             at 0x00CB  xxxx.x  0000 to 0000
+A_STG2                             at 0x00CE  xxxx.x  0000 to 0000
+A_STG3                             at 0x00B8  xxxx.x  0000 to 0000
+B_STG1                             at 0x00FE  xxxx.x  0000 to 0000
+B_STG2                             at 0x0104  xxxx.x  0000 to 0000
+B_STG3                             at 0x010D  xxxx.x  0000 to 0000
+B_STG4                             at 0x0117  xxxx.x  0000 to 0000
+B_STG5                             at 0x00E4  xxxx.x  0000 to 0000
+CMPCR                              at 0x0043  xxxx.x  0000 to 0000
+DDR0                               at 0x0045  xxxx.x  0000 to 0000
+DDR1                               at 0x0046  xxxx.x  0000 to 0000
+FSR                                at 0x0004  xxxx.x  0000 to 0000
+GET_STATE                          at 0x00B2  xxxx.x  0000 to 0000
+GET_STATE_EXIT                     at 0x0133  xxxx.x  0000 to 0000
+GPR0                               at 0x0007  xxxx.x  0000 to 0000
+HALT_CHK                           at 0x003E  xxxx.x  0000 to 0000
+HDWARE_INITIAL                     at 0x0181  xxxx.x  0000 to 0000
+INDF                               at 0x0000  xxxx.x  0000 to 0000
+INTE                               at 0x000E  xxxx.x  0000 to 0000
+INTF                               at 0x000F  xxxx.x  0000 to 0000
+INTF1                              at 0x0044  xxxx.x  0000 to 0000
+INT_EXIT                           at 0x0028  xxxx.x  0000 to 0000
+K1_HLD_CHK                         at 0x00D1  xxxx.x  0000 to 0000
+K1_HLD_PRO                         at 0x0094  xxxx.x  0000 to 0000
+K1_PRO                             at 0x008F  xxxx.x  0000 to 0000
+K2_HLD_CHK                         at 0x011D  xxxx.x  0000 to 0000
+K2_HLD_PRO                         at 0x009C  xxxx.x  0000 to 0000
+K2_PRO                             at 0x0097  xxxx.x  0000 to 0000
+K2_PRS_CHK                         at 0x00DF  xxxx.x  0000 to 0000
+K3_PRO                             at 0x009F  xxxx.x  0000 to 0000
+K3_PRS_CHK                         at 0x012D  xxxx.x  0000 to 0000
+KEY_HLD_CHK                        at 0x0076  xxxx.x  0000 to 0000
+KEY_SCAN                           at 0x0058  xxxx.x  0000 to 0000
+KEY_SCAN_EXIT                      at 0x00B1  xxxx.x  0000 to 0000
+K_PRS_HLD_CHK                      at 0x0080  xxxx.x  0000 to 0000
+MAIN                               at 0x0039  xxxx.x  0000 to 0000
+MCR                                at 0x0008  xxxx.x  0000 to 0000
+NEWKEY_PRO                         at 0x00A2  xxxx.x  0000 to 0000
+NOKEY_PRO                          at 0x00A8  xxxx.x  0000 to 0000
+ODCON                              at 0x000C  xxxx.x  0000 to 0000
+OUTPUT                             at 0x0134  xxxx.x  0000 to 0000
+OUTPUT_EXIT                        at 0x0180  xxxx.x  0000 to 0000
+P0                                 at 0x0005  xxxx.x  0000 to 0000
+P0KBCR                             at 0x0040  xxxx.x  0000 to 0000
+P1                                 at 0x0006  xxxx.x  0000 to 0000
+P1KBCR                             at 0x0009  xxxx.x  0000 to 0000
+PCL                                at 0x0002  xxxx.x  0000 to 0000
+PCLATH                             at 0x000A  xxxx.x  0000 to 0000
+PUCON                              at 0x000D  xxxx.x  0000 to 0000
+PUDCON                             at 0x000B  xxxx.x  0000 to 0000
+PWMCR0                             at 0x0048  xxxx.x  0000 to 0000
+PWMCR1                             at 0x0047  xxxx.x  0000 to 0000
+PWON_Start                         at 0x002D  xxxx.x  0000 to 0000
+PWON_WAIT                          at 0x0033  xxxx.x  0000 to 0000
+RAM_CLR                            at 0x01AA  xxxx.x  0000 to 0000
+RM_CLR_LP                          at 0x01AC  xxxx.x  0000 to 0000
+STATUS                             at 0x0003  xxxx.x  0000 to 0000
+STOP_PWMA                          at 0x00D6  xxxx.x  0000 to 0000
+STOP_PWMBC                         at 0x0122  xxxx.x  0000 to 0000
+T0CNT                              at 0x0001  xxxx.x  0000 to 0000
+T0CR                               at 0x0041  xxxx.x  0000 to 0000
+T1CNT                              at 0x004D  xxxx.x  0000 to 0000
+T1CR                               at 0x004C  xxxx.x  0000 to 0000
+T1DATA                             at 0x004F  xxxx.x  0000 to 0000
+T1DATB                             at 0x0049  xxxx.x  0000 to 0000
+T1DATC                             at 0x004A  xxxx.x  0000 to 0000
+T1DATD                             at 0x0042  xxxx.x  0000 to 0000
+T1LOAD                             at 0x004E  xxxx.x  0000 to 0000
+TM0CR                              at 0x004B  xxxx.x  0000 to 0000
+USR_INITIAL                        at 0x01B4  xxxx.x  0000 to 0000
+WK0_CHK                            at 0x0135  xxxx.x  0000 to 0000
+WK0_STG_CHK                        at 0x00C0  xxxx.x  0000 to 0000
+WK0_STOP                           at 0x013A  xxxx.x  0000 to 0000
+WK1_CHK                            at 0x013F  xxxx.x  0000 to 0000
+WK1_STG1                           at 0x0148  xxxx.x  0000 to 0000
+WK1_STG1_1                         at 0x0157  xxxx.x  0000 to 0000
+WK1_STG2                           at 0x0159  xxxx.x  0000 to 0000
+WK1_STG2_COM                       at 0x016F  xxxx.x  0000 to 0000
+WK1_STG2_DEC                       at 0x0165  xxxx.x  0000 to 0000
+WK1_STG2_DECPRO                    at 0x016D  xxxx.x  0000 to 0000
+WK1_STG_CHK                        at 0x00EF  xxxx.x  0000 to 0000
+WK1_STOP                           at 0x0172  xxxx.x  0000 to 0000
+WK2_1                              at 0x017F  xxxx.x  0000 to 0000
+WK2_CHK                            at 0x0179  xxxx.x  0000 to 0000
+_CONFIG0                           at 0x8000  xxxx.x  0000 to 0000
+_CONFIG1                           at 0x8001  xxxx.x  0000 to 0000
+__1K6240                           at 0x0001  xxxx.x  0000 to 0000
+#DEFINE FLAGBUF         0x10
+#DEFINE ACCBUF          0x11
+#DEFINE TMP0            0X12
+#DEFINE FLAG0           0X13
+#DEFINE F_K_RND         FLAG0,0
+#DEFINE F_T1            FLAG0,1
+#DEFINE F_T2            FLAG0,2
+#DEFINE F_T3            FLAG0,3
+#DEFINE F_WK0           FLAG0,5         
+#DEFINE F_WK1           FLAG0,6         
+#DEFINE F_WK2           FLAG0,7         
+#DEFINE KFLAG           0X14
+#DEFINE F_PR1           KFLAG,0
+#DEFINE F_PR2           KFLAG,1
+#DEFINE F_PR3           KFLAG,2
+#DEFINE F_PRS           KFLAG,3
+#DEFINE F_H1            KFLAG,4
+#DEFINE F_H2            KFLAG,5
+#DEFINE F_PRESSED       KFLAG,6
+#DEFINE F_HOLD          KFLAG,7
+#DEFINE DEBOUNCE        0X15
+#DEFINE HOLD_CNT        0X16
+#DEFINE HALT_CNT        0X17
+#DEFINE KEYIN           0X18
+#DEFINE KEYOLD          0X19
+#DEFINE FLAG1           0X1A
+#DEFINE F_ACTED         FLAG1,0
+#DEFINE F_NO_WK         FLAG1,1
+#DEFINE F_WK1_1         FLAG1,2
+#DEFINE F_UP            FLAG1,3
+#DEFINE F_INC_EN        FLAG1,4
+#DEFINE STG1            0X1B
+#DEFINE STG2            0X1C
+#DEFINE STG3            0X1D
+#DEFINE DLY1            0X1E
+#DEFINE DLY2            0X1F
+#DEFINE CNT50MS         0X20
+#DEFINE TM_CNT          0X21
+#DEFINE DUTY_BK         0X22
+#DEFINE KEY_CNT         0X23
+#DEFINE P_PSW3          P00D
+#DEFINE P_KLED          P01D
+#DEFINE P_SLED          P02D
+#DEFINE P_RLED          P03D
+#DEFINE P_PWMC          P10D
+#DEFINE P_PWMB          P11D
+#DEFINE P_PWMA          P12D
+#DEFINE P_KYR           P13D
+#DEFINE P_KYS           P14D
+#DEFINE P_KYK           P15D

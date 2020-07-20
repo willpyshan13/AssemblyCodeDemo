@@ -1,0 +1,1003 @@
+gplink-2.2.10 (Feb 22 2019)
+Listing File Generated: 2020-5-26  16:09:44
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	__moduint
+                                           	extern	_HIBYTEbits
+                                           	extern	_FSR0bits
+                                           	extern	_FSR1bits
+                                           	extern	_PFLAGbits
+                                           	extern	_ANSELbits
+                                           	extern	_VREFbits
+                                           	extern	_ADCRbits
+                                           	extern	_ADRHbits
+                                           	extern	_ADRLbits
+                                           	extern	_OEP0bits
+                                           	extern	_PEDGEbits
+                                           	extern	_OEP4bits
+                                           	extern	_OEP5bits
+                                           	extern	_INTFbits
+                                           	extern	_INTEbits
+                                           	extern	_OSCMbits
+                                           	extern	_WDTRbits
+                                           	extern	_T0Dbits
+                                           	extern	_PCLbits
+                                           	extern	_PCHbits
+                                           	extern	_IOP0bits
+                                           	extern	_IOP4bits
+                                           	extern	_IOP5bits
+                                           	extern	_TXCRbits
+                                           	extern	_T0CRbits
+                                           	extern	_T0Cbits
+                                           	extern	_T1CRbits
+                                           	extern	_T1Cbits
+                                           	extern	_T1Dbits
+                                           	extern	_STKPbits
+                                           	extern	_PUP0bits
+                                           	extern	_PUP4bits
+                                           	extern	_PUP5bits
+                                           	extern	_INDFbits
+                                           	extern	_T2CRbits
+                                           	extern	_T2Cbits
+                                           	extern	_T2Dbits
+                                           	extern	_HIBYTE
+                                           	extern	_FSR0
+                                           	extern	_FSR1
+                                           	extern	_PFLAG
+                                           	extern	_ANSEL
+                                           	extern	_VREF
+                                           	extern	_ADCR
+                                           	extern	_ADRH
+                                           	extern	_ADRL
+                                           	extern	_OEP0
+                                           	extern	_PEDGE
+                                           	extern	_OEP4
+                                           	extern	_OEP5
+                                           	extern	_INTF
+                                           	extern	_INTE
+                                           	extern	_OSCM
+                                           	extern	_WDTR
+                                           	extern	_T0D
+                                           	extern	_PCL
+                                           	extern	_PCH
+                                           	extern	_IOP0
+                                           	extern	_IOP4
+                                           	extern	_IOP5
+                                           	extern	_TXCR
+                                           	extern	_T0CR
+                                           	extern	_T0C
+                                           	extern	_T1CR
+                                           	extern	_T1C
+                                           	extern	_T1D
+                                           	extern	_STKP
+                                           	extern	_PUP0
+                                           	extern	_PUP4
+                                           	extern	_PUP5
+                                           	extern	_INDF
+                                           	extern	_T2CR
+                                           	extern	_T2C
+                                           	extern	_T2D
+                                           	extern	_STK3L
+                                           	extern	_STK3H
+                                           	extern	_STK2L
+                                           	extern	_STK2H
+                                           	extern	_STK1L
+                                           	extern	_STK1H
+                                           	extern	_STK0L
+                                           	extern	_STK0H
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_ADC_Get_Value_Average
+                                           	global	_ADC_Get_Value
+                                           	global	_Sys_Init
+                                           	global	_ADC_Init
+                                           	global	_TIMER1_PWM_Init
+                                           	global	_TIMER0_INT_Init
+                                           	global	_IO_Init
+                                           	global	_CLR_RAM
+                                           	global	_main
+                                           	global	_int_isr
+                                           	global	_changl_Num
+                                           	global	_ADC_num_value
+                                           	global	_timer0_count1
+                                           	global	_IO_buff
+                                           	global	_flag1
+                                           
+                                           	global STK06
+                                           	global STK05
+                                           	global STK04
+                                           	global STK03
+                                           	global STK02
+                                           	global STK01
+                                           	global STK00
+                                           
+                                           sharebank udata_ovr 0x0000
+                                           STK06	res 1
+                                           STK05	res 1
+                                           STK04	res 1
+                                           STK03	res 1
+                                           STK02	res 1
+                                           STK01	res 1
+                                           STK00	res 1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           UD_MC32P7031_Demo_C_0	udata
+                                           _changl_Num	res	1
+                                           
+                                           UD_MC32P7031_Demo_C_1	udata
+                                           _ADC_num_value	res	2
+                                           
+                                           UD_MC32P7031_Demo_C_2	udata
+                                           _timer0_count1	res	2
+                                           
+                                           UD_MC32P7031_Demo_C_3	udata
+                                           _IO_buff	res	1
+                                           
+                                           UD_MC32P7031_Demo_C_4	udata
+                                           _flag1	res	1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_MC32P7031_Demo_C_0	udata
+                                           r0x1015	res	1
+                                           r0x1016	res	1
+                                           r0x1018	res	1
+                                           r0x1017	res	1
+                                           r0x101A	res	1
+                                           r0x1005	res	1
+                                           r0x1006	res	1
+                                           r0x1007	res	1
+                                           r0x1008	res	1
+                                           r0x1009	res	1
+                                           r0x100A	res	1
+                                           r0x100B	res	1
+                                           r0x100C	res	1
+                                           r0x100D	res	1
+                                           r0x100E	res	1
+                                           r0x100F	res	1
+                                           r0x1011	res	1
+                                           r0x1010	res	1
+                                           r0x1012	res	1
+                                           r0x1013	res	1
+                                           r0x101C	res	1
+                                           r0x101D	res	1
+                                           _int_isr_count_1_33	res	2
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ;@Allocation info for local variables in function 'CLR_RAM'
+                                           ;@CLR_RAM IO_Init                   Allocated to registers ;size:2
+                                           ;@CLR_RAM TIMER0_INT_Init           Allocated to registers ;size:2
+                                           ;@CLR_RAM TIMER1_PWM_Init           Allocated to registers ;size:2
+                                           ;@CLR_RAM ADC_Init                  Allocated to registers ;size:2
+                                           ;@CLR_RAM Sys_Init                  Allocated to registers ;size:2
+                                           ;@CLR_RAM ADC_Get_Value             Allocated to registers ;size:2
+                                           ;@CLR_RAM ADC_Get_Value_Average     Allocated to registers ;size:2
+                                           ;@CLR_RAM HIBYTEbits                Allocated to registers ;size:1
+                                           ;@CLR_RAM FSR0bits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM FSR1bits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM PFLAGbits                 Allocated to registers ;size:1
+                                           ;@CLR_RAM ANSELbits                 Allocated to registers ;size:1
+                                           ;@CLR_RAM VREFbits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM ADCRbits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM ADRHbits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM ADRLbits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM OEP0bits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM PEDGEbits                 Allocated to registers ;size:1
+                                           ;@CLR_RAM OEP4bits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM OEP5bits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM INTFbits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM INTEbits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM OSCMbits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM WDTRbits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM T0Dbits                   Allocated to registers ;size:1
+                                           ;@CLR_RAM PCLbits                   Allocated to registers ;size:1
+                                           ;@CLR_RAM PCHbits                   Allocated to registers ;size:1
+                                           ;@CLR_RAM IOP0bits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM IOP4bits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM IOP5bits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM TXCRbits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM T0CRbits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM T0Cbits                   Allocated to registers ;size:1
+                                           ;@CLR_RAM T1CRbits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM T1Cbits                   Allocated to registers ;size:1
+                                           ;@CLR_RAM T1Dbits                   Allocated to registers ;size:1
+                                           ;@CLR_RAM STKPbits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM PUP0bits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM PUP4bits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM PUP5bits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM INDFbits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM T2CRbits                  Allocated to registers ;size:1
+                                           ;@CLR_RAM T2Cbits                   Allocated to registers ;size:1
+                                           ;@CLR_RAM T2Dbits                   Allocated to registers ;size:1
+                                           ;@CLR_RAM changl_Num                Allocated to registers ;size:1
+                                           ;@CLR_RAM ADC_num_value             Allocated to registers ;size:2
+                                           ;@CLR_RAM timer0_count1             Allocated to registers ;size:2
+                                           ;@CLR_RAM IO_buff                   Allocated to registers ;size:1
+                                           ;@CLR_RAM flag1                     Allocated to registers ;size:1
+                                           ;@CLR_RAM HIBYTE                    Allocated to registers ;size:1
+                                           ;@CLR_RAM FSR0                      Allocated to registers ;size:1
+                                           ;@CLR_RAM FSR1                      Allocated to registers ;size:1
+                                           ;@CLR_RAM PFLAG                     Allocated to registers ;size:1
+                                           ;@CLR_RAM ANSEL                     Allocated to registers ;size:1
+                                           ;@CLR_RAM VREF                      Allocated to registers ;size:1
+                                           ;@CLR_RAM ADCR                      Allocated to registers ;size:1
+                                           ;@CLR_RAM ADRH                      Allocated to registers ;size:1
+                                           ;@CLR_RAM ADRL                      Allocated to registers ;size:1
+                                           ;@CLR_RAM OEP0                      Allocated to registers ;size:1
+                                           ;@CLR_RAM PEDGE                     Allocated to registers ;size:1
+                                           ;@CLR_RAM OEP4                      Allocated to registers ;size:1
+                                           ;@CLR_RAM OEP5                      Allocated to registers ;size:1
+                                           ;@CLR_RAM INTF                      Allocated to registers ;size:1
+                                           ;@CLR_RAM INTE                      Allocated to registers ;size:1
+                                           ;@CLR_RAM OSCM                      Allocated to registers ;size:1
+                                           ;@CLR_RAM WDTR                      Allocated to registers ;size:1
+                                           ;@CLR_RAM T0D                       Allocated to registers ;size:1
+                                           ;@CLR_RAM PCL                       Allocated to registers ;size:1
+                                           ;@CLR_RAM PCH                       Allocated to registers ;size:1
+                                           ;@CLR_RAM IOP0                      Allocated to registers ;size:1
+                                           ;@CLR_RAM IOP4                      Allocated to registers ;size:1
+                                           ;@CLR_RAM IOP5                      Allocated to registers ;size:1
+                                           ;@CLR_RAM TXCR                      Allocated to registers ;size:1
+                                           ;@CLR_RAM T0CR                      Allocated to registers ;size:1
+                                           ;@CLR_RAM T0C                       Allocated to registers ;size:1
+                                           ;@CLR_RAM T1CR                      Allocated to registers ;size:1
+                                           ;@CLR_RAM T1C                       Allocated to registers ;size:1
+                                           ;@CLR_RAM T1D                       Allocated to registers ;size:1
+                                           ;@CLR_RAM STKP                      Allocated to registers ;size:1
+                                           ;@CLR_RAM PUP0                      Allocated to registers ;size:1
+                                           ;@CLR_RAM PUP4                      Allocated to registers ;size:1
+                                           ;@CLR_RAM PUP5                      Allocated to registers ;size:1
+                                           ;@CLR_RAM INDF                      Allocated to registers ;size:1
+                                           ;@CLR_RAM T2CR                      Allocated to registers ;size:1
+                                           ;@CLR_RAM T2C                       Allocated to registers ;size:1
+                                           ;@CLR_RAM T2D                       Allocated to registers ;size:1
+                                           ;@CLR_RAM STK3L                     Allocated to registers ;size:1
+                                           ;@CLR_RAM STK3H                     Allocated to registers ;size:1
+                                           ;@CLR_RAM STK2L                     Allocated to registers ;size:1
+                                           ;@CLR_RAM STK2H                     Allocated to registers ;size:1
+                                           ;@CLR_RAM STK1L                     Allocated to registers ;size:1
+                                           ;@CLR_RAM STK1H                     Allocated to registers ;size:1
+                                           ;@CLR_RAM STK0L                     Allocated to registers ;size:1
+                                           ;@CLR_RAM STK0H                     Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'CLR_RAM';
+                                           ;@Allocation info for local variables in function 'IO_Init'
+                                           ;@end Allocation info for local variables in function 'IO_Init';
+                                           ;@Allocation info for local variables in function 'TIMER0_INT_Init'
+                                           ;@end Allocation info for local variables in function 'TIMER0_INT_Init';
+                                           ;@Allocation info for local variables in function 'TIMER1_PWM_Init'
+                                           ;@end Allocation info for local variables in function 'TIMER1_PWM_Init';
+                                           ;@Allocation info for local variables in function 'ADC_Init'
+                                           ;@end Allocation info for local variables in function 'ADC_Init';
+                                           ;@Allocation info for local variables in function 'Sys_Init'
+                                           ;@end Allocation info for local variables in function 'Sys_Init';
+                                           ;@Allocation info for local variables in function 'ADC_Get_Value'
+                                           ;@ADC_Get_Value CHX                       Allocated to registers r0x1015 ;size:1
+                                           ;@ADC_Get_Value ADC_temp_value            Allocated to registers r0x1015 r0x1016 ;size:2
+                                           ;@end Allocation info for local variables in function 'ADC_Get_Value';
+                                           ;@Allocation info for local variables in function 'ADC_Get_Value_Average'
+                                           ;@ADC_Get_Value_Average CHX                       Allocated to registers r0x1005 ;size:1
+                                           ;@ADC_Get_Value_Average channel                   Allocated to registers r0x1005 ;size:1
+                                           ;@ADC_Get_Value_Average tmpBuff                   Allocated to registers r0x1006 r0x1007 r0x1008 r0x1009 ;size:4
+                                           ;@ADC_Get_Value_Average ADCMAX                    Allocated to registers r0x100A r0x100B ;size:2
+                                           ;@ADC_Get_Value_Average ADCMIN                    Allocated to registers r0x100C r0x100D ;size:2
+                                           ;@ADC_Get_Value_Average ADC_temp_value            Allocated to registers r0x100E r0x100F ;size:2
+                                           ;@end Allocation info for local variables in function 'ADC_Get_Value_Average';
+                                           ;@Allocation info for local variables in function 'main'
+                                           ;@end Allocation info for local variables in function 'main';
+                                           ;@Allocation info for local variables in function 'int_isr'
+                                           ;@int_isr count                     Allocated to registers ;size:2
+                                           ;@int_isr time_500ms_falg           Allocated to registers ;size:2
+                                           ;@int_isr iop0                      Allocated to registers r0x101C ;size:1
+                                           ;@end Allocation info for local variables in function 'int_isr';
+                                           ;@Allocation info for local variables in function 'int_isr'
+                                           ;@int_isr count                     Allocated to registers ;size:2
+                                           ;@int_isr time_500ms_falg           Allocated to registers ;size:2
+                                           ;@int_isr iop0                      Allocated to registers r0x101C ;size:1
+                                           ;@end Allocation info for local variables in function 'int_isr';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; reset vector 
+                                           ;--------------------------------------------------------
+                                           STARTUP	code 0x0000
+000000   8030     goto    0x30             	goto	_main
+                                           ;--------------------------------------------------------
+                                           ; interrupt and initialization code
+                                           ;--------------------------------------------------------
+                                           c_interrupt	code	0x8
+                                           __sdcc_interrupt
+                                           ;***
+                                           ;  pBlock Stats: dbName = I
+                                           ;***
+                                           ;entry:  _int_isr	;Function start
+                                           ; 0 exit points
+                                           ;functions called:
+                                           ;   __moduint
+                                           ;   __moduint
+                                           ;5 compiler assigned registers:
+                                           ;   r0x101C
+                                           ;   STK02
+                                           ;   STK01
+                                           ;   STK00
+                                           ;   r0x101D
+                                           ;; Starting pCode block
+                                           _int_isr	;Function start
+                                           ; 0 exit points
+                                           ;	.line	226; "MC32P7031_Demo_C.c"	u8 iop0=IOP0;
+000008   1ed0     movar   0xd0             	MOVAR	_IOP0
+000009   1f1b     movra   0x1b             	MOVRA	r0x101C
+                                           ;	.line	229; "MC32P7031_Demo_C.c"	__endasm;
+00000a   0400     push                     	push
+                                           	
+                                           ;	.line	231; "MC32P7031_Demo_C.c"	if (T0IF && T0IE)//1ms
+00000b   5dc8     jbset   0xc8, 0x5        	JBSET	_INTFbits,5
+00000c   8029     goto    0x29             	GOTO	_00202_DS_
+00000d   5dc9     jbset   0xc9, 0x5        	JBSET	_INTEbits,5
+00000e   8029     goto    0x29             	GOTO	_00202_DS_
+                                           ;	.line	233; "MC32P7031_Demo_C.c"	count++;
+00000f   2d01     movai   0x1              	MOVAI	0x01
+000010   131d     addra   0x1d             	ADDRA	_int_isr_count_1_33
+000011   5086     jbclr   0x86, 0          	JBCLR	PFLAG,0
+000012   131e     addra   0x1e             	ADDRA	(_int_isr_count_1_33 + 1)
+                                           ;	.line	234; "MC32P7031_Demo_C.c"	if(iop0 & 0x02)
+000013   591b     jbset   0x1b, 0x1        	JBSET	r0x101C,1
+000014   8017     goto    0x17             	GOTO	_00197_DS_
+                                           ;	.line	235; "MC32P7031_Demo_C.c"	PIN01_CC1 = 0;
+000015   41d0     bclr    0xd0, 0x1        	BCLR	_IOP0bits,1
+000016   8018     goto    0x18             	GOTO	_00198_DS_
+                                           _00197_DS_
+                                           ;	.line	237; "MC32P7031_Demo_C.c"	PIN01_CC1 = 1;
+000017   49d0     bset    0xd0, 0x1        	BSET	_IOP0bits,1
+                                           _00198_DS_
+                                           ;	.line	239; "MC32P7031_Demo_C.c"	if (0 == count%10) //10ms
+000018   2d0a     movai   0xa              	MOVAI	0x0a
+000019   1f04     movra   0x4              	MOVRA	STK02
+00001a   2d00     movai   0                	MOVAI	0x00
+00001b   1f05     movra   0x5              	MOVRA	STK01
+00001c   1e1d     movar   0x1d             	MOVAR	_int_isr_count_1_33
+00001d   1f06     movra   0x6              	MOVRA	STK00
+00001e   1e1e     movar   0x1e             	MOVAR	(_int_isr_count_1_33 + 1)
+00001f   c162     call    0x162            	CALL	__moduint
+000020   1f1c     movra   0x1c             	MOVRA	r0x101D
+000021   1e06     movar   0x6              	MOVAR	STK00
+000022   1f1b     movra   0x1b             	MOVRA	r0x101C
+000023   1e1b     movar   0x1b             	MOVAR	r0x101C
+000024   181c     orar    0x1c             	ORAR	r0x101D
+000025   5886     jbset   0x86, 0          	JBSET	PFLAG,0
+000026   8028     goto    0x28             	GOTO	_00200_DS_
+                                           ;	.line	241; "MC32P7031_Demo_C.c"	PIN00_CC2 = 1;
+000027   48d0     bset    0xd0, 0          	BSET	_IOP0bits,0
+                                           _00200_DS_
+                                           ;	.line	250; "MC32P7031_Demo_C.c"	T0IF = 0;
+000028   45c8     bclr    0xc8, 0x5        	BCLR	_INTFbits,5
+                                           _00202_DS_
+                                           ;	.line	253; "MC32P7031_Demo_C.c"	if (ADIF && ADIE)
+000029   5fc8     jbset   0xc8, 0x7        	JBSET	_INTFbits,7
+00002a   802e     goto    0x2e             	GOTO	_00205_DS_
+00002b   5fc9     jbset   0xc9, 0x7        	JBSET	_INTEbits,7
+00002c   802e     goto    0x2e             	GOTO	_00205_DS_
+                                           ;	.line	255; "MC32P7031_Demo_C.c"	ADIF = 0;
+00002d   47c8     bclr    0xc8, 0x7        	BCLR	_INTFbits,7
+                                           _00205_DS_
+                                           ;	.line	259; "MC32P7031_Demo_C.c"	__endasm;
+00002e   0500     pop                      	pop
+                                           	
+                                           END_OF_INTERRUPT
+00002f   0f00     retie                    	RETIE	
+                                           
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_MC32P7031_Demo_C	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = M
+                                           ;***
+                                           ;entry:  _main	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _Sys_Init
+                                           ;   _ADC_Get_Value_Average
+                                           ;   _ADC_Get_Value_Average
+                                           ;   _ADC_Get_Value_Average
+                                           ;   _Sys_Init
+                                           ;   _ADC_Get_Value_Average
+                                           ;   _ADC_Get_Value_Average
+                                           ;   _ADC_Get_Value_Average
+                                           ;1 compiler assigned register :
+                                           ;   STK00
+                                           ;; Starting pCode block
+                                           _main	;Function start
+                                           ; 2 exit points
+                                           ;	.line	192; "MC32P7031_Demo_C.c"	Sys_Init();
+000030   c127     call    0x127            	CALL	_Sys_Init
+                                           _00191_DS_
+                                           ;	.line	195; "MC32P7031_Demo_C.c"	ADC_num_value = ADC_Get_Value_Average(0);
+000031   2d00     movai   0                	MOVAI	0x00
+000032   c042     call    0x42             	CALL	_ADC_Get_Value_Average
+000033   1f26     movra   0x26             	MOVRA	(_ADC_num_value + 1)
+000034   1e06     movar   0x6              	MOVAR	STK00
+000035   1f25     movra   0x25             	MOVRA	_ADC_num_value
+                                           ;	.line	196; "MC32P7031_Demo_C.c"	ADC_num_value = ADC_Get_Value_Average(1);
+000036   2d01     movai   0x1              	MOVAI	0x01
+000037   c042     call    0x42             	CALL	_ADC_Get_Value_Average
+000038   1f26     movra   0x26             	MOVRA	(_ADC_num_value + 1)
+000039   1e06     movar   0x6              	MOVAR	STK00
+00003a   1f25     movra   0x25             	MOVRA	_ADC_num_value
+                                           ;	.line	197; "MC32P7031_Demo_C.c"	ADC_num_value = ADC_Get_Value_Average(5); //VDD/4
+00003b   2d05     movai   0x5              	MOVAI	0x05
+00003c   c042     call    0x42             	CALL	_ADC_Get_Value_Average
+00003d   1f26     movra   0x26             	MOVRA	(_ADC_num_value + 1)
+00003e   1e06     movar   0x6              	MOVAR	STK00
+00003f   1f25     movra   0x25             	MOVRA	_ADC_num_value
+000040   8031     goto    0x31             	GOTO	_00191_DS_
+000041   0e00     return                   	RETURN	
+                                           ; exit point of _main
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _ADC_Get_Value_Average	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;17 compiler assigned registers:
+                                           ;   r0x1005
+                                           ;   r0x1006
+                                           ;   r0x1007
+                                           ;   r0x1008
+                                           ;   r0x1009
+                                           ;   r0x100A
+                                           ;   r0x100B
+                                           ;   r0x100C
+                                           ;   r0x100D
+                                           ;   r0x100E
+                                           ;   r0x100F
+                                           ;   r0x1010
+                                           ;   r0x1011
+                                           ;   r0x1012
+                                           ;   r0x1013
+                                           ;   r0x1014
+                                           ;   STK00
+                                           ;; Starting pCode block
+                                           _ADC_Get_Value_Average	;Function start
+                                           ; 2 exit points
+                                           ;	.line	160; "MC32P7031_Demo_C.c"	uint ADC_Get_Value_Average(uchar CHX)
+000042   1f0c     movra   0xc              	MOVRA	r0x1005
+                                           ;	.line	163; "MC32P7031_Demo_C.c"	unsigned long int tmpBuff = 0;
+000043   2b0d     clrr    0xd              	CLRR	r0x1006
+000044   2b0e     clrr    0xe              	CLRR	r0x1007
+000045   2b0f     clrr    0xf              	CLRR	r0x1008
+000046   2b10     clrr    0x10             	CLRR	r0x1009
+                                           ;	.line	164; "MC32P7031_Demo_C.c"	u16 ADCMAX = 0;
+000047   2b11     clrr    0x11             	CLRR	r0x100A
+000048   2b12     clrr    0x12             	CLRR	r0x100B
+                                           ;	.line	165; "MC32P7031_Demo_C.c"	u16 ADCMIN = 0xffff;
+000049   2dff     movai   0xff             	MOVAI	0xff
+00004a   1f13     movra   0x13             	MOVRA	r0x100C
+00004b   1f14     movra   0x14             	MOVRA	r0x100D
+                                           ;	.line	168; "MC32P7031_Demo_C.c"	ADCR = (ADCR & 0xf8) | CHX; // ADC 使能  AD转换通道开启  通道  CHX
+00004c   2df8     movai   0xf8             	MOVAI	0xf8
+00004d   28b1     andar   0xb1             	ANDAR	_ADCR
+00004e   1f15     movra   0x15             	MOVRA	r0x100E
+00004f   1e0c     movar   0xc              	MOVAR	r0x1005
+000050   1815     orar    0x15             	ORAR	r0x100E
+000051   1fb1     movra   0xb1             	MOVRA	_ADCR
+                                           ;	.line	169; "MC32P7031_Demo_C.c"	for (channel = 0; channel < 20; channel++)
+000052   2b0c     clrr    0xc              	CLRR	r0x1005
+                                           ;;unsigned compare: left < lit(0x14=20), size=1
+                                           _00161_DS_
+000053   2d14     movai   0x14             	MOVAI	0x14
+000054   2c0c     xch     0xc              	XCH	r0x1005
+000055   230c     asubra  0xc              	ASUBRA	r0x1005
+000056   2c0c     xch     0xc              	XCH	r0x1005
+000057   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+000058   80ad     goto    0xad             	GOTO	_00164_DS_
+                                           ;;genSkipc:3223: created from rifx:00DE608C
+                                           ;	.line	171; "MC32P7031_Demo_C.c"	ADEOC = 0;
+000059   45b1     bclr    0xb1, 0x5        	BCLR	_ADCRbits,5
+                                           ;	.line	172; "MC32P7031_Demo_C.c"	ADST = 1; // 开始转换
+00005a   4eb1     bset    0xb1, 0x6        	BSET	_ADCRbits,6
+                                           _00152_DS_
+                                           ;	.line	173; "MC32P7031_Demo_C.c"	while (!ADEOC)
+00005b   5db1     jbset   0xb1, 0x5        	JBSET	_ADCRbits,5
+00005c   805b     goto    0x5b             	GOTO	_00152_DS_
+                                           ;	.line	175; "MC32P7031_Demo_C.c"	ADC_temp_value = ADRH;
+00005d   1eb2     movar   0xb2             	MOVAR	_ADRH
+00005e   1f15     movra   0x15             	MOVRA	r0x100E
+00005f   2b16     clrr    0x16             	CLRR	r0x100F
+                                           ;	.line	176; "MC32P7031_Demo_C.c"	ADC_temp_value = ADC_temp_value << 4 | (ADRL & 0x0f);
+000060   1716     swapar  0x16             	SWAPAR	r0x100F
+000061   2af0     andai   0xf0             	ANDAI	0xf0
+000062   1f18     movra   0x18             	MOVRA	r0x1010
+000063   1715     swapar  0x15             	SWAPAR	r0x100E
+000064   1f17     movra   0x17             	MOVRA	r0x1011
+000065   2a0f     andai   0xf              	ANDAI	0x0f
+000066   1918     orra    0x18             	ORRA	r0x1010
+000067   1c17     xorra   0x17             	XORRA	r0x1011
+000068   2d0f     movai   0xf              	MOVAI	0x0f
+000069   28b3     andar   0xb3             	ANDAR	_ADRL
+00006a   1f1a     movra   0x1a             	MOVRA	r0x1013
+00006b   1f19     movra   0x19             	MOVRA	r0x1012
+                                           ;;112	MOVAR	r0x1012
+                                           ;;1	CLRR	r0x1014
+00006c   1e1a     movar   0x1a             	MOVAR	r0x1013
+00006d   1817     orar    0x17             	ORAR	r0x1011
+00006e   1f15     movra   0x15             	MOVRA	r0x100E
+00006f   2d00     movai   0                	MOVAI	0x00
+000070   1818     orar    0x18             	ORAR	r0x1010
+000071   1f16     movra   0x16             	MOVRA	r0x100F
+                                           ;;unsigned compare: left < lit(0x2=2), size=1
+                                           ;	.line	177; "MC32P7031_Demo_C.c"	if (channel < 2)
+000072   2d02     movai   0x2              	MOVAI	0x02
+000073   2c0c     xch     0xc              	XCH	r0x1005
+000074   230c     asubra  0xc              	ASUBRA	r0x1005
+000075   2c0c     xch     0xc              	XCH	r0x1005
+000076   5a86     jbset   0x86, 0x2        	JBSET	PFLAG,2
+000077   80aa     goto    0xaa             	GOTO	_00163_DS_
+                                           ;;genSkipc:3223: created from rifx:00DE608C
+                                           ;	.line	179; "MC32P7031_Demo_C.c"	if (ADC_temp_value > ADCMAX)
+000078   1e16     movar   0x16             	MOVAR	r0x100F
+000079   2c12     xch     0x12             	XCH	r0x100B
+00007a   2312     asubra  0x12             	ASUBRA	r0x100B
+00007b   2c12     xch     0x12             	XCH	r0x100B
+00007c   5886     jbset   0x86, 0          	JBSET	PFLAG,0
+00007d   8082     goto    0x82             	GOTO	_00184_DS_
+00007e   1e15     movar   0x15             	MOVAR	r0x100E
+00007f   2c11     xch     0x11             	XCH	r0x100A
+000080   2311     asubra  0x11             	ASUBRA	r0x100A
+000081   2c11     xch     0x11             	XCH	r0x100A
+                                           _00184_DS_
+000082   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+000083   8088     goto    0x88             	GOTO	_00158_DS_
+                                           ;;genSkipc:3223: created from rifx:00DE608C
+                                           ;	.line	180; "MC32P7031_Demo_C.c"	ADCMAX = ADC_temp_value; //最大
+000084   1e15     movar   0x15             	MOVAR	r0x100E
+000085   1f11     movra   0x11             	MOVRA	r0x100A
+000086   1e16     movar   0x16             	MOVAR	r0x100F
+000087   1f12     movra   0x12             	MOVRA	r0x100B
+                                           _00158_DS_
+                                           ;	.line	181; "MC32P7031_Demo_C.c"	if (ADC_temp_value < ADCMIN)
+000088   1e14     movar   0x14             	MOVAR	r0x100D
+000089   2c16     xch     0x16             	XCH	r0x100F
+00008a   2316     asubra  0x16             	ASUBRA	r0x100F
+00008b   2c16     xch     0x16             	XCH	r0x100F
+00008c   5886     jbset   0x86, 0          	JBSET	PFLAG,0
+00008d   8092     goto    0x92             	GOTO	_00185_DS_
+00008e   1e13     movar   0x13             	MOVAR	r0x100C
+00008f   2c15     xch     0x15             	XCH	r0x100E
+000090   2315     asubra  0x15             	ASUBRA	r0x100E
+000091   2c15     xch     0x15             	XCH	r0x100E
+                                           _00185_DS_
+000092   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+000093   8098     goto    0x98             	GOTO	_00160_DS_
+                                           ;;genSkipc:3223: created from rifx:00DE608C
+                                           ;	.line	182; "MC32P7031_Demo_C.c"	ADCMIN = ADC_temp_value; //最小
+000094   1e15     movar   0x15             	MOVAR	r0x100E
+000095   1f13     movra   0x13             	MOVRA	r0x100C
+000096   1e16     movar   0x16             	MOVAR	r0x100F
+000097   1f14     movra   0x14             	MOVRA	r0x100D
+                                           ;;116	MOVAR	r0x100E
+                                           ;;111	MOVAR	r0x100F
+                                           _00160_DS_
+                                           ;	.line	183; "MC32P7031_Demo_C.c"	tmpBuff += ADC_temp_value;
+000098   2b19     clrr    0x19             	CLRR	r0x1012
+000099   2b1a     clrr    0x1a             	CLRR	r0x1013
+                                           ;;115	MOVAR	r0x1011
+00009a   1e15     movar   0x15             	MOVAR	r0x100E
+00009b   1f17     movra   0x17             	MOVRA	r0x1011
+00009c   130d     addra   0xd              	ADDRA	r0x1006
+                                           ;;110	MOVAR	r0x1010
+00009d   1e16     movar   0x16             	MOVAR	r0x100F
+00009e   1f18     movra   0x18             	MOVRA	r0x1010
+00009f   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+0000a0   1518     jzar    0x18             	JZAR	r0x1010
+0000a1   130e     addra   0xe              	ADDRA	r0x1007
+0000a2   1e19     movar   0x19             	MOVAR	r0x1012
+0000a3   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+0000a4   1519     jzar    0x19             	JZAR	r0x1012
+0000a5   130f     addra   0xf              	ADDRA	r0x1008
+0000a6   1e1a     movar   0x1a             	MOVAR	r0x1013
+0000a7   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+0000a8   151a     jzar    0x1a             	JZAR	r0x1013
+0000a9   1310     addra   0x10             	ADDRA	r0x1009
+                                           _00163_DS_
+                                           ;	.line	169; "MC32P7031_Demo_C.c"	for (channel = 0; channel < 20; channel++)
+0000aa   2d01     movai   0x1              	MOVAI	0x01
+0000ab   130c     addra   0xc              	ADDRA	r0x1005
+0000ac   8053     goto    0x53             	GOTO	_00161_DS_
+                                           ;;114	MOVAR	r0x100A
+                                           ;;109	MOVAR	r0x100B
+                                           _00164_DS_
+                                           ;	.line	185; "MC32P7031_Demo_C.c"	tmpBuff -= ADCMAX; 	   	   	   	 //去掉一个最大
+0000ad   2b18     clrr    0x18             	CLRR	r0x1010
+0000ae   2b19     clrr    0x19             	CLRR	r0x1012
+                                           ;;113	MOVAR	r0x1005
+0000af   1e11     movar   0x11             	MOVAR	r0x100A
+0000b0   1f0c     movra   0xc              	MOVRA	r0x1005
+0000b1   2c0d     xch     0xd              	XCH	r0x1006
+0000b2   220d     asubar  0xd              	ASUBAR	r0x1006
+0000b3   2c0d     xch     0xd              	XCH	r0x1006
+                                           ;;108	MOVAR	r0x1011
+0000b4   1e12     movar   0x12             	MOVAR	r0x100B
+0000b5   1f17     movra   0x17             	MOVRA	r0x1011
+0000b6   2c0e     xch     0xe              	XCH	r0x1007
+0000b7   5a86     jbset   0x86, 0x2        	JBSET	PFLAG,2
+0000b8   160e     jzr     0xe              	JZR	r0x1007
+0000b9   220e     asubar  0xe              	ASUBAR	r0x1007
+0000ba   2c0e     xch     0xe              	XCH	r0x1007
+0000bb   1e18     movar   0x18             	MOVAR	r0x1010
+0000bc   2c0f     xch     0xf              	XCH	r0x1008
+0000bd   5a86     jbset   0x86, 0x2        	JBSET	PFLAG,2
+0000be   160f     jzr     0xf              	JZR	r0x1008
+0000bf   220f     asubar  0xf              	ASUBAR	r0x1008
+0000c0   2c0f     xch     0xf              	XCH	r0x1008
+0000c1   1e19     movar   0x19             	MOVAR	r0x1012
+0000c2   2c10     xch     0x10             	XCH	r0x1009
+0000c3   5a86     jbset   0x86, 0x2        	JBSET	PFLAG,2
+0000c4   1610     jzr     0x10             	JZR	r0x1009
+0000c5   2210     asubar  0x10             	ASUBAR	r0x1009
+0000c6   2c10     xch     0x10             	XCH	r0x1009
+                                           ;;101	MOVAR	r0x100C
+                                           ;;103	MOVAR	r0x100D
+                                           ;	.line	186; "MC32P7031_Demo_C.c"	tmpBuff -= ADCMIN; 	   	   	   	 //去掉一个最小
+0000c7   2b12     clrr    0x12             	CLRR	r0x100B
+0000c8   2b17     clrr    0x17             	CLRR	r0x1011
+                                           ;;100	MOVAR	r0x1005
+0000c9   1e13     movar   0x13             	MOVAR	r0x100C
+0000ca   1f0c     movra   0xc              	MOVRA	r0x1005
+0000cb   2c0d     xch     0xd              	XCH	r0x1006
+0000cc   220d     asubar  0xd              	ASUBAR	r0x1006
+0000cd   2c0d     xch     0xd              	XCH	r0x1006
+                                           ;;102	MOVAR	r0x100A
+0000ce   1e14     movar   0x14             	MOVAR	r0x100D
+0000cf   1f11     movra   0x11             	MOVRA	r0x100A
+0000d0   2c0e     xch     0xe              	XCH	r0x1007
+0000d1   5a86     jbset   0x86, 0x2        	JBSET	PFLAG,2
+0000d2   160e     jzr     0xe              	JZR	r0x1007
+0000d3   220e     asubar  0xe              	ASUBAR	r0x1007
+0000d4   2c0e     xch     0xe              	XCH	r0x1007
+0000d5   1e12     movar   0x12             	MOVAR	r0x100B
+0000d6   2c0f     xch     0xf              	XCH	r0x1008
+0000d7   5a86     jbset   0x86, 0x2        	JBSET	PFLAG,2
+0000d8   160f     jzr     0xf              	JZR	r0x1008
+0000d9   220f     asubar  0xf              	ASUBAR	r0x1008
+0000da   2c0f     xch     0xf              	XCH	r0x1008
+0000db   1e17     movar   0x17             	MOVAR	r0x1011
+0000dc   2c10     xch     0x10             	XCH	r0x1009
+0000dd   5a86     jbset   0x86, 0x2        	JBSET	PFLAG,2
+0000de   1610     jzr     0x10             	JZR	r0x1009
+0000df   2210     asubar  0x10             	ASUBAR	r0x1009
+0000e0   2c10     xch     0x10             	XCH	r0x1009
+                                           ;	.line	187; "MC32P7031_Demo_C.c"	ADC_temp_value = (tmpBuff >> 4); //除以16，取平均值
+0000e1   170d     swapar  0xd              	SWAPAR	r0x1006
+0000e2   2a0f     andai   0xf              	ANDAI	0x0f
+0000e3   1f0c     movra   0xc              	MOVRA	r0x1005
+0000e4   170e     swapar  0xe              	SWAPAR	r0x1007
+0000e5   1f11     movra   0x11             	MOVRA	r0x100A
+0000e6   2af0     andai   0xf0             	ANDAI	0xf0
+0000e7   190c     orra    0xc              	ORRA	r0x1005
+0000e8   1c11     xorra   0x11             	XORRA	r0x100A
+0000e9   170f     swapar  0xf              	SWAPAR	r0x1008
+0000ea   1f12     movra   0x12             	MOVRA	r0x100B
+0000eb   2af0     andai   0xf0             	ANDAI	0xf0
+0000ec   1911     orra    0x11             	ORRA	r0x100A
+0000ed   1c12     xorra   0x12             	XORRA	r0x100B
+0000ee   1710     swapar  0x10             	SWAPAR	r0x1009
+0000ef   1f13     movra   0x13             	MOVRA	r0x100C
+0000f0   2af0     andai   0xf0             	ANDAI	0xf0
+0000f1   1912     orra    0x12             	ORRA	r0x100B
+0000f2   1c13     xorra   0x13             	XORRA	r0x100C
+                                           ;;105	MOVAR	r0x1005
+                                           ;;107	MOVAR	r0x100A
+                                           ;;104	MOVAR	r0x100E
+                                           ;	.line	188; "MC32P7031_Demo_C.c"	return ADC_temp_value;
+0000f3   1e0c     movar   0xc              	MOVAR	r0x1005
+0000f4   1f15     movra   0x15             	MOVRA	r0x100E
+0000f5   1f06     movra   0x6              	MOVRA	STK00
+                                           ;;106	MOVAR	r0x100F
+0000f6   1e11     movar   0x11             	MOVAR	r0x100A
+0000f7   1f16     movra   0x16             	MOVRA	r0x100F
+0000f8   0e00     return                   	RETURN	
+                                           ; exit point of _ADC_Get_Value_Average
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _ADC_Get_Value	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;8 compiler assigned registers:
+                                           ;   r0x1015
+                                           ;   r0x1016
+                                           ;   r0x1017
+                                           ;   r0x1018
+                                           ;   r0x1019
+                                           ;   r0x101A
+                                           ;   r0x101B
+                                           ;   STK00
+                                           ;; Starting pCode block
+                                           _ADC_Get_Value	;Function start
+                                           ; 2 exit points
+                                           ;	.line	129; "MC32P7031_Demo_C.c"	uint ADC_Get_Value(uchar CHX)
+0000f9   1f07     movra   0x7              	MOVRA	r0x1015
+                                           ;	.line	133; "MC32P7031_Demo_C.c"	ADCR = (ADCR & 0xf8) | CHX; // ADC 使能  AD转换通道开启  通道  CHX
+0000fa   2df8     movai   0xf8             	MOVAI	0xf8
+0000fb   28b1     andar   0xb1             	ANDAR	_ADCR
+0000fc   1f08     movra   0x8              	MOVRA	r0x1016
+0000fd   1e07     movar   0x7              	MOVAR	r0x1015
+0000fe   1808     orar    0x8              	ORAR	r0x1016
+0000ff   1fb1     movra   0xb1             	MOVRA	_ADCR
+                                           ;	.line	135; "MC32P7031_Demo_C.c"	if (changl_Num != CHX) //通道切换了  舍去
+000100   1e07     movar   0x7              	MOVAR	r0x1015
+000101   1b29     xorar   0x29             	XORAR	_changl_Num
+000102   5886     jbset   0x86, 0          	JBSET	PFLAG,0
+000103   8105     goto    0x105            	GOTO	_00147_DS_
+000104   810b     goto    0x10b            	GOTO	_00133_DS_
+                                           _00147_DS_
+                                           ;	.line	137; "MC32P7031_Demo_C.c"	changl_Num = CHX;
+000105   1e07     movar   0x7              	MOVAR	r0x1015
+000106   1f29     movra   0x29             	MOVRA	_changl_Num
+                                           ;	.line	138; "MC32P7031_Demo_C.c"	ADEOC = 0;
+000107   45b1     bclr    0xb1, 0x5        	BCLR	_ADCRbits,5
+                                           ;	.line	139; "MC32P7031_Demo_C.c"	ADST = 1; // 开始转换
+000108   4eb1     bset    0xb1, 0x6        	BSET	_ADCRbits,6
+                                           _00129_DS_
+                                           ;	.line	140; "MC32P7031_Demo_C.c"	while (ADEOC == 0)
+000109   5db1     jbset   0xb1, 0x5        	JBSET	_ADCRbits,5
+00010a   8109     goto    0x109            	GOTO	_00129_DS_
+                                           _00133_DS_
+                                           ;	.line	144; "MC32P7031_Demo_C.c"	ADEOC = 0;
+00010b   45b1     bclr    0xb1, 0x5        	BCLR	_ADCRbits,5
+                                           ;	.line	145; "MC32P7031_Demo_C.c"	ADST = 1; // 开始转换
+00010c   4eb1     bset    0xb1, 0x6        	BSET	_ADCRbits,6
+                                           _00134_DS_
+                                           ;	.line	146; "MC32P7031_Demo_C.c"	while (ADEOC == 0)
+00010d   5db1     jbset   0xb1, 0x5        	JBSET	_ADCRbits,5
+00010e   810d     goto    0x10d            	GOTO	_00134_DS_
+                                           ;	.line	149; "MC32P7031_Demo_C.c"	ADC_temp_value = ADRH;
+00010f   1eb2     movar   0xb2             	MOVAR	_ADRH
+000110   1f07     movra   0x7              	MOVRA	r0x1015
+000111   2b08     clrr    0x8              	CLRR	r0x1016
+                                           ;	.line	150; "MC32P7031_Demo_C.c"	ADC_temp_value = ADC_temp_value << 4 | (ADRL & 0x0f);
+000112   1708     swapar  0x8              	SWAPAR	r0x1016
+000113   2af0     andai   0xf0             	ANDAI	0xf0
+000114   1f0a     movra   0xa              	MOVRA	r0x1017
+000115   1707     swapar  0x7              	SWAPAR	r0x1015
+000116   1f09     movra   0x9              	MOVRA	r0x1018
+000117   2a0f     andai   0xf              	ANDAI	0x0f
+000118   190a     orra    0xa              	ORRA	r0x1017
+000119   1c09     xorra   0x9              	XORRA	r0x1018
+00011a   2d0f     movai   0xf              	MOVAI	0x0f
+00011b   28b3     andar   0xb3             	ANDAR	_ADRL
+00011c   1f0b     movra   0xb              	MOVRA	r0x101A
+                                           ;;1	MOVRA	r0x1019
+                                           ;;99	MOVAR	r0x1019
+                                           ;;1	CLRR	r0x101B
+00011d   1e0b     movar   0xb              	MOVAR	r0x101A
+00011e   1809     orar    0x9              	ORAR	r0x1018
+00011f   1f07     movra   0x7              	MOVRA	r0x1015
+000120   2d00     movai   0                	MOVAI	0x00
+000121   180a     orar    0xa              	ORAR	r0x1017
+000122   1f08     movra   0x8              	MOVRA	r0x1016
+                                           ;	.line	152; "MC32P7031_Demo_C.c"	return ADC_temp_value; // 获得ADC转换的数据
+000123   1e07     movar   0x7              	MOVAR	r0x1015
+000124   1f06     movra   0x6              	MOVRA	STK00
+000125   1e08     movar   0x8              	MOVAR	r0x1016
+000126   0e00     return                   	RETURN	
+                                           ; exit point of _ADC_Get_Value
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _Sys_Init	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _CLR_RAM
+                                           ;   _IO_Init
+                                           ;   _TIMER0_INT_Init
+                                           ;   _TIMER1_PWM_Init
+                                           ;   _ADC_Init
+                                           ;   _CLR_RAM
+                                           ;   _IO_Init
+                                           ;   _TIMER0_INT_Init
+                                           ;   _TIMER1_PWM_Init
+                                           ;   _ADC_Init
+                                           ;; Starting pCode block
+                                           _Sys_Init	;Function start
+                                           ; 2 exit points
+                                           ;	.line	115; "MC32P7031_Demo_C.c"	GIE = 0;
+000127   47df     bclr    0xdf, 0x7        	BCLR	_STKPbits,7
+                                           ;	.line	116; "MC32P7031_Demo_C.c"	CLR_RAM();
+000128   c15a     call    0x15a            	CALL	_CLR_RAM
+                                           ;	.line	117; "MC32P7031_Demo_C.c"	IO_Init();
+000129   c14b     call    0x14b            	CALL	_IO_Init
+                                           ;	.line	118; "MC32P7031_Demo_C.c"	TIMER0_INT_Init();
+00012a   c140     call    0x140            	CALL	_TIMER0_INT_Init
+                                           ;	.line	119; "MC32P7031_Demo_C.c"	TIMER1_PWM_Init();
+00012b   c139     call    0x139            	CALL	_TIMER1_PWM_Init
+                                           ;	.line	120; "MC32P7031_Demo_C.c"	ADC_Init();
+00012c   c12f     call    0x12f            	CALL	_ADC_Init
+                                           ;	.line	121; "MC32P7031_Demo_C.c"	GIE = 1;
+00012d   4fdf     bset    0xdf, 0x7        	BSET	_STKPbits,7
+00012e   0e00     return                   	RETURN	
+                                           ; exit point of _Sys_Init
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _ADC_Init	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _ADC_Init	;Function start
+                                           ; 2 exit points
+                                           ;	.line	100; "MC32P7031_Demo_C.c"	ANSEL |= 0x03; //P40 1  模拟输入  1 模拟输入  0  IO口
+00012f   2d03     movai   0x3              	MOVAI	0x03
+000130   19ae     orra    0xae             	ORRA	_ANSEL
+                                           ;	.line	101; "MC32P7031_Demo_C.c"	ADCR &= 0x00;
+000131   2bb1     clrr    0xb1             	CLRR	_ADCR
+                                           ;	.line	102; "MC32P7031_Demo_C.c"	ADCR |= 0x90;
+000132   2d90     movai   0x90             	MOVAI	0x90
+000133   19b1     orra    0xb1             	ORRA	_ADCR
+                                           ;	.line	103; "MC32P7031_Demo_C.c"	VREF = 0x00; //设置内部参考电压 为2.0V
+000134   2baf     clrr    0xaf             	CLRR	_VREF
+                                           ;	.line	104; "MC32P7031_Demo_C.c"	ADRL &= 0x80;
+000135   2d80     movai   0x80             	MOVAI	0x80
+000136   29b3     andra   0xb3             	ANDRA	_ADRL
+                                           ;	.line	105; "MC32P7031_Demo_C.c"	ADRL |= 0x20; //adc时钟  Fcpu/16
+000137   4db3     bset    0xb3, 0x5        	BSET	_ADRL,5
+000138   0e00     return                   	RETURN	
+                                           ; exit point of _ADC_Init
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _TIMER1_PWM_Init	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _TIMER1_PWM_Init	;Function start
+                                           ; 2 exit points
+                                           ;	.line	88; "MC32P7031_Demo_C.c"	T1CR = 0xF1;
+000139   2df1     movai   0xf1             	MOVAI	0xf1
+00013a   1fdc     movra   0xdc             	MOVRA	_T1CR
+                                           ;	.line	89; "MC32P7031_Demo_C.c"	T1C = 200;
+00013b   2dc8     movai   0xc8             	MOVAI	0xc8
+00013c   1fdd     movra   0xdd             	MOVRA	_T1C
+                                           ;	.line	90; "MC32P7031_Demo_C.c"	T1D = 127;
+00013d   2d7f     movai   0x7f             	MOVAI	0x7f
+00013e   1fde     movra   0xde             	MOVRA	_T1D
+00013f   0e00     return                   	RETURN	
+                                           ; exit point of _TIMER1_PWM_Init
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _TIMER0_INT_Init	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _TIMER0_INT_Init	;Function start
+                                           ; 2 exit points
+                                           ;	.line	72; "MC32P7031_Demo_C.c"	TXCR = 0x08; //T0时钟 T0 T2 Fcpu  T1 Fhosc 禁止T0唤醒
+000140   2d08     movai   0x8              	MOVAI	0x08
+000141   1fd8     movra   0xd8             	MOVRA	_TXCR
+                                           ;	.line	74; "MC32P7031_Demo_C.c"	T0CR = 0xD4; //内部 8分频  允许自动重载
+000142   2dd4     movai   0xd4             	MOVAI	0xd4
+000143   1fda     movra   0xda             	MOVRA	_T0CR
+                                           ;	.line	75; "MC32P7031_Demo_C.c"	T0C = 256 - 125;
+000144   2d83     movai   0x83             	MOVAI	0x83
+000145   1fdb     movra   0xdb             	MOVRA	_T0C
+                                           ;	.line	76; "MC32P7031_Demo_C.c"	T0D = 256 - 125; //1ms
+000146   2d83     movai   0x83             	MOVAI	0x83
+000147   1fcd     movra   0xcd             	MOVRA	_T0D
+                                           ;	.line	77; "MC32P7031_Demo_C.c"	T0IF = 0;
+000148   45c8     bclr    0xc8, 0x5        	BCLR	_INTFbits,5
+                                           ;	.line	78; "MC32P7031_Demo_C.c"	T0IE = 1;
+000149   4dc9     bset    0xc9, 0x5        	BSET	_INTEbits,5
+00014a   0e00     return                   	RETURN	
+                                           ; exit point of _TIMER0_INT_Init
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _IO_Init	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _IO_Init	;Function start
+                                           ; 2 exit points
+                                           ;	.line	51; "MC32P7031_Demo_C.c"	IOP0 = 0x00; //io口数据位
+00014b   2bd0     clrr    0xd0             	CLRR	_IOP0
+                                           ;	.line	52; "MC32P7031_Demo_C.c"	OEP0 = 0xfE; //io口方向 1:out  0:in
+00014c   2dfe     movai   0xfe             	MOVAI	0xfe
+00014d   1fb8     movra   0xb8             	MOVRA	_OEP0
+                                           ;	.line	53; "MC32P7031_Demo_C.c"	PUP0 = 0x01; //io口上拉电阻   1:enable  0:disable
+00014e   2d01     movai   0x1              	MOVAI	0x01
+00014f   1fe0     movra   0xe0             	MOVRA	_PUP0
+                                           ;	.line	55; "MC32P7031_Demo_C.c"	IOP4 = 0x00;  //io口数据位
+000150   2bd4     clrr    0xd4             	CLRR	_IOP4
+                                           ;	.line	56; "MC32P7031_Demo_C.c"	OEP4 = 0xfC;  //io口方向 1:out  0:in      	P40  41in
+000151   2dfc     movai   0xfc             	MOVAI	0xfc
+000152   1fc4     movra   0xc4             	MOVRA	_OEP4
+                                           ;	.line	57; "MC32P7031_Demo_C.c"	PUP4 = 0x00;  //io口上拉电阻   1:enable  0:disable
+000153   2be4     clrr    0xe4             	CLRR	_PUP4
+                                           ;	.line	58; "MC32P7031_Demo_C.c"	ANSEL = 0x00; //io类型选择  1:模拟输入  0:通用io
+000154   2bae     clrr    0xae             	CLRR	_ANSEL
+                                           ;	.line	60; "MC32P7031_Demo_C.c"	IOP5 = 0x00; //io口数据位
+000155   2bd5     clrr    0xd5             	CLRR	_IOP5
+                                           ;	.line	61; "MC32P7031_Demo_C.c"	OEP5 = 0xff; //io口方向 1:out  0:in
+000156   2dff     movai   0xff             	MOVAI	0xff
+000157   1fc5     movra   0xc5             	MOVRA	_OEP5
+                                           ;	.line	62; "MC32P7031_Demo_C.c"	PUP5 = 0x00; //io口上拉电阻   1:enable  0:disable
+000158   2be5     clrr    0xe5             	CLRR	_PUP5
+000159   0e00     return                   	RETURN	
+                                           ; exit point of _IO_Init
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _CLR_RAM	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _CLR_RAM	;Function start
+                                           ; 2 exit points
+                                           ;	.line	41; "MC32P7031_Demo_C.c"	__endasm;
+00015a   2d7f     movai   0x7f             	movai 0x7F
+00015b   1f83     movra   0x83             	movra FSR0
+00015c   2b84     clrr    0x84             	clrr FSR1
+00015d   2be7     clrr    0xe7             	clrr INDF
+00015e   2683     djzr    0x83             	DJZR FSR0
+00015f   815d     goto    0x15d            	goto $ -2
+000160   2be7     clrr    0xe7             	clrr INDF
+                                           	
+000161   0e00     return                   	RETURN	
+                                           ; exit point of _CLR_RAM
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	  337+    0 =   337 instructions (  674 byte)
+                                           
+                                           	end
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XX-------------- XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0100 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0140 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0180 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+01C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0200 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0240 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0280 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+02C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0300 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0340 : XXXX------------ ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:   411
+

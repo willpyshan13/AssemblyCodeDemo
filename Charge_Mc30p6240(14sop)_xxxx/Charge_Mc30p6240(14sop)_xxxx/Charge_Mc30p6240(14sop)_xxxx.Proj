@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project MCU="MC30P6240" ID="0x6240" MCU_Type="RISC" Date="2012-08-28" VS="1.01">
+  <ProWindows>
+    <Explorer fName="Charge_Mc30p6240(14sop)_xxxx">
+      <SouceCode fName="SourceCode">
+        <asmFile fName="Charge_Mc30p6240(14sop)_xxxx.asm" fPath="\Charge_Mc30p6240(14sop)_xxxx.asm" />
+      </SouceCode>
+      <SouceCode fName="Output" />
+      <SouceCode fName="Debug" />
+    </Explorer>
+  </ProWindows>
+  <Option Value="85" Value0="10" Value1="f06" Value2="0" Value3="f08" Value4="cc" Value5="" Value6="" Value7="" Value8="" Value9="" Value10="" />
+  <Compiler Name="gpasm.exe" />
+  <Language Name="ASM" />
+</Project>

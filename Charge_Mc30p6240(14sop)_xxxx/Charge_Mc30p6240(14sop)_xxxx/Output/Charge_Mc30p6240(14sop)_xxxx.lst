@@ -1,0 +1,604 @@
+gplink-2.2.15 (Dec 17 2019)
+Listing File Generated: 2020-6-30  15:50:11
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           INCLUDE MC30P6240.INC
+                                           		LIST
+                                           ;mc30p6240.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;LED DIM CONTROL FOR HONGYUAN
+                                           ;EDITED BY COSTA 2020-06-24
+                                           ;14SOP
+                                           ;FSYS:8M/2
+                                           ;=======================================
+                                           ;BYTE DEFINE SECTION
+                                           #DEFINE FLAGBUF	   	0x10
+                                           #DEFINE ACCBUF 	   	0x11
+                                           #DEFINE TMP0   	   	0X12
+                                           #DEFINE FLAG0  	   	0X13
+                                           #DEFINE F_K_RND	   	FLAG0,0
+                                           #DEFINE F_T1   	   	FLAG0,1
+                                           #DEFINE F_T2   	   	FLAG0,2
+                                           #DEFINE F_T3   	   	FLAG0,3
+                                           #DEFINE F_WK0  	   	FLAG0,5	   	;手电筒工作
+                                           #DEFINE F_WK1  	   	FLAG0,6	   	;红外灯工作
+                                           #DEFINE F_WK2  	   	FLAG0,7	   	;外部开关工作
+                                           #DEFINE KFLAG  	   	0X14
+                                           #DEFINE F_PR1  	   	KFLAG,0
+                                           #DEFINE F_PR2  	   	KFLAG,1
+                                           #DEFINE F_PR3  	   	KFLAG,2
+                                           #DEFINE F_PRS  	   	KFLAG,3
+                                           #DEFINE F_H1   	   	KFLAG,4
+                                           #DEFINE F_H2   	   	KFLAG,5
+                                           #DEFINE F_PRESSED  	KFLAG,6
+                                           #DEFINE F_HOLD 	   	KFLAG,7
+                                           
+                                           #DEFINE DEBOUNCE   	0X15
+                                           #DEFINE HOLD_CNT   	0X16
+                                           #DEFINE HALT_CNT   	0X17
+                                           #DEFINE KEYIN  	   	0X18
+                                           #DEFINE KEYOLD 	   	0X19
+                                           #DEFINE FLAG1  	   	0X1A
+                                           #DEFINE F_ACTED	   	FLAG1,0
+                                           #DEFINE	F_NO_WK	   	FLAG1,1
+                                           #DEFINE F_WK1_1	   	FLAG1,2
+                                           #DEFINE F_UP   	   	FLAG1,3
+                                           #DEFINE	F_INC_EN   	FLAG1,4
+                                           #DEFINE STG1   	   	0X1B
+                                           #DEFINE	STG2   	   	0X1C
+                                           #DEFINE	STG3   	   	0X1D
+                                           #DEFINE DLY1   	   	0X1E
+                                           #DEFINE DLY2   	   	0X1F
+                                           #DEFINE	CNT50MS	   	0X20
+                                           #DEFINE TM_CNT 	   	0X21
+                                           #DEFINE DUTY_BK	   	0X22
+                                           #DEFINE KEY_CNT	   	0X23
+                                           
+                                           ;=======================================
+                                           ;PORT DEFINE SECTION
+                                           #DEFINE	P_PSW3 	   	P00D
+                                           #DEFINE	P_KLED 	   	P01D
+                                           #DEFINE	P_SLED 	   	P02D
+                                           #DEFINE	P_RLED 	   	P03D
+                                           #DEFINE	P_PWMC 	   	P10D
+                                           #DEFINE	P_PWMB 	   	P11D
+                                           #DEFINE	P_PWMA 	   	P12D
+                                           #DEFINE	P_KYR  	   	P13D
+                                           #DEFINE	P_KYS  	   	P14D
+                                           #DEFINE	P_KYK  	   	P15D
+                                           
+                                           
+                                           
+                                           ;=======================================
+                                              	   	   	   	ORG     0x00       	   	;起始地址
+000000   000e     clrwdt                      	   	   	   	CLRWDT
+000001   1d8e     clrr    0xe                 	   	   	   	CLRR   	INTE
+000002   1d8f     clrr    0xf                 	   	   	   	CLRR   	INTF
+000003   1dc4     clrr    0x44                	   	   	   	CLRR   	INTF1
+000004   282d     goto    0x2d                        	   	GOTO    PWON_Start     	   	;调到程序运行
+                                                   
+                                                  	   	   	ORG    	0x08   	   	;进入中断地址
+000008   1591     movra   0x11                	   	   	   	MOVRA  	ACCBUF
+000009   1603     movar   0x3                 	   	   	   	MOVAR  	STATUS
+00000a   1590     movra   0x10                	   	   	   	MOVRA  	FLAGBUF
+00000b   300f     jbset   0xf, 0              	   	   	   	JBSET  	T0IF
+00000c   2828     goto    0x28                	   	   	   	GOTO   	INT_EXIT
+00000d   3c0f     bclr    0xf, 0              	   	   	   	BCLR   	T0IF   	;EVERY (64/4M)*256=4096US
+00000e   3a1a     bset    0x1a, 0x4           	   	   	   	BSET   	F_INC_EN
+00000f   19a3     incr    0x23                	   	   	   	INCR   	KEY_CNT
+000010   0b04     movai   0x4                 	   	   	   	MOVAI  	4
+000011   1223     rsubar  0x23                	   	   	   	RSUBAR 	KEY_CNT
+000012   3003     jbset   0x3, 0              	   	   	   	JBSET  	C
+000013   2828     goto    0x28                	   	   	   	GOTO   	INT_EXIT
+000014   1da3     clrr    0x23                	   	   	   	CLRR   	KEY_CNT
+000015   3813     bset    0x13, 0             	   	   	   	BSET   	F_K_RND
+000016   1617     movar   0x17                	   	   	   	MOVAR  	HALT_CNT
+000017   0800     xorai   0                   	   	   	   	XORAI  	0
+000018   3103     jbset   0x3, 0x2            	   	   	   	JBSET  	Z
+000019   1b97     decr    0x17                	   	   	   	DECR   	HALT_CNT
+00001a   19a0     incr    0x20                	   	   	   	INCR   	CNT50MS
+00001b   0b03     movai   0x3                 	   	   	   	MOVAI  	3
+00001c   1220     rsubar  0x20                	   	   	   	RSUBAR 	CNT50MS
+00001d   3003     jbset   0x3, 0              	   	   	   	JBSET  	C
+00001e   2828     goto    0x28                	   	   	   	GOTO   	INT_EXIT
+00001f   1da0     clrr    0x20                	   	   	   	CLRR   	CNT50MS
+000020   161e     movar   0x1e                	   	   	   	MOVAR  	DLY1
+000021   0800     xorai   0                   	   	   	   	XORAI  	0
+000022   3103     jbset   0x3, 0x2            	   	   	   	JBSET  	Z
+000023   1b9e     decr    0x1e                	   	   	   	DECR   	DLY1
+000024   161f     movar   0x1f                	   	   	   	MOVAR  	DLY2
+000025   0800     xorai   0                   	   	   	   	XORAI  	0
+000026   3103     jbset   0x3, 0x2            	   	   	   	JBSET  	Z
+000027   1b9f     decr    0x1f                	   	   	   	DECR   	DLY2
+                                           INT_EXIT:
+000028   1d8f     clrr    0xf                 	   	   	   	CLRR   	INTF
+000029   1610     movar   0x10                	   	   	   	MOVAR  	FLAGBUF
+00002a   1583     movra   0x3                 	   	   	   	MOVRA  	STATUS
+00002b   1611     movar   0x11                	   	   	   	MOVAR  	ACCBUF
+00002c   000d     retie                       	   	   	   	RETIE
+                                           PWON_Start:
+00002d   1dc5     clrr    0x45                	   	   	   	CLRR   	DDR0
+00002e   1dc6     clrr    0x46                	   	   	   	CLRR   	DDR1
+00002f   1d85     clrr    0x5                 	   	   	   	CLRR   	P0
+000030   1d86     clrr    0x6                 	   	   	   	CLRR   	P1
+000031   0b50     movai   0x50                	   	   	   	MOVAI  	0X50
+000032   1592     movra   0x12                	   	   	   	MOVRA  	TMP0
+                                           PWON_WAIT:
+000033   000e     clrwdt                      	   	   	   	CLRWDT
+000034   1a92     djzr    0x12                	   	   	   	DJZR   	TMP0
+000035   2833     goto    0x33                	   	   	   	GOTO   	PWON_WAIT
+000036   2181     call    0x181               	   	   	   	CALL   	HDWARE_INITIAL
+000037   21aa     call    0x1aa               	   	   	   	CALL   	RAM_CLR
+000038   21b4     call    0x1b4               	   	   	   	CALL   	USR_INITIAL
+                                           ;=======================================
+                                           ;;;;;;;;;;;MAIN LOOP SECTION;;;;;;;;;;;;
+                                           ;=======================================
+                                           MAIN:
+000039   000e     clrwdt                      	   	   	   	CLRWDT
+00003a   2058     call    0x58                	   	   	   	CALL   	KEY_SCAN
+00003b   20b2     call    0xb2                	   	   	   	CALL   	GET_STATE
+00003c   2134     call    0x134               	   	   	   	CALL   	OUTPUT
+00003d   2839     goto    0x39                	   	   	   	GOTO   	MAIN   	;FOR TEST
+                                           HALT_CHK:
+00003e   3594     jbclr   0x14, 0x3           	   	   	   	JBCLR  	F_PRS
+00003f   2839     goto    0x39                	   	   	   	GOTO   	MAIN
+000040   3693     jbclr   0x13, 0x5           	   	   	   	JBCLR  	F_WK0
+000041   2839     goto    0x39                	   	   	   	GOTO   	MAIN
+000042   3713     jbclr   0x13, 0x6           	   	   	   	JBCLR  	F_WK1
+000043   2839     goto    0x39                	   	   	   	GOTO   	MAIN
+000044   3793     jbclr   0x13, 0x7           	   	   	   	JBCLR  	F_WK2
+000045   2839     goto    0x39                	   	   	   	GOTO   	MAIN
+000046   1617     movar   0x17                	   	   	   	MOVAR  	HALT_CNT
+000047   0800     xorai   0                   	   	   	   	XORAI  	0
+000048   3103     jbset   0x3, 0x2            	   	   	   	JBSET  	Z
+000049   2839     goto    0x39                	   	   	   	GOTO   	MAIN
+00004a   161e     movar   0x1e                	   	   	   	MOVAR  	DLY1
+00004b   0800     xorai   0                   	   	   	   	XORAI  	0
+00004c   3103     jbset   0x3, 0x2            	   	   	   	JBSET  	Z
+00004d   2839     goto    0x39                	   	   	   	GOTO   	MAIN
+00004e   161f     movar   0x1f                	   	   	   	MOVAR  	DLY2
+00004f   0800     xorai   0                   	   	   	   	XORAI  	0
+000050   3103     jbset   0x3, 0x2            	   	   	   	JBSET  	Z
+000051   2839     goto    0x39                	   	   	   	GOTO   	MAIN
+000052   0000     nop                         	   	   	   	NOP
+000053   0000     nop                         	   	   	   	NOP
+000054   000b     sleep                       	   	   	   	STOP
+000055   0000     nop                         	   	   	   	NOP
+000056   0000     nop                         	   	   	   	NOP
+000057   2839     goto    0x39                	   	   	   	GOTO   	MAIN
+                                           ;;;;;;;;;;;;;MAIN LOOP END;;;;;;;;;;;;;;
+                                           ;=======================================
+                                           ;SUBROUTINE SECTION
+                                           KEY_SCAN:
+000058   000e     clrwdt                      	   	   	   	CLRWDT
+000059   3013     jbset   0x13, 0             	   	   	   	JBSET  	F_K_RND
+00005a   28b1     goto    0xb1                	   	   	   	GOTO   	KEY_SCAN_EXIT
+00005b   3c13     bclr    0x13, 0             	   	   	   	BCLR   	F_K_RND
+00005c   1d98     clrr    0x18                	   	   	   	CLRR   	KEYIN
+00005d   3206     jbset   0x6, 0x4            	   	   	   	JBSET  	P_KYS
+00005e   3818     bset    0x18, 0             	   	   	   	BSET   	KEYIN,0
+00005f   3186     jbset   0x6, 0x3            	   	   	   	JBSET  	P_KYR
+000060   3898     bset    0x18, 0x1           	   	   	   	BSET   	KEYIN,1
+000061   3286     jbset   0x6, 0x5            	   	   	   	JBSET  	P_KYK
+000062   3918     bset    0x18, 0x2           	   	   	   	BSET   	KEYIN,2
+000063   1618     movar   0x18                	   	   	   	MOVAR  	KEYIN
+000064   0800     xorai   0                   	   	   	   	XORAI  	0
+000065   3503     jbclr   0x3, 0x2            	   	   	   	JBCLR  	Z
+000066   28a8     goto    0xa8                	   	   	   	GOTO   	NOKEY_PRO
+000067   1618     movar   0x18                	   	   	   	MOVAR  	KEYIN
+000068   1019     xorar   0x19                	   	   	   	XORAR  	KEYOLD
+000069   3103     jbset   0x3, 0x2            	   	   	   	JBSET  	Z
+00006a   28a2     goto    0xa2                	   	   	   	GOTO   	NEWKEY_PRO
+00006b   1995     incr    0x15                	   	   	   	INCR   	DEBOUNCE
+00006c   0b04     movai   0x4                 	   	   	   	MOVAI  	0X04
+00006d   1215     rsubar  0x15                	   	   	   	RSUBAR 	DEBOUNCE
+00006e   3003     jbset   0x3, 0              	   	   	   	JBSET  	C
+00006f   28b1     goto    0xb1                	   	   	   	GOTO   	KEY_SCAN_EXIT
+000070   0b04     movai   0x4                 	   	   	   	MOVAI  	0X04
+000071   1595     movra   0x15                	   	   	   	MOVRA  	DEBOUNCE
+000072   3714     jbclr   0x14, 0x6           	   	   	   	JBCLR  	F_PRESSED
+000073   2876     goto    0x76                	   	   	   	GOTO   	KEY_HLD_CHK
+000074   3b14     bset    0x14, 0x6           	   	   	   	BSET   	F_PRESSED
+000075   2880     goto    0x80                	   	   	   	GOTO   	K_PRS_HLD_CHK
+                                           KEY_HLD_CHK:
+000076   3794     jbclr   0x14, 0x7           	   	   	   	JBCLR  	F_HOLD
+000077   28b1     goto    0xb1                	   	   	   	GOTO   	KEY_SCAN_EXIT
+000078   1996     incr    0x16                	   	   	   	INCR   	HOLD_CNT
+000079   0b60     movai   0x60                	   	   	   	MOVAI  	0X60
+00007a   1216     rsubar  0x16                	   	   	   	RSUBAR 	HOLD_CNT
+00007b   3003     jbset   0x3, 0              	   	   	   	JBSET  	C
+00007c   28b1     goto    0xb1                	   	   	   	GOTO   	KEY_SCAN_EXIT
+00007d   0b60     movai   0x60                	   	   	   	MOVAI  	0X60
+00007e   1596     movra   0x16                	   	   	   	MOVRA  	HOLD_CNT
+00007f   3b94     bset    0x14, 0x7           	   	   	   	BSET   	F_HOLD
+                                           K_PRS_HLD_CHK:
+000080   0b7a     movai   0x7a                	   	   	   	MOVAI  	122
+000081   1597     movra   0x17                	   	   	   	MOVRA  	HALT_CNT
+000082   1618     movar   0x18                	   	   	   	MOVAR  	KEYIN
+000083   0801     xorai   0x1                 	   	   	   	XORAI  	00000001B
+000084   3503     jbclr   0x3, 0x2            	   	   	   	JBCLR  	Z
+000085   288f     goto    0x8f                	   	   	   	GOTO   	K1_PRO
+000086   1618     movar   0x18                	   	   	   	MOVAR  	KEYIN
+000087   0802     xorai   0x2                 	   	   	   	XORAI  	00000010B
+000088   3503     jbclr   0x3, 0x2            	   	   	   	JBCLR  	Z
+000089   2897     goto    0x97                	   	   	   	GOTO   	K2_PRO
+00008a   1618     movar   0x18                	   	   	   	MOVAR  	KEYIN
+00008b   0804     xorai   0x4                 	   	   	   	XORAI  	00000100B
+00008c   3503     jbclr   0x3, 0x2            	   	   	   	JBCLR  	Z
+00008d   289f     goto    0x9f                	   	   	   	GOTO   	K3_PRO
+00008e   28b1     goto    0xb1                	   	   	   	GOTO   	KEY_SCAN_EXIT
+                                           K1_PRO:	   	;手电筒开关
+00008f   3794     jbclr   0x14, 0x7           	   	   	   	JBCLR  	F_HOLD
+000090   2894     goto    0x94                	   	   	   	GOTO   	K1_HLD_PRO
+000091   3814     bset    0x14, 0             	   	   	   	BSET   	F_PR1
+000092   3e14     bclr    0x14, 0x4           	   	   	   	BCLR   	F_H1
+000093   28b1     goto    0xb1                	   	   	   	GOTO   	KEY_SCAN_EXIT
+                                           K1_HLD_PRO:
+000094   3c14     bclr    0x14, 0             	   	   	   	BCLR   	F_PR1
+000095   3a14     bset    0x14, 0x4           	   	   	   	BSET   	F_H1
+000096   28b1     goto    0xb1                	   	   	   	GOTO   	KEY_SCAN_EXIT
+                                           K2_PRO:	   	;红白灯板开关
+000097   3794     jbclr   0x14, 0x7           	   	   	   	JBCLR  	F_HOLD
+000098   289c     goto    0x9c                	   	   	   	GOTO   	K2_HLD_PRO
+000099   3894     bset    0x14, 0x1           	   	   	   	BSET   	F_PR2
+00009a   3e94     bclr    0x14, 0x5           	   	   	   	BCLR   	F_H2
+00009b   28b1     goto    0xb1                	   	   	   	GOTO   	KEY_SCAN_EXIT
+                                           K2_HLD_PRO:
+00009c   3c94     bclr    0x14, 0x1           	   	   	   	BCLR   	F_PR2
+00009d   3a94     bset    0x14, 0x5           	   	   	   	BSET   	F_H2
+00009e   28b1     goto    0xb1                	   	   	   	GOTO   	KEY_SCAN_EXIT
+                                           K3_PRO:	   	;外部开关
+00009f   3914     bset    0x14, 0x2           	   	   	   	BSET   	F_PR3
+0000a0   3993     bset    0x13, 0x3           	   	   	   	BSET   	F_T3
+0000a1   28b1     goto    0xb1                	   	   	   	GOTO   	KEY_SCAN_EXIT
+                                           NEWKEY_PRO:
+0000a2   3994     bset    0x14, 0x3           	   	   	   	BSET	   	F_PRS
+0000a3   1618     movar   0x18                	   	   	   	MOVAR  	KEYIN
+0000a4   1599     movra   0x19                	   	   	   	MOVRA  	KEYOLD
+0000a5   0b04     movai   0x4                 	   	   	   	MOVAI  	0X04
+0000a6   1595     movra   0x15                	   	   	   	MOVRA  	DEBOUNCE
+0000a7   28b1     goto    0xb1                	   	   	   	GOTO   	KEY_SCAN_EXIT
+                                           NOKEY_PRO:
+0000a8   3414     jbclr   0x14, 0             	   	   	   	JBCLR  	F_PR1
+0000a9   3893     bset    0x13, 0x1           	   	   	   	BSET   	F_T1
+0000aa   3494     jbclr   0x14, 0x1           	   	   	   	JBCLR  	F_PR2
+0000ab   3913     bset    0x13, 0x2           	   	   	   	BSET   	F_T2
+0000ac   1d94     clrr    0x14                	   	   	   	CLRR   	KFLAG
+0000ad   1d99     clrr    0x19                	   	   	   	CLRR   	KEYOLD
+0000ae   1d95     clrr    0x15                	   	   	   	CLRR   	DEBOUNCE
+0000af   1d96     clrr    0x16                	   	   	   	CLRR   	HOLD_CNT
+0000b0   3c1a     bclr    0x1a, 0             	   	   	   	BCLR   	F_ACTED
+                                           KEY_SCAN_EXIT:
+0000b1   000c     return                      	   	   	   	RETURN
+                                           ;=======================================
+                                           GET_STATE:
+0000b2   000e     clrwdt                      	   	   	   	CLRWDT
+0000b3   3093     jbset   0x13, 0x1           	   	   	   	JBSET  	F_T1
+0000b4   28d1     goto    0xd1                	   	   	   	GOTO   	K1_HLD_CHK
+0000b5   3c93     bclr    0x13, 0x1           	   	   	   	BCLR   	F_T1
+0000b6   3693     jbclr   0x13, 0x5           	   	   	   	JBCLR  	F_WK0
+0000b7   28c0     goto    0xc0                	   	   	   	GOTO   	WK0_STG_CHK
+                                           A_STG3:
+0000b8   3a93     bset    0x13, 0x5           	   	   	   	BSET   	F_WK0
+0000b9   3c9a     bclr    0x1a, 0x1           	   	   	   	BCLR   	F_NO_WK
+0000ba   164e     movar   0x4e                	   	   	   	MOVAR  	T1LOAD
+0000bb   15cf     movra   0x4f                	   	   	   	MOVRA  	T1DATA
+0000bc   0b04     movai   0x4                 	   	   	   	MOVAI  	00000100B
+0000bd   159b     movra   0x1b                	   	   	   	MOVRA  	STG1
+0000be   3bc8     bset    0x48, 0x7           	   	   	   	BSET   	PWM1AOE
+0000bf   2933     goto    0x133               	   	   	   	GOTO   	GET_STATE_EXIT
+                                           WK0_STG_CHK:
+0000c0   341b     jbclr   0x1b, 0             	   	   	   	JBCLR  	STG1,0
+0000c1   28d6     goto    0xd6                	   	   	   	GOTO   	STOP_PWMA
+0000c2   3c03     bclr    0x3, 0              	   	   	   	BCLR   	C
+0000c3   139b     rrr     0x1b                	   	   	   	RRR	   	STG1
+0000c4   341b     jbclr   0x1b, 0             	   	   	   	JBCLR  	STG1,0
+0000c5   28cb     goto    0xcb                	   	   	   	GOTO   	A_STG1
+0000c6   349b     jbclr   0x1b, 0x1           	   	   	   	JBCLR  	STG1,1
+0000c7   28ce     goto    0xce                	   	   	   	GOTO   	A_STG2
+0000c8   351b     jbclr   0x1b, 0x2           	   	   	   	JBCLR  	STG1,2
+0000c9   28b8     goto    0xb8                	   	   	   	GOTO   	A_STG3
+0000ca   28d6     goto    0xd6                	   	   	   	GOTO   	STOP_PWMA
+                                           A_STG1:
+0000cb   0b4b     movai   0x4b                	   	   	   	MOVAI  	75
+0000cc   15cf     movra   0x4f                	   	   	   	MOVRA  	T1DATA
+0000cd   2933     goto    0x133               	   	   	   	GOTO   	GET_STATE_EXIT
+                                           A_STG2:
+0000ce   0b14     movai   0x14                	   	   	   	MOVAI  	20
+0000cf   15cf     movra   0x4f                	   	   	   	MOVRA  	T1DATA
+0000d0   2933     goto    0x133               	   	   	   	GOTO   	GET_STATE_EXIT
+                                           K1_HLD_CHK:
+0000d1   3214     jbset   0x14, 0x4           	   	   	   	JBSET  	F_H1
+0000d2   28df     goto    0xdf                	   	   	   	GOTO   	K2_PRS_CHK
+0000d3   341a     jbclr   0x1a, 0             	   	   	   	JBCLR  	F_ACTED
+0000d4   28df     goto    0xdf                	   	   	   	GOTO   	K2_PRS_CHK
+0000d5   381a     bset    0x1a, 0             	   	   	   	BSET   	F_ACTED
+                                           STOP_PWMA:
+0000d6   3e93     bclr    0x13, 0x5           	   	   	   	BCLR   	F_WK0
+0000d7   1d9b     clrr    0x1b                	   	   	   	CLRR   	STG1
+0000d8   3fc8     bclr    0x48, 0x7           	   	   	   	BCLR   	PWM1AOE
+0000d9   3d06     bclr    0x6, 0x2            	   	   	   	BCLR   	P_PWMA
+0000da   3713     jbclr   0x13, 0x6           	   	   	   	JBCLR  	F_WK1
+0000db   2933     goto    0x133               	   	   	   	GOTO   	GET_STATE_EXIT
+0000dc   0b66     movai   0x66                	   	   	   	MOVAI  	102
+0000dd   159e     movra   0x1e                	   	   	   	MOVRA  	DLY1
+0000de   2933     goto    0x133               	   	   	   	GOTO   	GET_STATE_EXIT
+                                           K2_PRS_CHK:
+0000df   3113     jbset   0x13, 0x2           	   	   	   	JBSET  	F_T2
+0000e0   291d     goto    0x11d               	   	   	   	GOTO   	K2_HLD_CHK
+0000e1   3d13     bclr    0x13, 0x2           	   	   	   	BCLR   	F_T2
+0000e2   3713     jbclr   0x13, 0x6           	   	   	   	JBCLR  	F_WK1
+0000e3   28ef     goto    0xef                	   	   	   	GOTO   	WK1_STG_CHK
+                                           B_STG5:	;白灯亮
+0000e4   3b13     bset    0x13, 0x6           	   	   	   	BSET   	F_WK1
+0000e5   3c9a     bclr    0x1a, 0x1           	   	   	   	BCLR   	F_NO_WK
+0000e6   3d1a     bclr    0x1a, 0x2           	   	   	   	BCLR   	F_WK1_1
+0000e7   164e     movar   0x4e                	   	   	   	MOVAR  	T1LOAD
+0000e8   15c9     movra   0x49                	   	   	   	MOVRA  	T1DATB
+0000e9   3ec8     bclr    0x48, 0x5           	   	   	   	BCLR   	PWM1COE
+0000ea   3c06     bclr    0x6, 0              	   	   	   	BCLR   	P_PWMC
+0000eb   0b10     movai   0x10                	   	   	   	MOVAI  	00010000B
+0000ec   159c     movra   0x1c                	   	   	   	MOVRA  	STG2
+0000ed   3b48     bset    0x48, 0x6           	   	   	   	BSET   	PWM1BOE
+0000ee   2933     goto    0x133               	   	   	   	GOTO   	GET_STATE_EXIT
+                                           WK1_STG_CHK:
+0000ef   341c     jbclr   0x1c, 0             	   	   	   	JBCLR  	STG2,0
+0000f0   2922     goto    0x122               	   	   	   	GOTO   	STOP_PWMBC
+0000f1   3c03     bclr    0x3, 0              	   	   	   	BCLR   	C
+0000f2   139c     rrr     0x1c                	   	   	   	RRR	   	STG2
+0000f3   341c     jbclr   0x1c, 0             	   	   	   	JBCLR  	STG2,0
+0000f4   28fe     goto    0xfe                	   	   	   	GOTO   	B_STG1
+0000f5   349c     jbclr   0x1c, 0x1           	   	   	   	JBCLR  	STG2,1
+0000f6   2904     goto    0x104               	   	   	   	GOTO   	B_STG2
+0000f7   351c     jbclr   0x1c, 0x2           	   	   	   	JBCLR  	STG2,2
+0000f8   290d     goto    0x10d               	   	   	   	GOTO   	B_STG3
+0000f9   359c     jbclr   0x1c, 0x3           	   	   	   	JBCLR  	STG2,3
+0000fa   2917     goto    0x117               	   	   	   	GOTO   	B_STG4
+0000fb   361c     jbclr   0x1c, 0x4           	   	   	   	JBCLR  	STG2,4
+0000fc   28e4     goto    0xe4                	   	   	   	GOTO   	B_STG5
+0000fd   2922     goto    0x122               	   	   	   	GOTO   	STOP_PWMBC
+                                           B_STG1:;红灯亮
+0000fe   3f48     bclr    0x48, 0x6           	   	   	   	BCLR   	PWM1BOE
+0000ff   3c86     bclr    0x6, 0x1            	   	   	   	BCLR   	P_PWMB
+000100   0b40     movai   0x40                	   	   	   	MOVAI  	64
+000101   15ca     movra   0x4a                	   	   	   	MOVRA  	T1DATC
+000102   3ac8     bset    0x48, 0x5           	   	   	   	BSET   	PWM1COE
+000103   2933     goto    0x133               	   	   	   	GOTO   	GET_STATE_EXIT
+                                           B_STG2:;红灯快闪
+000104   3f48     bclr    0x48, 0x6           	   	   	   	BCLR   	PWM1BOE
+000105   3c86     bclr    0x6, 0x1            	   	   	   	BCLR   	P_PWMB
+000106   0b40     movai   0x40                	   	   	   	MOVAI  	64
+000107   15ca     movra   0x4a                	   	   	   	MOVRA  	T1DATC
+000108   1da1     clrr    0x21                	   	   	   	CLRR   	TM_CNT
+000109   1da3     clrr    0x23                	   	   	   	CLRR   	KEY_CNT
+00010a   3e1a     bclr    0x1a, 0x4           	   	   	   	BCLR   	F_INC_EN
+00010b   3ac8     bset    0x48, 0x5           	   	   	   	BSET   	PWM1COE
+00010c   2933     goto    0x133               	   	   	   	GOTO   	GET_STATE_EXIT
+                                           B_STG3:;红灯SOS
+00010d   3f48     bclr    0x48, 0x6           	   	   	   	BCLR   	PWM1BOE
+00010e   3c86     bclr    0x6, 0x1            	   	   	   	BCLR   	P_PWMB
+00010f   0b01     movai   0x1                 	   	   	   	MOVAI  	01
+000110   15ca     movra   0x4a                	   	   	   	MOVRA  	T1DATC
+000111   15a2     movra   0x22                	   	   	   	MOVRA  	DUTY_BK
+000112   399a     bset    0x1a, 0x3           	   	   	   	BSET   	F_UP
+000113   1da3     clrr    0x23                	   	   	   	CLRR   	KEY_CNT
+000114   3e1a     bclr    0x1a, 0x4           	   	   	   	BCLR   	F_INC_EN
+000115   3ac8     bset    0x48, 0x5           	   	   	   	BSET   	PWM1COE
+000116   2933     goto    0x133               	   	   	   	GOTO   	GET_STATE_EXIT
+                                           B_STG4:;白灯暗
+000117   3ec8     bclr    0x48, 0x5           	   	   	   	BCLR   	PWM1COE
+000118   3c06     bclr    0x6, 0              	   	   	   	BCLR   	P_PWMC
+000119   0b32     movai   0x32                	   	   	   	MOVAI  	50
+00011a   15c9     movra   0x49                	   	   	   	MOVRA  	T1DATB
+00011b   3b48     bset    0x48, 0x6           	   	   	   	BSET   	PWM1BOE
+00011c   2933     goto    0x133               	   	   	   	GOTO   	GET_STATE_EXIT
+                                           K2_HLD_CHK:
+00011d   3294     jbset   0x14, 0x5           	   	   	   	JBSET  	F_H2
+00011e   292d     goto    0x12d               	   	   	   	GOTO   	K3_PRS_CHK
+00011f   341a     jbclr   0x1a, 0             	   	   	   	JBCLR  	F_ACTED
+000120   292d     goto    0x12d               	   	   	   	GOTO   	K3_PRS_CHK
+000121   381a     bset    0x1a, 0             	   	   	   	BSET   	F_ACTED
+                                           STOP_PWMBC:
+000122   3f13     bclr    0x13, 0x6           	   	   	   	BCLR   	F_WK1
+000123   1d9c     clrr    0x1c                	   	   	   	CLRR   	STG2
+000124   3f48     bclr    0x48, 0x6           	   	   	   	BCLR   	PWM1BOE
+000125   3c86     bclr    0x6, 0x1            	   	   	   	BCLR   	P_PWMB
+000126   3ec8     bclr    0x48, 0x5           	   	   	   	BCLR   	PWM1COE
+000127   3c06     bclr    0x6, 0              	   	   	   	BCLR   	P_PWMC
+000128   3693     jbclr   0x13, 0x5           	   	   	   	JBCLR  	F_WK0
+000129   2933     goto    0x133               	   	   	   	GOTO   	GET_STATE_EXIT
+00012a   0b66     movai   0x66                	   	   	   	MOVAI  	102
+00012b   159e     movra   0x1e                	   	   	   	MOVRA  	DLY1
+00012c   2933     goto    0x133               	   	   	   	GOTO   	GET_STATE_EXIT
+                                           K3_PRS_CHK:
+00012d   3193     jbset   0x13, 0x3           	   	   	   	JBSET  	F_T3
+00012e   2933     goto    0x133               	   	   	   	GOTO   	GET_STATE_EXIT
+00012f   3d93     bclr    0x13, 0x3           	   	   	   	BCLR   	F_T3
+000130   3b93     bset    0x13, 0x7           	   	   	   	BSET   	F_WK2
+000131   0b66     movai   0x66                	   	   	   	MOVAI  	102
+000132   159f     movra   0x1f                	   	   	   	MOVRA  	DLY2
+                                           GET_STATE_EXIT:
+000133   000c     return                      	   	   	   	RETURN
+                                           ;=======================================
+                                           OUTPUT:
+000134   000e     clrwdt                      	   	   	   	CLRWDT
+                                           WK0_CHK:
+000135   3293     jbset   0x13, 0x5           	   	   	   	JBSET  	F_WK0
+000136   293a     goto    0x13a               	   	   	   	GOTO   	WK0_STOP
+000137   3905     bset    0x5, 0x2            	   	   	   	BSET   	P_SLED
+000138   3805     bset    0x5, 0              	   	   	   	BSET   	P_PSW3
+000139   293f     goto    0x13f               	   	   	   	GOTO   	WK1_CHK
+                                           WK0_STOP:
+00013a   3fc8     bclr    0x48, 0x7           	   	   	   	BCLR   	PWM1AOE
+00013b   3d06     bclr    0x6, 0x2            	   	   	   	BCLR   	P_PWMA
+00013c   3d05     bclr    0x5, 0x2            	   	   	   	BCLR   	P_SLED
+00013d   3313     jbset   0x13, 0x6           	   	   	   	JBSET  	F_WK1
+00013e   3c05     bclr    0x5, 0              	   	   	   	BCLR   	P_PSW3
+                                           WK1_CHK:
+00013f   3313     jbset   0x13, 0x6           	   	   	   	JBSET  	F_WK1
+000140   2972     goto    0x172               	   	   	   	GOTO   	WK1_STOP
+000141   3985     bset    0x5, 0x3            	   	   	   	BSET   	P_RLED
+000142   3805     bset    0x5, 0              	   	   	   	BSET   	P_PSW3
+000143   349c     jbclr   0x1c, 0x1           	   	   	   	JBCLR  	STG2,1
+000144   2948     goto    0x148               	   	   	   	GOTO   	WK1_STG1
+000145   351c     jbclr   0x1c, 0x2           	   	   	   	JBCLR  	STG2,2
+000146   2959     goto    0x159               	   	   	   	GOTO   	WK1_STG2
+000147   2979     goto    0x179               	   	   	   	GOTO   	WK2_CHK
+                                           WK1_STG1:
+000148   321a     jbset   0x1a, 0x4           	   	   	   	JBSET  	F_INC_EN
+000149   2979     goto    0x179               	   	   	   	GOTO   	WK2_CHK
+00014a   3e1a     bclr    0x1a, 0x4           	   	   	   	BCLR   	F_INC_EN
+00014b   19a1     incr    0x21                	   	   	   	INCR   	TM_CNT
+00014c   0b1f     movai   0x1f                	   	   	   	MOVAI  	31
+00014d   1221     rsubar  0x21                	   	   	   	RSUBAR 	TM_CNT
+00014e   3003     jbset   0x3, 0              	   	   	   	JBSET  	C
+00014f   2957     goto    0x157               	   	   	   	GOTO   	WK1_STG1_1
+000150   3ec8     bclr    0x48, 0x5           	   	   	   	BCLR   	PWM1COE
+000151   3c06     bclr    0x6, 0              	   	   	   	BCLR   	P_PWMC
+000152   0b3d     movai   0x3d                	   	   	   	MOVAI  	61
+000153   1221     rsubar  0x21                	   	   	   	RSUBAR 	TM_CNT
+000154   3003     jbset   0x3, 0              	   	   	   	JBSET  	C
+000155   2979     goto    0x179               	   	   	   	GOTO   	WK2_CHK
+000156   1da1     clrr    0x21                	   	   	   	CLRR   	TM_CNT
+                                           WK1_STG1_1:
+000157   3ac8     bset    0x48, 0x5           	   	   	   	BSET   	PWM1COE
+000158   2979     goto    0x179               	   	   	   	GOTO   	WK2_CHK
+                                           WK1_STG2:
+000159   321a     jbset   0x1a, 0x4           	   	   	   	JBSET  	F_INC_EN
+00015a   2979     goto    0x179               	   	   	   	GOTO   	WK2_CHK
+00015b   3e1a     bclr    0x1a, 0x4           	   	   	   	BCLR   	F_INC_EN
+00015c   319a     jbset   0x1a, 0x3           	   	   	   	JBSET  	F_UP
+00015d   2965     goto    0x165               	   	   	   	GOTO   	WK1_STG2_DEC
+00015e   0b02     movai   0x2                 	   	   	   	MOVAI  	2
+00015f   1fa2     addra   0x22                	   	   	   	ADDRA  	DUTY_BK
+000160   0b7d     movai   0x7d                	   	   	   	MOVAI  	125
+000161   1222     rsubar  0x22                	   	   	   	RSUBAR 	DUTY_BK
+000162   3403     jbclr   0x3, 0              	   	   	   	JBCLR  	C  	
+000163   3d9a     bclr    0x1a, 0x3           	   	   	   	BCLR   	F_UP
+000164   296f     goto    0x16f               	   	   	   	GOTO   	WK1_STG2_COM
+                                           WK1_STG2_DEC:
+000165   0b02     movai   0x2                 	   	   	   	MOVAI  	2
+000166   1222     rsubar  0x22                	   	   	   	RSUBAR 	DUTY_BK
+000167   3403     jbclr   0x3, 0              	   	   	   	JBCLR  	C
+000168   296d     goto    0x16d               	   	   	   	GOTO   	WK1_STG2_DECPRO
+000169   399a     bset    0x1a, 0x3           	   	   	   	BSET   	F_UP
+00016a   0b02     movai   0x2                 	   	   	   	MOVAI  	2
+00016b   15a2     movra   0x22                	   	   	   	MOVRA  	DUTY_BK
+00016c   296f     goto    0x16f               	   	   	   	GOTO   	WK1_STG2_COM
+                                           WK1_STG2_DECPRO:
+00016d   0b02     movai   0x2                 	   	   	   	MOVAI  	2
+00016e   12a2     rsubra  0x22                	   	   	   	RSUBRA 	DUTY_BK
+                                           WK1_STG2_COM:
+00016f   1622     movar   0x22                	   	   	   	MOVAR  	DUTY_BK
+000170   15ca     movra   0x4a                	   	   	   	MOVRA  	T1DATC
+000171   2979     goto    0x179               	   	   	   	GOTO   	WK2_CHK
+                                           WK1_STOP:
+000172   3f48     bclr    0x48, 0x6           	   	   	   	BCLR   	PWM1BOE
+000173   3ec8     bclr    0x48, 0x5           	   	   	   	BCLR   	PWM1COE
+000174   3c86     bclr    0x6, 0x1            	   	   	   	BCLR   	P_PWMB
+000175   3c06     bclr    0x6, 0              	   	   	   	BCLR   	P_PWMC
+000176   3d85     bclr    0x5, 0x3            	   	   	   	BCLR   	P_RLED
+000177   3293     jbset   0x13, 0x5           	   	   	   	JBSET  	F_WK0
+000178   3c05     bclr    0x5, 0              	   	   	   	BCLR   	P_PSW3
+                                           WK2_CHK:
+000179   161f     movar   0x1f                	   	   	   	MOVAR  	DLY2
+00017a   0800     xorai   0                   	   	   	   	XORAI  	0
+00017b   3103     jbset   0x3, 0x2            	   	   	   	JBSET  	Z
+00017c   297f     goto    0x17f               	   	   	   	GOTO   	WK2_1
+00017d   3c85     bclr    0x5, 0x1            	   	   	   	BCLR   	P_KLED
+00017e   2980     goto    0x180               	   	   	   	GOTO   	OUTPUT_EXIT
+                                           WK2_1:
+00017f   3885     bset    0x5, 0x1            	   	   	   	BSET   	P_KLED
+                                           OUTPUT_EXIT:
+000180   000c     return                      	   	   	   	RETURN
+                                           ;=======================================
+                                           HDWARE_INITIAL:
+000181   0b38     movai   0x38                	   	   	   	MOVAI  	00111000B
+000182   15c6     movra   0x46                	   	   	   	MOVRA  	DDR1
+000183   0b00     movai   0                   	   	   	   	MOVAI  	0X00
+000184   15c5     movra   0x45                	   	   	   	MOVRA  	DDR0
+000185   1585     movra   0x5                 	   	   	   	MOVRA  	P0
+000186   1586     movra   0x6                 	   	   	   	MOVRA  	P1
+000187   158c     movra   0xc                 	   	   	   	MOVRA  	ODCON
+000188   0bff     movai   0xff                	   	   	   	MOVAI  	0XFF
+000189   158b     movra   0xb                 	   	   	   	MOVRA  	PUDCON
+00018a   0be7     movai   0xe7                	   	   	   	MOVAI  	11100111B
+00018b   158d     movra   0xd                 	   	   	   	MOVRA  	PUCON
+00018c   0b80     movai   0x80                	   	   	   	MOVAI  	10000000B
+00018d   1588     movra   0x8                 	   	   	   	MOVRA  	MCR
+00018e   0b05     movai   0x5                 	   	   	   	MOVAI  	00000101B
+00018f   15c1     movra   0x41                	   	   	   	MOVRA  	T0CR
+000190   0b00     movai   0                   	   	   	   	MOVAI  	00000000B
+000191   15c3     movra   0x43                	   	   	   	MOVRA  	CMPCR
+000192   15cb     movra   0x4b                	   	   	   	MOVRA  	TM0CR
+000193   1581     movra   0x1                 	   	   	   	MOVRA  	T0CNT
+000194   15c0     movra   0x40                	   	   	   	MOVRA  	P0KBCR
+000195   158f     movra   0xf                 	   	   	   	MOVRA  	INTF
+000196   15c4     movra   0x44                	   	   	   	MOVRA  	INTF1
+000197   0b38     movai   0x38                	   	   	   	MOVAI  	00111000B
+000198   1589     movra   0x9                 	   	   	   	MOVRA  	P1KBCR
+000199   0b00     movai   0                   	   	   	   	MOVAI  	0X00
+00019a   158e     movra   0xe                 	   	   	   	MOVRA  	INTE
+00019b   0b42     movai   0x42                	   	   	   	MOVAI  	01000010B
+00019c   15cc     movra   0x4c                	   	   	   	MOVRA  	T1CR
+00019d   0b7d     movai   0x7d                	   	   	   	MOVAI  	125
+00019e   15cd     movra   0x4d                	   	   	   	MOVRA  	T1CNT
+00019f   15ce     movra   0x4e                	   	   	   	MOVRA  	T1LOAD
+0001a0   0b40     movai   0x40                	   	   	   	MOVAI  	64
+0001a1   15cf     movra   0x4f                	   	   	   	MOVRA  	T1DATA
+0001a2   15c9     movra   0x49                	   	   	   	MOVRA  	T1DATB
+0001a3   15ca     movra   0x4a                	   	   	   	MOVRA  	T1DATC
+0001a4   0b00     movai   0                   	   	   	   	MOVAI  	0
+0001a5   15c2     movra   0x42                	   	   	   	MOVRA  	T1DATD
+0001a6   15c7     movra   0x47                	   	   	   	MOVRA  	PWMCR1
+0001a7   0b03     movai   0x3                 	   	   	   	MOVAI  	00000011B
+0001a8   15c8     movra   0x48                	   	   	   	MOVRA  	PWMCR0
+                                              	   	   	   	
+0001a9   000c     return                      	   	   	   	RETURN
+                                           ;=======================================
+                                           RAM_CLR:
+0001aa   0b10     movai   0x10                	   	   	   	MOVAI  	0X10
+0001ab   1584     movra   0x4                 	   	   	   	MOVRA  	FSR
+                                           RM_CLR_LP:
+0001ac   000e     clrwdt                      	   	   	   	CLRWDT
+0001ad   1d80     clrr    0                   	   	   	   	CLRR   	INDF
+0001ae   1984     incr    0x4                 	   	   	   	INCR   	FSR
+0001af   1604     movar   0x4                 	   	   	   	MOVAR  	FSR
+0001b0   0840     xorai   0x40                	   	   	   	XORAI  	0X40
+0001b1   3103     jbset   0x3, 0x2            	   	   	   	JBSET  	Z
+0001b2   29ac     goto    0x1ac               	   	   	   	GOTO   	RM_CLR_LP
+0001b3   000c     return                      	   	   	   	RETURN
+                                           ;=======================================
+                                           USR_INITIAL:
+0001b4   0b7a     movai   0x7a                	   	   	   	MOVAI  	122
+0001b5   1597     movra   0x17                	   	   	   	MOVRA  	HALT_CNT
+0001b6   3bcc     bset    0x4c, 0x7           	   	   	   	BSET   	T1EN
+0001b7   3b8e     bset    0xe, 0x7            	   	   	   	BSET   	GIE
+0001b8   000c     return                      	   	   	   	RETURN
+                                           ;=======================================
+                                              	   	   	   	END
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXX------ XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0100 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0140 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0180 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+01C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0200 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0240 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0280 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+02C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0300 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0340 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XX--------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:   438
+

@@ -1,0 +1,1168 @@
+gpasm-2.2.10 (Feb 22 2019)   Demo.asm           2019-7-16  11:25:07          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;**********************************************
+                      00002 ;Pin define
+                      00003 ;               ©³©¥©¥©¥©¥©·©³©¥©¥©¥©¥©·
+                      00004 ;           ©¥©¥©§1 Vdd   ©»©¿  Vss  8©§©¥©¥
+                      00005 ;               ©§                    ©§
+                      00006 ;           ©¥©¥©§2 P02                 AN4  7©§©¥©¥
+                      00007 ;               ©§                    ©§
+                      00008 ;           ©¥©¥©§3 P04                 AN1  6©§©¥©¥ V;100/51
+                      00009 ;               ©§                    ©§
+                      00010 ;       PWM ©¥©¥©§4 P53                 AN0  5©§©¥©¥ Overload
+                      00011 ;               ©§                    ©§
+                      00012 ;               ©»©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¿
+                      00013 ;--------------------------------------------------------------------------
+                      00014 #include <mc32p7031.inc>
+                      00001                 LIST
+                      00002 ;mc32p7031.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00447                 LIST
+                      00015 
+  00000000            00016 R_Temp          equ             00H
+  00000001            00017 R_WorkTemp      equ             01H
+  00000002            00018 R_WorkTemp1     equ             02H
+  00000003            00019 R_LoopNum       equ             03H
+  00000004            00020 R_VoltageH_Max  equ             04H
+  00000005            00021 R_VoltageL_Max  equ             05H
+  00000006            00022 R_VoltageH_Min  equ             06H
+  00000007            00023 R_VoltageL_Min  equ             07H
+  00000008            00024 R_VoltageSumH   equ             08H
+  00000009            00025 R_VoltageSumL   equ             09H
+  0000000A            00026 R_VoltageH      equ             0AH
+  0000000B            00027 R_VoltageL      equ             0BH
+  0000000C            00028 R_OverloadCntH  equ             0CH
+  0000000D            00029 R_OverloadCntL  equ             0DH
+  0000000E            00030 R_PwmBuf        equ             0EH
+  0000000F            00031 R_Pwm           equ             0FH
+                      00032 
+  00000010            00033 R_DispNumM      equ             10H
+  00000011            00034 R_DispNumL      equ             11H
+  00000012            00035 R_Flag          equ             12H
+                      00036 #define         B_8MsFlag       R_Flag,0
+                      00037 #define         B_Overload      R_Flag,1
+                      00038 #define         B_Reset         R_Flag,2
+                      00039 #define         B_AdSample      R_Flag,3
+                      00040 #define         B_AdOk          R_Flag,4
+                      00041 
+  00000013            00042 R_SampleCnt     equ             13H
+  00000014            00043 R_VH_Max        equ             14H
+  00000015            00044 R_VL_Max        equ             15H
+  00000016            00045 R_VH_Min        equ             16H
+  00000017            00046 R_VL_Min        equ             17H
+  00000018            00047 R_VSumH         equ             18H
+  00000019            00048 R_VSumL         equ             19H
+  0000001A            00049 R_DefCnt        equ             1AH
+  0000001B            00050 R_DisplayCnt    equ             1BH
+  0000001C            00051 R_8MsCnt        equ             1CH
+  0000001D            00052 R_SegCnt        equ             1DH
+  0000001E            00053 R_VoltageHBak   equ             1EH
+  0000001F            00054 R_VoltageLBak   equ             1FH
+                      00055 
+  00000020            00056 wr0             equ             20H
+  00000021            00057 wr1             equ             21H
+  00000022            00058 wr2             equ             22H
+  00000023            00059 wr3             equ             23H
+  00000024            00060 wr4             equ             24H
+  00000025            00061 wr5             equ             25H
+  00000026            00062 wr6             equ             26H
+  00000027            00063 wr7             equ             27H
+  00000028            00064 wr8             equ             28H
+  00000029            00065 wr9             equ             29H
+  0000002A            00066 R_SampleNum     equ             2AH
+  0000002B            00067 R_VoltageSumM   equ             2BH
+                      00068 ;-------------------------------------------------
+                      00069 ;MACRO
+                      00070 ;-------------------------------------------------
+                      00071 MOV             MACRO           REG0,REG1
+                      00072                 movar           REG1
+                      00073                 movra           REG0
+                      00074                 ENDM
+                      00075 ;-------------------------------------------------
+                      00076 MOVI            MACRO           REG0,IMM0
+                      00077                 movai           IMM0
+                      00078                 movra           REG0
+                      00079                 ENDM
+                      00080 ;-------------------------------------------------
+                      00081 ANDIR           MACRO           REG0,IMM0
+                      00082                 movai           IMM0
+                      00083                 ANDRA           REG0
+                      00084                 ENDM
+                      00085 ;-------------------------------------------------
+                      00086 IORIR           MACRO           REG0,IMM0
+                      00087                 movai           IMM0
+                      00088                 orra            REG0
+                      00089                 ENDM
+                      00090 ;-------------------------------------------------
+                      00091 XORIR           MACRO           REG0,IMM0
+                      00092                 movai           IMM0
+                      00093                 xorra           REG0
+                      00094                 ENDM
+                      00095 ;-------------------------------------------------
+                      00096 CJZ1            MACRO           REG0,ADDRESS
+                      00097                 movar           REG0
+                      00098                 jbclr           Z
+                      00099                 goto            ADDRESS
+                      00100                 ENDM
+                      00101 ;-------------------------------------------------
+                      00102 CJNZ1           MACRO           REG0,ADDRESS
+                      00103                 movar           REG0
+                      00104                 jbset           Z
+                      00105                 goto            ADDRESS
+                      00106                 ENDM
+                      00107 ;-------------------------------------------------
+                      00108 CJZ2            MACRO           REG0,REG1,ADDRESS
+                      00109                 movar           REG0
+                      00110                 orar            REG1
+                      00111                 jbclr           Z
+                      00112                 goto            ADDRESS
+                      00113                 ENDM
+                      00114 ;-------------------------------------------------
+                      00115 CJNZ2           MACRO           REG0,REG1,ADDRESS
+                      00116                 movar           REG0
+                      00117                 orar            REG1
+                      00118                 jbset           Z
+                      00119                 goto            ADDRESS
+                      00120                 ENDM
+                      00121 ;-------------------------------------------------
+                      00122 CJZ3            MACRO           REG0,REG1,REG2,ADDRESS
+                      00123                 movar           REG0
+                      00124                 orar            REG1
+                      00125                 orar            REG2
+                      00126                 jbclr           Z
+                      00127                 goto            ADDRESS
+                      00128                 ENDM
+                      00129 ;-------------------------------------------------
+                      00130 CJNZ3           MACRO           REG0,REG1,REG2,ADDRESS
+                      00131                 movar           REG0
+                      00132                 orar            REG1
+                      00133                 orar            REG2
+                      00134                 jbset           Z
+                      00135                 goto            ADDRESS
+                      00136                 ENDM
+                      00137 ;-------------------------------------------------
+                      00138 CJZ4            MACRO           REG0,REG1,REG2,REG3,ADDRESS
+                      00139                 movar           REG0
+                      00140                 orar            REG1
+                      00141                 orar            REG2
+                      00142                 orar            REG3
+                      00143                 jbclr           Z
+                      00144                 goto            ADDRESS
+                      00145                 ENDM
+                      00146 ;-------------------------------------------------
+                      00147 CJNZ4           MACRO           REG0,REG1,REG2,REG3,ADDRESS
+                      00148                 movar           REG0
+                      00149                 orar            REG1
+                      00150                 orar            REG2
+                      00151                 orar            REG3
+                      00152                 jbset           Z
+                      00153                 goto            ADDRESS
+                      00154                 ENDM
+                      00155 ;-------------------------------------------------
+                      00156 CJE1            MACRO           REG0,IMM0,ADDRESS
+                      00157                 movai           IMM0
+                      00158                 xorar           REG0
+                      00159                 jbclr           Z
+                      00160                 goto            ADDRESS
+                      00161                 ENDM
+                      00162 ;-------------------------------------------------
+                      00163 CJNE1           MACRO           REG0,IMM0,ADDRESS
+                      00164                 movai           IMM0
+                      00165                 xorar           REG0
+                      00166                 jbset           Z
+                      00167                 goto            ADDRESS
+                      00168                 ENDM
+                      00169 ;-------------------------------------------------
+                      00170 CJE2            MACRO           REG0,REG1,IMM0,IMM1,ADDRESS
+                      00171                 movai           IMM0
+                      00172                 XORAR           REG0
+                      00173                 JBSET           Z
+                      00174                 GOTO            $+5
+                      00175                 movai           IMM1
+                      00176                 XORAR           REG1
+                      00177                 JBCLR           Z
+                      00178                 GOTO            ADDRESS
+                      00179                 ENDM
+                      00180 ;-------------------------------------------------
+                      00181 CJNE2           MACRO           REG0,REG1,IMM0,IMM1,ADDRESS
+                      00182                 movai           IMM0
+                      00183                 XORAR           REG0
+                      00184                 JBSET           Z
+                      00185                 GOTO            ADDRESS
+                      00186                 movai           IMM1
+                      00187                 XORAR           REG1
+                      00188                 JBSET           Z
+                      00189                 GOTO            ADDRESS
+                      00190                 ENDM
+                      00191 ;-------------------------------------------------
+                      00192 CJS1            MACRO           REG0,IMM0,ADDRESS
+                      00193                 movai           IMM0
+                      00194                 ASUBAR          REG0
+                      00195                 JBCLR           C
+                      00196                 GOTO            ADDRESS
+                      00197                 ENDM
+                      00198 ;-------------------------------------------------
+                      00199 CJB1            MACRO           REG0,IMM0,ADDRESS
+                      00200                 movai           IMM0
+                      00201                 ASUBAR          REG0
+                      00202                 JBSET           C
+                      00203                 GOTO            ADDRESS
+                      00204                 ENDM
+                      00205 ;-------------------------------------------------
+                      00206 CPE1            MACRO           REG0,REG1,ADDRESS
+                      00207                 MOVAR           REG1
+                      00208                 XORAR           REG0
+                      00209                 JBCLR           Z
+                      00210                 GOTO            ADDRESS
+                      00211                 ENDM
+                      00212 ;-------------------------------------------------
+                      00213 CPNE1           MACRO           REG0,REG1,ADDRESS
+                      00214                 MOVAR           REG1
+                      00215                 XORAR           REG0
+                      00216                 JBSET           Z
+                      00217                 GOTO            ADDRESS
+                      00218                 ENDM
+                      00219 ;-------------------------------------------------
+                      00220 CPS1            MACRO           REG0,REG1,ADDRESS
+                      00221                 movar           REG0
+                      00222                 asubar          REG1
+                      00223                 jbset           C
+                      00224                 goto            ADDRESS
+                      00225                 ENDM
+                      00226 ;-------------------------------------------------
+                      00227 CPB1            MACRO           REG0,REG1,ADDRESS
+                      00228                 movar           REG0
+                      00229                 asubar          REG1
+                      00230                 jbclr           C
+                      00231                 goto            ADDRESS
+                      00232                 ENDM
+                      00233 ;-------------------------------------------------
+                      00234 CJS2            MACRO           REG0H,REG0L,IMMH,IMML,ADDRESS
+                      00235                 movar           REG0H
+                      00236                 asubai          IMMH
+                      00237                 jbset           C
+                      00238                 goto            ADDRESS
+                      00239                 jbset           Z
+                      00240                 goto            $+5
+                      00241                 movar           REG0L
+                      00242                 asubai          IMML
+                      00243                 jbset           C
+                      00244                 goto            ADDRESS
+                      00245                 ENDM
+                      00246 ;-------------------------------------------------
+                      00247 CJB2            MACRO           REG0H,REG0L,IMMH,IMML,ADDRESS
+                      00248                 movar           REG0H
+                      00249                 asubai          IMMH
+                      00250                 jbset           C
+                      00251                 goto            $+7
+                      00252                 jbset           Z
+                      00253                 goto            ADDRESS
+                      00254                 movar           REG0L
+                      00255                 asubai          IMML
+                      00256                 jbclr           C
+                      00257                 goto            ADDRESS
+                      00258                 ENDM
+                      00259 ;-------------------------------------------------
+                      00260 CPS2            MACRO           REG0H,REG0L,REG1H,REG1L,ADDRESS
+                      00261                 movar           REG0H
+                      00262                 asubar          REG1H
+                      00263                 jbset           C
+                      00264                 goto            ADDRESS
+                      00265                 jbset           Z
+                      00266                 goto            $+5
+                      00267                 movar           REG0L
+                      00268                 asubar          REG1L
+                      00269                 jbset           C
+                      00270                 goto            ADDRESS
+                      00271                 ENDM
+                      00272 ;--------------------------------------------------------------------------
+                      00273                 org             0x00
+0000   8000           00274                 goto            Reset
+                      00275 ;--------------------------------------------------------------------------
+                      00276                 org             08h
+0008                  00277 Interrupt_Service:
+0008   0400           00278                 PUSH
+0009   5DC8           00279                 jbset           T0IF
+000A   8000           00280                 goto            Interrupt_Service_Ret
+000B   45C8           00281                 bclr            T0IF
+                      00282                 XORIR           IOP0,1
+000C   2D01               M                 movai           IMM0
+000D   1CD0               M                 xorra           REG0
+000E   161C           00283                 jzr             R_8MsCnt
+000F   0000           00284                 nop
+0010   C000           00285                 call            F_Output
+                      00286                 CJS1            R_8MsCnt,8,Interrupt_Service_Ret
+0011   2D08               M                 movai           IMM0
+0012   221C               M                 ASUBAR          REG0
+0013   5286               M                 JBCLR           C
+0014   8000               M                 GOTO            ADDRESS
+0015   2B1C           00287                 clrr            R_8MsCnt
+0016   4812           00288                 bset            B_8MsFlag
+0017                  00289 Interrupt_Service_Ret:
+0017   0500           00290                 POP
+0018   0F00           00291                 retie
+                      00292 ;--------------------------------------------------------------------------
+0019                  00293 F_PwmTable:
+                      00294                 ;dw             3       ;0
+                      00295                 ;dw             5       ;1 
+                      00296                 ;dw             8       ;2 
+                      00297                 ;dw             10      ;3 
+                      00298                 ;dw             13      ;4 
+                      00299                 ;dw             15      ;5 
+                      00300                 ;dw             18      ;6 
+0019   0014           00301                 dw              20 ;20 ;7 
+001A   0017           00302                 dw              23 ;23 ;8 
+001B   001A           00303                 dw              26 ;26 ;9 
+001C   001C           00304                 dw              28 ;28 ;10
+001D   001F           00305                 dw              31 ;31 ;11
+001E   0021           00306                 dw              33 ;33 ;12
+001F   0024           00307                 dw              36 ;36 ;13
+0020   0026           00308                 dw              38 ;38 ;14
+0021   0029           00309                 dw              41 ;41 ;15
+0022   002B           00310                 dw              43 ;43 ;16
+0023   002E           00311                 dw              46 ;46 ;17
+0024   0030           00312                 dw              48 ;48 ;18
+0025   0033           00313                 dw              51 ;51 ;19
+0026   0036           00314                 dw              54 ;54 ;20
+0027   0038           00315                 dw              56 ;56 ;21
+0028   003B           00316                 dw              59 ;59 ;22
+0029   003D           00317                 dw              61 ;61 ;23
+002A   0040           00318                 dw              64 ;64 ;24
+002B   0042           00319                 dw              66 ;66 ;25
+002C   0045           00320                 dw              69 ;69 ;26
+002D   0047           00321                 dw              71 ;71 ;27
+002E   004A           00322                 dw              74 ;74 ;28
+002F   004D           00323                 dw              77 ;77 ;29
+0030   004F           00324                 dw              79 ;79 ;30
+0031   0052           00325                 dw              82 ;82 ;31
+0032   0054           00326                 dw              84 ;84 ;32
+0033   0057           00327                 dw              87 ;87 ;33
+0034   0059           00328                 dw              89 ;89 ;34
+0035   005C           00329                 dw              92 ;92 ;35
+0036   005E           00330                 dw              94 ;94 ;36
+0037   0061           00331                 dw              97 ;97 ;37
+0038   0063           00332                 dw              99 ;99 ;38
+0039   0066           00333                 dw              102;102;39
+003A   0069           00334                 dw              105;105;40
+003B   006B           00335                 dw              107;107;41
+003C   006E           00336                 dw              110;110;42
+003D   0070           00337                 dw              112;112;43
+003E   0073           00338                 dw              115;115;44
+003F   0075           00339                 dw              117;117;45
+0040   0078           00340                 dw              120;120;46
+0041   007A           00341                 dw              122;122;47
+0042   007D           00342                 dw              125;125;48
+0043   0080           00343                 dw              128;128;49
+0044   0082           00344                 dw              130;130;50
+0045   0085           00345                 dw              133;133;51
+0046   0087           00346                 dw              135;135;52
+0047   008A           00347                 dw              138;138;53
+0048   008C           00348                 dw              140;140;54
+0049   008F           00349                 dw              143;143;55
+004A   0091           00350                 dw              145;145;56
+004B   0094           00351                 dw              148;148;57
+004C   0096           00352                 dw              150;150;58
+004D   0099           00353                 dw              153;153;59
+004E   009C           00354                 dw              156;156;60
+004F   009E           00355                 dw              158;158;61
+0050   00A1           00356                 dw              161;161;62
+0051   00A3           00357                 dw              163;163;63
+0052   00A6           00358                 dw              166;166;64
+0053   00A8           00359                 dw              168;168;65
+0054   00AB           00360                 dw              171;171;66
+0055   00AD           00361                 dw              173;173;67
+0056   00B0           00362                 dw              176;176;68
+0057   00B3           00363                 dw              179;179;69
+0058   00B5           00364                 dw              181;181;70
+0059   00B8           00365                 dw              184;184;71
+005A   00BA           00366                 dw              186;186;72
+005B   00BD           00367                 dw              189;189;73
+005C   00BF           00368                 dw              191;191;74
+005D   00C2           00369                 dw              194;194;75
+005E   00C4           00370                 dw              196;196;76
+005F   00C7           00371                 dw              199;199;77
+0060   00C9           00372                 dw              201;201;78
+0061   00CC           00373                 dw              204;204;79
+0062   00CF           00374                 dw              207;207;80
+0063   00D1           00375                 dw              209;209;81
+0064   00D4           00376                 dw              212;212;82
+0065   00D6           00377                 dw              214;214;83
+0066   00D9           00378                 dw              217;217;84
+0067   00DB           00379                 dw              219;219;85
+0068   00DE           00380                 dw              222;222;86
+0069   00E0           00381                 dw              224;224;87
+006A   00E3           00382                 dw              227;227;88
+006B   00E6           00383                 dw              230;230;89
+006C   00E8           00384                 dw              232;232;90
+006D   00E8           00385                 dw              232;235;91
+006E   00E8           00386                 dw              232;237;92
+006F   00E8           00387                 dw              232;240;93
+0070   00E8           00388                 dw              232;242;94
+0071   00E8           00389                 dw              232;245;95
+0072   00E8           00390                 dw              232;247;96
+0073   00E8           00391                 dw              232;250;97
+0074   00E8           00392                 dw              232;252;98
+0075   00E8           00393                 dw              232;255;99
+                      00394 ;--------------------------------------------------------------------------
+0076                  00395 Reset:
+0076   2D00           00396                 movai           0x00
+0077   1FD0           00397                 movra           IOP0
+0078   2DFF           00398                 movai           11111111B
+0079   1FB8           00399                 movra           OEP0
+007A   2D00           00400                 movai           0x00
+007B   1FD0           00401                 movra           IOP0
+                      00402 
+007C   2D00           00403                 movai           0x00
+007D   1FD4           00404                 movra           IOP4
+007E   2DFC           00405                 movai           11111100B
+007F   1FC4           00406                 movra           OEP4
+0080   2D00           00407                 movai           0x00
+0081   1FD4           00408                 movra           IOP4
+                      00409 
+0082   2D00           00410                 movai           0x00
+0083   1FD5           00411                 movra           IOP5
+0084   2DFF           00412                 movai           11111111B
+0085   1FC5           00413                 movra           OEP5
+0086   2D00           00414                 movai           0x00
+0087   1FD5           00415                 movra           IOP5
+                      00416                 
+0088   4CD4           00417                 bset            IOP4,4
+                      00418 
+0089   2B84           00419                 clrr            FSR1
+008A   2D7F           00420                 movai           127
+008B   1F83           00421                 movra           FSR0
+008C   2BE7           00422                 clrr            INDF
+008D   2683           00423                 djzr            FSR0
+008E   8000           00424                 goto            $-2
+008F   2BE7           00425                 clrr            INDF
+0090   2D5A           00426                 movai           5AH
+0091   1ECC           00427                 movar           WDTR
+                      00428 
+0092   2D03           00429                 movai           0x03
+0093   1FAE           00430                 movra           ANSEL
+                      00431 
+0094   2D90           00432                 movai           0x90
+0095   1FB1           00433                 movra           ADCR
+                      00434 
+                      00435                 MOVI            VREF,02H;Vref=4V
+0096   2D02               M                 movai           IMM0
+0097   1FAF               M                 movra           REG0
+                      00436 
+0098   2D30           00437                 movai           00110000B;0x20;0111 0000
+0099   1FB3           00438                 movra           ADRL    ;ad covert times,Fcpu/8
+                      00439 
+009A   2D08           00440                 movai           00001000B
+009B   1FD8           00441                 movra           TXCR
+                      00442                 
+009C   2DD4           00443                 movai           11010100B
+009D   1FDA           00444                 movra           T0CR
+                      00445 
+009E   2D82           00446                 movai           130
+009F   1FDB           00447                 movra           T0C
+00A0   1FCD           00448                 movra           T0D
+                      00449                 
+00A1   2DD0           00450                 movai           11010000B
+00A2   1FDC           00451                 movra           T1CR
+00A3   2D00           00452                 movai           0
+00A4   1FDD           00453                 movra           T1C
+00A5   1FDE           00454                 movra           T1D
+                      00455 
+00A6   45C8           00456                 bclr            T0IF
+00A7   4DC9           00457                 bset            T0IE
+00A8   4FDF           00458                 bset            GIE
+00A9   4A12           00459                 bset            B_Reset
+                      00460 ;--------------------------------------------------------------------------
+00AA                  00461 Main:
+00AA   2D5A           00462                 movai           5AH
+00AB   1FCC           00463                 movra           WDTR
+00AC   5212           00464                 jbclr           B_Reset
+00AD   8000           00465                 goto            $+4
+00AE   5812           00466                 jbset           B_8MsFlag
+00AF   8000           00467                 goto            Main
+00B0   4012           00468                 bclr            B_8MsFlag
+                      00469           ;     call            ADC_Config
+00B1   C000           00470                 call            F_AdSample
+00B2   C000           00471                 call            F_Ad_Level
+00B3   C000           00472                 call            F_Pwm
+00B4   8000           00473                 goto            Main
+                      00474 
+                      00475 ;------------------------------------------------------------------------------
+00B5                  00476 F_AdSample:
+                      00477                 MOVI            R_LoopNum,0Ah
+00B5   2D0A               M                 movai           IMM0
+00B6   1F03               M                 movra           REG0
+00B7   2B08           00478                 clrr            R_VoltageSumH
+00B8   2B09           00479                 clrr            R_VoltageSumL
+00B9   42B1           00480                 bclr            ADCHS2
+00BA   41B1           00481                 bclr            ADCHS1
+00BB   40B1           00482                 bclr            ADCHS0
+00BC   45B1           00483                 bclr            ADEOC
+00BD   4EB1           00484                 bset            ADST
+00BE   8000           00485                 goto            $+1
+00BF   8000           00486                 goto            $+1
+00C0   8000           00487                 goto            $+1
+00C1   5DB1           00488                 jbset           ADEOC
+00C2   8000           00489                 goto            $-1
+                      00490 
+00C3   45B1           00491                 bclr            ADEOC
+00C4   4EB1           00492                 bset            ADST
+00C5   8000           00493                 goto            $+1
+00C6   8000           00494                 goto            $+1
+00C7   8000           00495                 goto            $+1
+00C8   5DB1           00496                 jbset           ADEOC
+00C9   8000           00497                 goto            $-1
+00CA                  00498 L_AdSample_Loop:
+00CA   45B1           00499                 bclr            ADEOC
+00CB   4EB1           00500                 bset            ADST
+00CC   8000           00501                 goto            $+1
+00CD   8000           00502                 goto            $+1
+00CE   8000           00503                 goto            $+1
+00CF   5DB1           00504                 jbset           ADEOC
+00D0   8000           00505                 goto            $-1
+                      00506 
+00D1   17B3           00507                 swapar          ADRL
+00D2   2AF0           00508                 andai           0F0H
+00D3   1F00           00509                 movra           R_Temp
+                      00510 
+00D4   1EB2           00511                 movar           ADRH
+00D5   1F01           00512                 movra           R_WorkTemp
+                      00513 
+00D6   4286           00514                 bclr            C
+00D7   0901           00515                 rrr             R_WorkTemp
+00D8   0900           00516                 rrr             R_Temp
+00D9   4286           00517                 bclr            C
+00DA   0901           00518                 rrr             R_WorkTemp
+00DB   0900           00519                 rrr             R_Temp
+00DC   4286           00520                 bclr            C
+00DD   0901           00521                 rrr             R_WorkTemp
+00DE   0900           00522                 rrr             R_Temp
+00DF   4286           00523                 bclr            C
+00E0   0901           00524                 rrr             R_WorkTemp
+00E1   0900           00525                 rrr             R_Temp
+                      00526 
+                      00527                 CJNE1           R_LoopNum,0AH,L_AdComapre
+00E2   2D0A               M                 movai           IMM0
+00E3   1B03               M                 xorar           REG0
+00E4   5886               M                 jbset           Z
+00E5   8000               M                 goto            ADDRESS
+00E6   1E00           00528                 movar           R_Temp
+00E7   1F07           00529                 movra           R_VoltageL_Min
+00E8   1F05           00530                 movra           R_VoltageL_Max
+00E9   1E01           00531                 movar           R_WorkTemp
+00EA   1F06           00532                 movra           R_VoltageH_Min
+00EB   1F04           00533                 movra           R_VoltageH_Max
+00EC   8000           00534                 goto            L_AdAverage
+00ED                  00535 L_AdComapre:
+                      00536                 CPS2            R_WorkTemp,R_Temp,R_VoltageH_Max,R_VoltageL_Max,L_AdComapre_Min
+00ED   1E01               M                 movar           REG0H
+00EE   2204               M                 asubar          REG1H
+00EF   5A86               M                 jbset           C
+00F0   8000               M                 goto            ADDRESS
+00F1   5886               M                 jbset           Z
+00F2   8000               M                 goto            $+5
+00F3   1E00               M                 movar           REG0L
+00F4   2205               M                 asubar          REG1L
+00F5   5A86               M                 jbset           C
+00F6   8000               M                 goto            ADDRESS
+00F7   1E00           00537                 movar           R_Temp
+00F8   1F05           00538                 movra           R_VoltageL_Max
+00F9   1E01           00539                 movar           R_WorkTemp
+00FA   1F04           00540                 movra           R_VoltageH_Max
+00FB                  00541 L_AdComapre_Min:
+                      00542                 CPS2            R_VoltageH_Min,R_VoltageL_Min,R_WorkTemp,R_Temp,L_AdAverage
+00FB   1E06               M                 movar           REG0H
+00FC   2201               M                 asubar          REG1H
+00FD   5A86               M                 jbset           C
+00FE   8000               M                 goto            ADDRESS
+00FF   5886               M                 jbset           Z
+0100   8000               M                 goto            $+5
+0101   1E07               M                 movar           REG0L
+0102   2200               M                 asubar          REG1L
+0103   5A86               M                 jbset           C
+0104   8000               M                 goto            ADDRESS
+0105   1E00           00543                 movar           R_Temp
+0106   1F07           00544                 movra           R_VoltageL_Min
+0107   1E01           00545                 movar           R_WorkTemp
+0108   1F06           00546                 movra           R_VoltageH_Min
+0109                  00547 L_AdAverage:
+0109   1E00           00548                 movar           R_Temp
+010A   1309           00549                 addra           R_VoltageSumL
+010B   5286           00550                 jbclr           C
+010C   1608           00551                 jzr             R_VoltageSumH
+010D   0000           00552                 nop
+010E   1E01           00553                 movar           R_WorkTemp
+010F   1308           00554                 addra           R_VoltageSumH
+                      00555 
+0110   2603           00556                 djzr            R_LoopNum
+0111   8000           00557                 goto            L_AdSample_Loop
+                      00558 
+0112   1E09           00559                 movar           R_VoltageSumL           ;sub Min
+0113   2207           00560                 asubar          R_VoltageL_Min
+0114   1F09           00561                 movra           R_VoltageSumL
+0115   5A86           00562                 jbset           C
+0116   2608           00563                 djzr            R_VoltageSumH
+0117   0000           00564                 nop
+0118   1E08           00565                 movar           R_VoltageSumH
+0119   2206           00566                 asubar          R_VoltageH_Min
+011A   1F08           00567                 movra           R_VoltageSumH
+                      00568 
+011B   1E09           00569                 movar           R_VoltageSumL           ;sub Max
+011C   2205           00570                 asubar          R_VoltageL_Max
+011D   1F09           00571                 movra           R_VoltageSumL
+011E   5A86           00572                 jbset           C
+011F   2608           00573                 djzr            R_VoltageSumH
+0120   0000           00574                 nop
+0121   1E08           00575                 movar           R_VoltageSumH
+0122   2204           00576                 asubar          R_VoltageH_Max
+0123   1F08           00577                 movra           R_VoltageSumH
+                      00578 
+0124   4286           00579                 bclr            C
+0125   0908           00580                 rrr             R_VoltageSumH
+0126   0909           00581                 rrr             R_VoltageSumL
+0127   4286           00582                 bclr            C
+0128   0908           00583                 rrr             R_VoltageSumH
+0129   0909           00584                 rrr             R_VoltageSumL
+012A   4286           00585                 bclr            C
+012B   0908           00586                 rrr             R_VoltageSumH
+012C   0909           00587                 rrr             R_VoltageSumL
+012D                  00588 L_AdSample_Ret:
+012D   0E00           00589                 return
+                      00590 ;**********************************************
+012E                  00591 F_Ad_Level:
+012E   4286           00592                 bclr            C
+012F   0908           00593                 rrr             R_VoltageSumH
+0130   0909           00594                 rrr             R_VoltageSumL
+0131   4286           00595                 bclr            C
+0132   0908           00596                 rrr             R_VoltageSumH
+0133   0909           00597                 rrr             R_VoltageSumL
+0134   4286           00598                 bclr            C
+0135   0908           00599                 rrr             R_VoltageSumH
+0136   0909           00600                 rrr             R_VoltageSumL
+0137   4286           00601                 bclr            C
+0138   0908           00602                 rrr             R_VoltageSumH
+0139   0909           00603                 rrr             R_VoltageSumL
+013A   2B84           00604                 clrr            FSR1
+013B   2D00           00605                 movai           F_PwmTable
+                      00606                 
+013C   1209           00607                 addar           R_VoltageSumL
+013D   1F83           00608                 movra           FSR0
+013E   0D00           00609                 movc
+013F   1F0E           00610                 movra           R_PwmBuf
+0140                  00611 L_AD_Level_Ret:
+0140   0E00           00612                 return
+                      00613 ;------------------------------------------------------------------------------
+0141                  00614 F_Output:
+                      00615                 CJZ1            R_PwmBuf,L_Output_Ret
+0141   1E0E               M                 movar           REG0
+0142   5086               M                 jbclr           Z
+0143   8000               M                 goto            ADDRESS
+0144   5A12           00616                 jbset           B_Reset
+0145   8000           00617                 goto            L_Output_Do
+                      00618                 
+0146   5C12           00619                 jbset           B_AdOk
+0147   8000           00620                 goto            L_Output_Do
+                      00621                         
+0148   1E0E           00622                 movar           R_PwmBuf
+0149   220F           00623                 asubar          R_Pwm
+014A   5086           00624                 jbclr           Z
+014B   8000           00625                 goto            L_Output_Do0
+014C   5A86           00626                 jbset           C
+014D   8000           00627                 goto            L_Ad_Level_Dec
+014E   160F           00628                 jzr             R_Pwm
+014F   0000           00629                 nop
+0150   8000           00630                 goto            L_AD_Level_Ret
+0151                  00631 L_Ad_Level_Dec:
+0151   260F           00632                 djzr            R_Pwm
+0152   0000           00633                 nop
+0153   8000           00634                 goto            L_Output_Ret
+0154                  00635 L_Output_Do0:
+0154   4412           00636                 bclr            B_AdOk
+0155                  00637 L_Output_Do:
+0155   4212           00638                 bclr            B_Reset
+                      00639                 MOV             R_Pwm,R_PwmBuf
+0156   1E0E               M                 movar           REG1
+0157   1F0F               M                 movra           REG0
+0158   8000           00640                 goto            L_Output_Ret
+0159                  00641 L_Output_Ret:
+0159   0E00           00642                 return
+                      00643 ;------------------------------------------------------------------------------
+015A                  00644 F_Pwm:
+                      00645                 CJZ1            R_Pwm,L_Pwm_Off
+015A   1E0F               M                 movar           REG0
+015B   5086               M                 jbclr           Z
+015C   8000               M                 goto            ADDRESS
+                      00646                 CJE1            R_Pwm,0FFH,L_Pwm_Full
+015D   2DFF               M                 movai           IMM0
+015E   1B0F               M                 xorar           REG0
+015F   5086               M                 jbclr           Z
+0160   8000               M                 goto            ADDRESS
+                      00647                 MOV             T1D,R_Pwm
+0161   1E0F               M                 movar           REG1
+0162   1FDE               M                 movra           REG0
+0163   48DC           00648                 bset            PWM1OE
+0164   8000           00649                 goto            L_Pwm_Ret
+0165                  00650 L_Pwm_Off:
+0165   40DC           00651                 bclr            PWM1OE
+0166   43D5           00652                 bclr            IOP5,3
+0167   8000           00653                 goto            L_Pwm_Ret
+0168                  00654 L_Pwm_Full:     
+0168   40DC           00655                 bclr            PWM1OE
+0169   4BD5           00656                 bset            IOP5,3  
+016A                  00657 L_Pwm_Ret:
+016A   0E00           00658                 return
+                      00659 
+                      00660 ;**********************************************
+                      00661 ;FILE NAME:DIV32X16
+                      00662 ;IN:wr8wr7wr6wr5/wr3wr2
+                      00663 ;OUT:wr8wr7wr6wr5
+                      00664 ;TEMP:wr1,wr0,wr4
+                      00665 ;SMALL DATA: wr1wr0
+                      00666 ;------------------------------------------
+016B                  00667 F_Div:
+016B   2B20           00668                 clrr            wr0
+016C   2B21           00669                 clrr            wr1
+                      00670                 MOVI            wr4,32
+016D   2D20               M                 movai           IMM0
+016E   1F24               M                 movra           REG0
+                      00671                                 
+                      00672                 CJNZ2           wr3,wr2,L_Div
+016F   1E23               M                 movar           REG0
+0170   1822               M                 orar            REG1
+0171   5886               M                 jbset           Z
+0172   8000               M                 goto            ADDRESS
+0173   2B25           00673                 clrr            wr5
+0174   2B26           00674                 clrr            wr6
+0175   2B27           00675                 clrr            wr7
+0176   2B28           00676                 clrr            wr8
+0177   8000           00677                 goto            L_Div_Ret
+0178                  00678 L_Div:                          
+0178   4286           00679                 bclr            C
+0179   0B25           00680                 rlr             wr5
+017A   0B26           00681                 rlr             wr6
+017B   0B27           00682                 rlr             wr7
+017C   0B28           00683                 rlr             wr8
+017D   0B20           00684                 rlr             wr0
+017E   0B21           00685                 rlr             wr1
+017F   5286           00686                 jbclr           C
+0180   8000           00687                 goto            L_Div_1
+                      00688                                 
+0181   1E21           00689                 movar           wr1
+0182   2223           00690                 asubar          wr3
+                      00691                                 
+0183   5A86           00692                 jbset           C
+0184   8000           00693                 goto            L_Div_2
+                      00694                                 
+0185   5886           00695                 jbset           Z
+0186   8000           00696                 goto            L_Div_1
+                      00697                                 
+0187   1E20           00698                 movar           wr0
+0188   2222           00699                 asubar          wr2
+0189   5A86           00700                 jbset           C
+018A   8000           00701                 goto            L_Div_2
+                      00702                                 
+018B                  00703 L_Div_1:                        
+018B   1625           00704                 jzr             wr5
+018C   0000           00705                 nop             
+018D   1E21           00706                 movar           wr1
+018E   2223           00707                 asubar          wr3
+018F   1F21           00708                 movra           wr1
+                      00709                                 
+0190   1E20           00710                 movar           wr0
+0191   2222           00711                 asubar          wr2
+0192   1F20           00712                 movra           wr0
+                      00713                                 
+0193   5286           00714                 jbclr           C
+0194   8000           00715                 goto            L_Div_2
+0195   2621           00716                 djzr            wr1
+0196   0000           00717                 nop             
+0197                  00718 L_Div_2:                        
+0197   2624           00719                 djzr            wr4
+0198   8000           00720                 goto            L_Div
+0199                  00721 L_Div_Ret:
+0199   0E00           00722                 return
+                      00723 ;------------------------------------------------------------------------------
+                      00724                 END
+gpasm-2.2.10 (Feb 22 2019)   Demo.asm           2019-7-16  11:25:07          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+ADCR                              000000B1
+ADRH                              000000B2
+ADRL                              000000B3
+ANSEL                             000000AE
+FSR0                              00000083
+FSR1                              00000084
+F_AdSample                        000000B5
+F_Ad_Level                        0000012E
+F_Div                             0000016B
+F_Output                          00000141
+F_Pwm                             0000015A
+F_PwmTable                        00000019
+HIBYTE                            00000082
+INDF                              000000E7
+INTE                              000000C9
+INTF                              000000C8
+IOP0                              000000D0
+IOP4                              000000D4
+IOP5                              000000D5
+Interrupt_Service                 00000008
+Interrupt_Service_Ret             00000017
+L_AD_Level_Ret                    00000140
+L_AdAverage                       00000109
+L_AdComapre                       000000ED
+L_AdComapre_Min                   000000FB
+L_AdSample_Loop                   000000CA
+L_AdSample_Ret                    0000012D
+L_Ad_Level_Dec                    00000151
+L_Div                             00000178
+L_Div_1                           0000018B
+L_Div_2                           00000197
+L_Div_Ret                         00000199
+L_Output_Do                       00000155
+L_Output_Do0                      00000154
+L_Output_Ret                      00000159
+L_Pwm_Full                        00000168
+L_Pwm_Off                         00000165
+L_Pwm_Ret                         0000016A
+Main                              000000AA
+OEP0                              000000B8
+OEP4                              000000C4
+OEP5                              000000C5
+OSCM                              000000CA
+PCH                               000000CF
+PCL                               000000CE
+PEDGE                             000000BF
+PFLAG                             00000086
+PUP0                              000000E0
+PUP4                              000000E4
+PUP5                              000000E5
+R_8MsCnt                          0000001C
+R_DefCnt                          0000001A
+R_DispNumL                        00000011
+R_DispNumM                        00000010
+R_DisplayCnt                      0000001B
+R_Flag                            00000012
+R_LoopNum                         00000003
+R_OverloadCntH                    0000000C
+R_OverloadCntL                    0000000D
+R_Pwm                             0000000F
+R_PwmBuf                          0000000E
+R_SampleCnt                       00000013
+R_SampleNum                       0000002A
+R_SegCnt                          0000001D
+R_Temp                            00000000
+R_VH_Max                          00000014
+R_VH_Min                          00000016
+R_VL_Max                          00000015
+R_VL_Min                          00000017
+R_VSumH                           00000018
+R_VSumL                           00000019
+R_VoltageH                        0000000A
+R_VoltageHBak                     0000001E
+R_VoltageH_Max                    00000004
+R_VoltageH_Min                    00000006
+R_VoltageL                        0000000B
+R_VoltageLBak                     0000001F
+R_VoltageL_Max                    00000005
+R_VoltageL_Min                    00000007
+R_VoltageSumH                     00000008
+R_VoltageSumL                     00000009
+R_VoltageSumM                     0000002B
+R_WorkTemp                        00000001
+R_WorkTemp1                       00000002
+Reset                             00000076
+STK0H                             000000FF
+STK0L                             000000FE
+STK1H                             000000FD
+STK1L                             000000FC
+STK2H                             000000FB
+STK2L                             000000FA
+STK3H                             000000F9
+STK3L                             000000F8
+STKP                              000000DF
+T0C                               000000DB
+T0CR                              000000DA
+T0D                               000000CD
+T1C                               000000DD
+T1CR                              000000DC
+T1D                               000000DE
+T2C                               000000ED
+T2CR                              000000EC
+T2D                               000000EE
+TXCR                              000000D8
+VREF                              000000AF
+WDTR                              000000CC
+_.org_8_008E                      0000008E
+_.org_8_00AD                      000000AD
+_.org_8_00BE                      000000BE
+_.org_8_00BF                      000000BF
+_.org_8_00C0                      000000C0
+_.org_8_00C2                      000000C2
+_.org_8_00C5                      000000C5
+_.org_8_00C6                      000000C6
+_.org_8_00C7                      000000C7
+_.org_8_00C9                      000000C9
+_.org_8_00CC                      000000CC
+_.org_8_00CD                      000000CD
+_.org_8_00CE                      000000CE
+_.org_8_00D0                      000000D0
+_.org_8_00F2                      000000F2
+_.org_8_0100                      00000100
+_CONFIG0                          00008000
+_CONFIG1                          00008001
+__32P7011                         00000001
+wr0                               00000020
+wr1                               00000021
+wr2                               00000022
+wr3                               00000023
+wr4                               00000024
+wr5                               00000025
+wr6                               00000026
+wr7                               00000027
+wr8                               00000028
+wr9                               00000029
+ADCHS0                            ADCR,0
+ADCHS1                            ADCR,1
+ADCHS2                            ADCR,2
+ADCKS0                            ADRL,4
+ADCKS1                            ADRL,6
+ADEOC                             ADCR,5
+ADIE                              INTE,7
+ADIF                              INTF,7
+ADLEN                             ADRL,5
+ADON                              ADCR,7
+ADR0                              ADRL,0
+ADR1                              ADRL,1
+ADR10                             ADRH,6
+ADR11                             ADRH,7
+ADR2                              ADRL,2
+ADR3                              ADRL,3
+ADR4                              ADRH,0
+ADR5                              ADRH,1
+ADR6                              ADRH,2
+ADR7                              ADRH,3
+ADR8                              ADRH,4
+ADR9                              ADRH,5
+ADST                              ADCR,6
+BUZ0OE                            T0CR,1
+BUZ1OE                            T1CR,1
+BUZ2OE                            T2CR,1
+B_8MsFlag                         R_Flag,0
+B_AdOk                            R_Flag,4
+B_AdSample                        R_Flag,3
+B_Overload                        R_Flag,1
+B_Reset                           R_Flag,2
+C                                 PFLAG,2
+CLKS                              OSCM,2
+CPUM0                             OSCM,3
+CPUM1                             OSCM,4
+DC                                PFLAG,1
+FSR00                             FSR0,0
+FSR01                             FSR0,1
+FSR02                             FSR0,2
+FSR03                             FSR0,3
+FSR04                             FSR0,4
+FSR05                             FSR0,5
+FSR06                             FSR0,6
+FSR07                             FSR0,7
+FSR10                             FSR1,0
+FSR11                             FSR1,1
+FSR12                             FSR1,2
+FSR13                             FSR1,3
+FSR14                             FSR1,4
+FSR15                             FSR1,5
+FSR16                             FSR1,6
+FSR17                             FSR1,7
+GCHS                              ADCR,4
+GIE                               STKP,7
+HIBYTE0                           HIBYTE,0
+HIBYTE1                           HIBYTE,1
+HIBYTE2                           HIBYTE,2
+HIBYTE3                           HIBYTE,3
+HIBYTE4                           HIBYTE,4
+HIBYTE5                           HIBYTE,5
+HIBYTE6                           HIBYTE,6
+HIBYTE7                           HIBYTE,7
+HOFF                              OSCM,1
+INDF0                             INDF,0
+INDF1                             INDF,1
+INDF2                             INDF,2
+INDF3                             INDF,3
+INDF4                             INDF,4
+INDF5                             INDF,5
+INDF6                             INDF,6
+INDF7                             INDF,7
+INT0IE                            INTE,0
+INT0IF                            INTF,0
+INT1IE                            INTE,1
+INT1IF                            INTF,1
+LVD24                             PFLAG,4
+LVD36                             PFLAG,5
+MINT00                            PEDGE,3
+MINT01                            PEDGE,4
+NPD                               PFLAG,6
+NT0                               PFLAG,7
+P00D                              IOP0,0
+P00OE                             OEP0,0
+P00PU                             PUP0,0
+P01D                              IOP0,1
+P01OE                             OEP0,1
+P01PU                             PUP0,1
+P02D                              IOP0,2
+P02OE                             OEP0,2
+P02PU                             PUP0,2
+P03D                              IOP0,3
+P03OE                             OEP0,3
+P03PU                             PUP0,3
+P04D                              IOP0,4
+P04OE                             OEP0,4
+P04PU                             PUP0,4
+P40ANS                            ANSEL,0
+P40D                              IOP4,0
+P40OE                             OEP4,0
+P40PU                             PUP4,0
+P41ANS                            ANSEL,1
+P41D                              IOP4,1
+P41OE                             OEP4,1
+P41PU                             PUP4,1
+P42ANS                            ANSEL,2
+P42D                              IOP4,2
+P42OE                             OEP4,2
+P42PU                             PUP4,2
+P43ANS                            ANSEL,3
+P43D                              IOP4,3
+P43OE                             OEP4,3
+P43PU                             PUP4,3
+P44ANS                            ANSEL,4
+P44D                              IOP4,4
+P44OE                             OEP4,4
+P44PU                             PUP4,4
+P45ANS                            ANSEL,5
+P45D                              IOP4,5
+P45OE                             OEP4,5
+P45PU                             PUP4,5
+P52D                              IOP5,2
+P52OE                             OEP5,2
+P52PU                             PUP5,2
+P53D                              IOP5,3
+P53OE                             OEP5,3
+P53PU                             PUP5,3
+P54D                              IOP5,4
+P54OE                             OEP5,4
+P54PU                             PUP5,4
+PC0                               PCL,0
+PC1                               PCL,1
+PC10                              PCH,2
+PC2                               PCL,2
+PC3                               PCL,3
+PC4                               PCL,4
+PC5                               PCL,5
+PC6                               PCL,6
+PC7                               PCL,7
+PC8                               PCH,0
+PC9                               PCH,1
+PWM0OE                            T0CR,0
+PWM1OE                            T1CR,0
+PWM2OE                            T2CR,0
+STKP0                             STKP,0
+STKP1                             STKP,1
+STKP2                             STKP,2
+T0ALOAD                           T0CR,2
+T0C0                              T0C,0
+T0C1                              T0C,1
+T0C2                              T0C,2
+T0C3                              T0C,3
+T0C4                              T0C,4
+T0C5                              T0C,5
+T0C6                              T0C,6
+T0C7                              T0C,7
+T0D0                              T0D,0
+T0D1                              T0D,1
+T0D2                              T0D,2
+T0D3                              T0D,3
+T0D4                              T0D,4
+T0D5                              T0D,5
+T0D6                              T0D,6
+T0D7                              T0D,7
+T0GE                              TXCR,1
+T0IE                              INTE,5
+T0IF                              INTF,5
+T0PR0                             T0CR,4
+T0PR1                             T0CR,5
+T0PR2                             T0CR,6
+T0PTS                             T0CR,3
+T0PTSX                            TXCR,2
+T1ALOAD                           T1CR,2
+T1C0                              T1C,0
+T1C1                              T1C,1
+T1C2                              T1C,2
+T1C3                              T1C,3
+T1C4                              T1C,4
+T1C5                              T1C,5
+T1C6                              T1C,6
+T1C7                              T1C,7
+T1D0                              T1D,0
+T1D1                              T1D,1
+T1D2                              T1D,2
+T1D3                              T1D,3
+T1D4                              T1D,4
+T1D5                              T1D,5
+T1D6                              T1D,6
+T1D7                              T1D,7
+T1IE                              INTE,6
+T1IF                              INTF,6
+T1PR0                             T1CR,4
+T1PR1                             T1CR,5
+T1PR2                             T1CR,6
+T1PTS                             T1CR,3
+T1PTSX                            TXCR,3
+T2ALOAD                           T2CR,2
+T2C0                              T2C,0
+T2C1                              T2C,1
+T2C2                              T2C,2
+T2C3                              T2C,3
+T2C4                              T2C,4
+T2C5                              T2C,5
+T2C6                              T2C,6
+T2C7                              T2C,7
+T2D0                              T2D,0
+T2D1                              T2D,1
+T2D2                              T2D,2
+T2D3                              T2D,3
+T2D4                              T2D,4
+T2D5                              T2D,5
+T2D6                              T2D,6
+T2D7                              T2D,7
+T2IE                              INTE,4
+T2IF                              INTF,4
+T2PR0                             T2CR,4
+T2PR1                             T2CR,5
+T2PR2                             T2CR,6
+T2PTS                             T2CR,3
+T2PTSX                            TXCR,4
+TC0EN                             T0CR,7
+TC1EN                             T1CR,7
+TC2EN                             T2CR,7
+VREFS                             VREF,7
+VRS0                              VREF,0
+VRS1                              VREF,1
+WDTR0                             WDTR,0
+WDTR1                             WDTR,1
+WDTR2                             WDTR,2
+WDTR3                             WDTR,3
+WDTR4                             WDTR,4
+WDTR5                             WDTR,5
+WDTR6                             WDTR,6
+WDTR7                             WDTR,7
+Z                                 PFLAG,0
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

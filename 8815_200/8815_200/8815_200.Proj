@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project MCU="MC30P6080" ID="0x6080" MCU_Type="CRISC" Date="2012-08-28" VS="1.01">
+  <ProWindows>
+    <Explorer fName="8815_200">
+      <SouceCode fName="SourceCode">
+        <asmFile fName="8815_200.c" fPath="\8815_200.c" />
+        <asmFile fName="iic.c" fPath="\iic.c" />
+        <asmFile fName="qma7981.c" fPath="\qma7981.c" />
+      </SouceCode>
+      <SouceCode fName="Output" />
+      <SouceCode fName="Debug" />
+    </Explorer>
+  </ProWindows>
+  <Option Value="0" Value0="0" Value1="3808" Value2="" Value3="1200" Value4="1087" Value5="" />
+  <Compiler Name="gpasm.exe" />
+  <Language Name="C" />
+</Project>

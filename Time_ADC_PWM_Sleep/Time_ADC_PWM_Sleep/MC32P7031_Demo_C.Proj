@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project MCU="MC32P7031" ID="0x7031" MCU_Type="CRISC" Date="2012-08-28" VS="1.01">
+  <ProWindows>
+    <Explorer fName="MC32P7031_Demo_C">
+      <SouceCode fName="SourceCode">
+        <asmFile fName="MC32P7031_Demo_C.c" fPath="\MC32P7031_Demo_C.c" />
+      </SouceCode>
+      <SouceCode fName="Output" />
+      <SouceCode fName="Debug">
+        <asmFile fName="user.h" fPath="\user.h" />
+      </SouceCode>
+    </Explorer>
+  </ProWindows>
+  <Option Value="4" Value0="4" Value1="c030" Value2="" Value3="b2" Value4="80" Value5="" Value6="" Value7="" Value8="" Value9="" Value10="" />
+  <Compiler Name="gpasm.exe" />
+  <Language Name="C" />
+  <WatchSymbol Name="ADC_Num_Value" Addr="0025" Value="??" BitFlag="False" Bit="0" DataRes="2" Array="False" />
+  <WatchSymbol Name="ADC_Num_Value" Addr="0025" Value="??" BitFlag="False" Bit="0" DataRes="2" Array="False" />
+</Project>

@@ -1,0 +1,730 @@
+gpasm-1.6.1 (Jan 23 2014)    ad_pwm1.asm        2014-8-12  11:18:39          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 #include     "mc32p21.inc"
+                      00001 
+                      00002 ;==========================================================================
+                      00003 ;
+                      00004 ;       Revision History
+                      00005 ;
+                      00006 ;==========================================================================
+                      00007 
+                      00008 ;Rev:   Date:    Reason:
+                      00009 
+                      00010 ;1.00   12/06/21 Initial Release
+                      00011 
+                      00012 ;==========================================================================
+                      00013 ;
+                      00014 ;       Register Definitions
+                      00015 ;
+                      00016 ;==========================================================================
+                      00017 
+                      00018 ;W                            EQU     H'0000'
+                      00019 ;F                            EQU     H'0001'
+                      00020 
+                      00021 ;----- Register Files------------------------------------------------------
+                      00022 cblock  0x180
+                      00023 INDF0                   
+                      00024 INDF1                   
+                      00025 INDF2                   
+                      00026 HIBYTE                  
+                      00027 FSR0                    
+                      00028 FSR1                    
+                      00029 PCL                     
+                      00030 PFLAG                   
+                      00031 ;----0x188
+                      00032 MCR                     
+                      00033 INDF3                   
+                      00034 INTE0                   
+                      00035 INTF0                   
+                      00036 INVALID_ADDR0           
+                      00037 INVALID_ADDR1           
+                      00038 INVALID_ADDR2           
+                      00039 INVALID_ADDR3           
+                      00040 ;----0x190
+                      00041 IOP0                    
+                      00042 OEP0                    
+                      00043 PUP0           
+                      00044 ANSEL
+                      00045 IOP1                      
+                      00046 OEP1                    
+                      00047 PUP1                    
+                      00048 KBIM           
+                      00049 ;-----0x198                        
+                      00050 INVALID_ADDR5                      
+                      00051 INVALID_ADDR6                    
+                      00052 INVALID_ADDR7           
+                      00053 INVALID_ADDR8           
+                      00054 INVALID_ADDR9           
+                      00055 INVALID_ADDRA           
+                      00056 INVALID_ADDRB           
+                      00057 INVALID_ADDRC           
+                      00058 ;-----0x1a0
+                      00059 T0CR                    
+                      00060 T0CNT                   
+                      00061 T0LOAD                  
+                      00062 T0DATA                  
+                      00063 T1CR                    
+                      00064 T1CNT                   
+                      00065 T1LOAD                  
+                      00066 T1DATA                  
+                      00067 ;-----0x1a8                        
+                      00068 UCR                     
+                      00069 UBR                     
+                      00070 UFR                     
+                      00071 UTR                     
+                      00072 URR                     
+                      00073 LVDCR                   
+                      00074 OSCM                    
+                      00075 POWCR                   
+                      00076 ;-----0x1b0
+                      00077 ADCR0                   
+                      00078 ADCR1                   
+                      00079 ADCR2                   
+                      00080 ADCR3                   
+                      00081 ADRH                    
+                      00082 ADRM                    
+                      00083 ADRL                    
+                      00084 INVALID_ADDRD           
+                      00085 ;----0x1b8                        
+                      00086 LCDCR0                  
+                      00087 LCDCR1                  
+                      00088 LCDIOS                  
+                      00089 INVALID_ADDRE           
+                      00090 INVALID_ADDRF           
+                      00091 INVALID_ADDR10          
+                      00092 INVALID_ADDR11          
+                      00093 INVALID_ADDR12          
+                      00094 ;----0x1c0
+                      00095 LCDDS0                  
+                      00096 LCDDS1                  
+                      00097 LCDDS2                  
+                      00098 LCDDS3                  
+                      00099 LCDDS4                  
+                      00100 LCDDS5                  
+                      00101 LCDDS6                  
+                      00102 LCDDS7                  
+                      00103 ;----0x1c8                        
+                      00104 LCDDS8                  
+                      00105 LCDDS9                  
+                      00106 LCDDSa                  
+                      00107 LCDDSb                  
+                      00108 LCDDSc                  
+                      00109 LCDDSd                  
+                      00110 LCDDSe                  
+                      00111 LCDDSf                  
+                      00112 endc
+  000001F3            00113 OSCCAL          equ     0x1f3
+                      00114 
+                      00115 ;#define                sleep                   stop
+                      00116 #define         STATUS          PFLAG
+                      00117 #define         INDF            INDF0
+                      00118 #define         FSR             FSR0
+                      00119 #define         P0HCON          PUP0
+                      00120 #define         P1HCON          PUP1
+                      00121 #define         INTECON         INTE0
+                      00122 #define         INTEFLAG        INTF0   
+                      00123 #define         LCDDS10         LCDDSa
+                      00124 #define         LCDDS11         LCDDSb
+                      00125 #define         LCDDS12         LCDDSc
+                      00126 #define         LCDDS13         LCDDSc
+                      00127 #define         LCDDS14         LCDDSe
+                      00128 #define         LCDDS15         LCDDSf
+                      00129 
+                      00130 ;----- STATUS Bits --------------------------
+                      00131 #define Z       STATUS,2
+                      00132 #define DC      STATUS,1
+                      00133 #define C       STATUS,0
+                      00134 
+                      00135 ;----- MCR Bits --------------------------
+                      00136 #define GIE     MCR,7
+                      00137 
+                      00138 ;-----  P2HCON Bits -----------------------
+                      00139 #define P20PH   P2HCON,0
+                      00140 #define P21PH   P2HCON,1
+                      00141 #define P22PH   P2HCON,2
+                      00142 #define P23PH   P2HCON,3
+                      00143 #define P24PH   P2HCON,4
+                      00144 #define P25PH   P2HCON,5
+                      00145 #define P26PH   P2HCON,6
+                      00146 #define P27PH   P2HCON,7
+                      00147 ;----- INTECON Bits --------------------------
+                      00148 #define INTE    INTECON
+                      00149 #define ADIE    INTECON,6
+                      00150 #define KBIE    INTECON,4
+                      00151 #define INT1IE  INTECON,3
+                      00152 #define INT0IE  INTECON,2
+                      00153 #define T1IE    INTECON,1
+                      00154 #define T0IE    INTECON,0
+                      00155 
+                      00156 ;----- INTEFLAG Bits --------------------------
+                      00157 #define INTF    INTEFLAG
+                      00158 #define ADIF    INTF,6
+                      00159 #define KBIF    INTF,4
+                      00160 #define INT1IF  INTF,3
+                      00161 #define INT0IF  INTF,2
+                      00162 #define T1IF    INTF,1
+                      00163 #define T0IF    INTF,0
+                      00164 ;----- UCR Bits--------------------------
+                      00165 #define OPEN    UCR,4
+                      00166 #define EPEN    UCR,3
+                      00167 #define UARTEN  UCR,2
+                      00168 ;----- UFR ----------------------
+                      00169 #define FREF    UFR,7
+                      00170 #define PAEF    UFR,6
+                      00171 #define OVEF    UFR,5
+                      00172 #define TSEF    UFR,4
+                      00173 #define RDAF    UFR,1
+                      00174 #define TREF    UFR,0
+                      00175 ;---- ADCR0 Bits -----------------
+                      00176 #define    ADCKS_16     0<<1    ;Fcpu/16
+                      00177 #define    ADCKS_8      1<<1    ;Fcpu/8
+                      00178 #define    ADCKS_4      2<<1    ;Fcpu/4
+                      00179 #define    ADCKS_2      2<<1    ;Fcpu/2
+                      00180 #define    ADCHS_0      0<<4    ;AN0
+                      00181 #define    ADCHS_1      1<<4    ;AN1
+                      00182 #define    ADCHS_2      2<<4    ;AN2
+                      00183 #define    ADCHS_3      3<<4    ;AN3
+                      00184 #define    ADCHS_4      4<<4    ;AN4
+                      00185 #define    ADCHS_5      5<<4    ;AN5
+                      00186 #define    ADCHS_6      6<<4    ;AN6
+                      00187 #define    ADEN     ADCR0,0
+                      00188 #define    ADON     ADCR0,0
+                      00189 #define    ADEOC          ADCR0,1
+                      00190 ;---- ADCR1 Bits -----------------
+                      00191 #define    ADV_ADD      3       ;VDD
+                      00192 #define    ADV_4V       2       ;4V
+                      00193 #define    ADV_3V       1       ;3V
+                      00194 #define    ADV_2V       0       ;2V
+                      00195 #define    ADV_EX       4       ;外部参考电压
+                      00196 ;----- LCDCR0 Bits --------------------------
+                      00197 #define LCDEN   LCDCR0,7
+                      00198 #define VLCDS   LCDCR0,3
+                      00199 ;----- T0CR  Bits ----------------
+                      00200 #define TC0EN   T0CR,7
+                      00201 #define PWM0OUT T0CR,6
+                      00202 #define BUZ0OUT T0CR,5
+                      00203 
+                      00204 ;----- T1CR  Bits ----------------
+                      00205 #define TC1EN   T1CR,7
+                      00206 #define PWM1OUT T1CR,6
+                      00207 #define BUZ1OUT T1CR,5
+                      00208 
+                      00209 ;----- OSCM  Bits ----------------
+                      00210 #define STBL    OSCM,5
+                      00211 #define STBH    OSCM,4
+                      00212 #define CLKS    OSCM,2
+                      00213 #define LFEN    OSCM,1
+                      00214 #define HFEN    OSCM,0
+                      00215 
+                      00216 ;-----  POWCR Bits -------
+                      00217 #define LDOEN   POWCR,7
+                      00218 #define ENB     POWCR,6
+                      00219 ;-----  LVDCR Bits -------
+                      00220 #define LVD     PLVDCR,7
+                      00221 #define LVDS    PLVDCR,6
+                      00222 ;***********DDR1 DDR2 **********
+                      00223 #define DDR10   DDR1,0
+                      00224 #define DDR11   DDR1,1
+                      00225 #define DDR12   DDR1,2
+                      00226 #define DDR13   DDR1,3
+                      00227 
+                      00228 #define DDR20   DDR2,0
+                      00229 #define DDR21   DDR2,1
+                      00230 #define DDR22   DDR2,2
+                      00231 #define DDR23   DDR2,3
+                      00232 #define DDR24   DDR2,4
+                      00233 #define DDR25   DDR2,5
+                      00234 #define DDR26   DDR2,6
+                      00235 #define DDR27   DDR2,7
+                      00236 ;******************************
+                      00237 
+                      00238 
+                      00239 ;#define        inca    addai 1
+                      00002 #include     "user.inc"
+                      00001 ;==========================================
+                      00002 ;********user ram********************
+                      00003 cblock                  0x00
+                      00004 ACCBUF       
+                      00005 PFLAGBUF  
+                      00006 ;***********************************   
+                      00007 FLAG1   
+                      00008 r0              
+                      00009 r1                 
+                      00010 r2                
+                      00011 r3                 
+                      00012 r4                
+                      00013 r5                 
+                      00014 r6                 
+                      00015 r7
+                      00016 Filter_new                     ;新采样值
+                      00017 Filter_old                     ;上次采样值
+                      00018 Filter_temp       
+                      00019 Filter_const                   ;
+                      00020 Filter_adp                     ;
+                      00021 Filter_flag                    ;
+                      00022    
+                      00023 endc
+                      00024 ;************************************
+                      00025 #define       tm0flag           FLAG1,0
+                      00026 ;============================================================
+                      00027 #define       directionflag     FLAG1,1          ;0=dec,1=inc
+                      00028 ;---------------------------------------------
+                      00029 #define       filter_adp_max    5                ;消抖计数器最大值
+                      00030 #define       filter_1st_incr   5                
+                      00031 #define       filter_1st_max    250              
+                      00032 #define       THRESHOLD         5                ;变化阀值
+                      00033                 
+                      00034 ;==============================================================
+                      00035 ;********user io*********************
+                      00036 ;***********************************
+                      00003 
+                      00004         org                 00h
+0000   DF88           00005         bclr                GIE
+0001   A000           00006         goto                start
+                      00007         org                 08h
+0008                  00008 intter:
+0008   5600           00009         movra               ACCBUF
+0009   4587           00010         swapar              STATUS
+000A   5601           00011         movra               PFLAGBUF        
+                      00012         ;**************************************        
+000B   D18B           00013         bclr                T0IF
+                      00014         
+                      00015         ;**************************************
+000C                  00016 interrexit:        
+000C   4401           00017         swapar              PFLAGBUF       
+000D   5787           00018         movra               STATUS
+000E   4600           00019         swapr               ACCBUF
+000F   4400           00020         swapar              ACCBUF
+0010   000D           00021         retie                       
+0011                  00022 start:  
+                      00023         ;============io======================
+0011   77AE           00024         clrr               OSCM
+0012   3C00           00025         movai              0
+0013   5791           00026         movra              OEP0
+0014   3CFF           00027         movai              0xff
+0015   5792           00028         movra              PUP0
+                      00029         ;====================================
+0016   3C08           00030         movai              0x08
+0017   5795           00031         movra              OEP1                        
+                      00032         ;====================================
+0018   3C00           00033         movai              0
+0019   57A0           00034         movra              T0CR
+001A   3CFA           00035         movai              250
+001B   57A2           00036         movra              T0LOAD
+                      00037         ;=====================================
+001C   3C43           00038         movai              0x43
+001D   57A4           00039         movra              T1CR
+001E   3CFF           00040         movai              255
+001F   57A6           00041         movra              T1LOAD
+0020   3C00           00042         movai              0
+0021   57A7           00043         movra              T1DATA
+                      00044         ;======================================
+0022   3C20           00045         movai           0x20
+0023   5793           00046         movra           ANSEL
+0024   3C52           00047         movai           01010010b
+0025   57B0           00048         movra           ADCR0  
+0026   3C03           00049         movai           0x03
+0027   57B1           00050         movra           ADCR1      
+                      00051         ;*********clr  ram**************00-7f
+0028   3C7F           00052         movai           0x07f
+0029   5784           00053         movra           FSR0
+002A   7780           00054         clrr            INDF0
+002B   6B84           00055         djzr            FSR0
+002C   A000           00056         goto            $-2
+002D   7780           00057         clrr            INDF0       
+002E   C1B0           00058         bset            ADON 
+002F   CFA4           00059         bset            TC1EN
+                      00060         ;=================================                 
+0030                  00061 main:
+0030   000E           00062         clrwdt
+0031   8000           00063         call            get_ad
+0032   59B4           00064         movar           ADRH
+0033   560B           00065         movra           Filter_new
+0034   8000           00066         call            filter            
+0035   3C0A           00067         movai           10
+0036   480C           00068         rsubar          Filter_old
+0037   F187           00069         jbclr           C
+0038   A000           00070         goto            mainloop            
+0039   3C00           00071         movai           0
+003A   57A7           00072         movra           T1DATA
+003B   A000           00073         goto            main 
+003C                  00074 mainloop:
+003C   580C           00075         movar           Filter_old
+003D   57A7           00076         movra           T1DATA        
+003E   A000           00077         goto            main                 
+                      00078 ;********************************************                      
+                      00079 ;********user  function**********************
+                      00080 ;==========================================================
+003F                  00081 get_ad:
+                      00082 
+003F   D3B0           00083        bclr            ADEOC
+0040   E3B0           00084        jbset           ADEOC
+0041   A000           00085        goto            $-1
+0042   000C           00086        return
+                      00087 ;==========================================================
+0043                  00088 FUNCTION_MUL:
+0043   3C08           00089         movai   8
+0044   5605           00090         movra   r2      
+0045   7603           00091         clrr    r0
+0046   7604           00092         clrr    r1
+0047                  00093 mul_loop:
+0047   4E06           00094         rrr     r3      
+0048   E187           00095         jbset   C  
+0049   A000           00096         goto    result_shift
+004A   5807           00097         movar   r4
+004B   7E04           00098         addra   r1      
+004C                  00099 result_shift:                                                                
+004C   4E04           00100         rrr     r1      
+004D   4E03           00101         rrr     r0      
+004E   6A05           00102         djzr    r2
+004F   A000           00103         goto    mul_loop
+0050   000C           00104         return   
+                      00105 ;===============================================
+0051                  00106 FUNCTION_DIV:
+0051   7603           00107         clrr        r0  
+0052   7604           00108         clrr        r1
+0053   7605           00109         clrr        r2  
+0054   5A08           00110         movr        r5
+0055   F587           00111         jbclr       Z
+0056   000C           00112         return                                           
+0057   3C10           00113         movai       16
+0058   5609           00114         movra       r6  
+0059   5A06           00115         movr        r3
+005A   E587           00116         jbset       Z
+005B   A000           00117         goto        div_loop
+005C   5A07           00118         movr        r4
+005D   F587           00119         jbclr       Z
+005E   000C           00120         return                                           
+005F                  00121 div_loop:
+005F   D187           00122         bclr            C
+0060   5207           00123         rlr             r4      
+0061   5206           00124         rlr             r3      
+0062   5205           00125         rlr             r2      
+0063   520A           00126         rlr             r7
+0064   5808           00127         movar           r5
+0065   4805           00128         rsubar           r2
+0066   F187           00129         jbclr           C
+0067   A000           00130         goto             updata_div
+0068   F00A           00131         jbclr            r7,0
+0069   A000           00132         goto            $+3
+006A   D187           00133         bclr            C
+006B   A000           00134         goto            r0_shift
+006C                  00135 updata_div:                                                                       
+006C   5605           00136         movra            r2
+006D   C187           00137         bset            C
+006E                  00138 r0_shift:
+006E   5203           00139         rlr             r0
+006F   5204           00140         rlr             r1
+0070   6A09           00141         djzr            r6
+0071   A000           00142         goto            div_loop
+0072   000C           00143         return         
+                      00144 ;********************************************                           
+0073                  00145 filter:
+0073   8000           00146           call                filterconst
+0074   580C           00147           movar               Filter_old
+0075   480B           00148           rsubar              Filter_new
+0076   E187           00149           jbset               C
+0077   A000           00150           goto                xiaoyu
+0078   5606           00151           movra               r3
+0079   580E           00152           movar               Filter_const
+007A   5607           00153           movra               r4
+007B   8000           00154           call                FUNCTION_MUL
+007C   5804           00155           movar               r1
+007D   7E0C           00156           addra               Filter_old
+007E   000C           00157           return          
+007F                  00158 xiaoyu:          
+007F   580B           00159           movar               Filter_new
+0080   480C           00160           rsubar              Filter_old          
+                      00161           ;(Filter_old-Filter_new)*Filter_const/256
+0081   5606           00162           movra               r3
+0082   580E           00163           movar               Filter_const
+0083   5607           00164           movra               r4
+0084   8000           00165           call                FUNCTION_MUL
+0085   5804           00166           movar               r1
+0086   4A0C           00167           rsubra              Filter_old
+0087   000C           00168           return
+                      00169 ;------------------------------------------------------------------
+0088                  00170 filterconst:
+0088   580C           00171           movar               Filter_old
+0089   480B           00172           rsubar              Filter_new     ;
+008A   560D           00173           movra               Filter_temp
+008B   F187           00174           jbclr               C
+008C   A000           00175           goto                directionset
+                      00176           ;-----Filter_new<Filter_old-------------
+008D   E202           00177           jbset               directionflag
+008E   A000           00178           goto                filterloop
+008F   D202           00179           bclr                directionflag
+0090   A000           00180           goto                noise           
+0091                  00181 directionset:;-----Filter_new>Filter_old-------------
+0091   F202           00182           jbclr               directionflag
+0092   A000           00183           goto                filterloop
+0093   C202           00184           bset                directionflag
+0094   A000           00185           goto                noise
+0095                  00186 filterloop:
+0095   660F           00187           incr                Filter_adp
+0096   3A05           00188           isubai              THRESHOLD    ;
+0097   F187           00189           jbclr               C
+0098   A000           00190           goto                filterbijiao
+0099   660F           00191           incr                Filter_adp
+009A   660F           00192           incr                Filter_adp
+009B                  00193 filterbijiao:  
+009B   3C05           00194           movai               filter_adp_max
+009C   480F           00195           rsubar              Filter_adp   
+009D   E187           00196           jbset               C
+009E   000C           00197           return
+009F   760F           00198           clrr                Filter_adp
+00A0   3C05           00199           movai               filter_1st_incr
+00A1   7E0E           00200           addra               Filter_const
+00A2   3CFA           00201           movai               filter_1st_max
+00A3   480E           00202           rsubar              Filter_const 
+00A4   E187           00203           jbset               C
+00A5   000C           00204           return
+00A6   3CFA           00205           movai               filter_1st_max
+00A7   560E           00206           movra               Filter_const
+00A8   000C           00207           return
+00A9                  00208 noise:                
+00A9   760F           00209           clrr                Filter_adp 
+00AA   760E           00210           clrr                Filter_const
+00AB   000C           00211           return                
+                      00212 ;********************************************
+                      00213           en
+gpasm-1.6.1 (Jan 23 2014)    ad_pwm1.asm        2014-8-12  11:18:39          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+ACCBUF                            00000000
+ADCR0                             000001B0
+ADCR1                             000001B1
+ADCR2                             000001B2
+ADCR3                             000001B3
+ADRH                              000001B4
+ADRL                              000001B6
+ADRM                              000001B5
+ANSEL                             00000193
+FLAG1                             00000002
+FSR0                              00000184
+FSR1                              00000185
+FUNCTION_DIV                      00000051
+FUNCTION_MUL                      00000043
+Filter_adp                        0000000F
+Filter_const                      0000000E
+Filter_flag                       00000010
+Filter_new                        0000000B
+Filter_old                        0000000C
+Filter_temp                       0000000D
+HIBYTE                            00000183
+INDF0                             00000180
+INDF1                             00000181
+INDF2                             00000182
+INDF3                             00000189
+INTE0                             0000018A
+INTF0                             0000018B
+INVALID_ADDR0                     0000018C
+INVALID_ADDR1                     0000018D
+INVALID_ADDR10                    000001BD
+INVALID_ADDR11                    000001BE
+INVALID_ADDR12                    000001BF
+INVALID_ADDR2                     0000018E
+INVALID_ADDR3                     0000018F
+INVALID_ADDR5                     00000198
+INVALID_ADDR6                     00000199
+INVALID_ADDR7                     0000019A
+INVALID_ADDR8                     0000019B
+INVALID_ADDR9                     0000019C
+INVALID_ADDRA                     0000019D
+INVALID_ADDRB                     0000019E
+INVALID_ADDRC                     0000019F
+INVALID_ADDRD                     000001B7
+INVALID_ADDRE                     000001BB
+INVALID_ADDRF                     000001BC
+IOP0                              00000190
+IOP1                              00000194
+KBIM                              00000197
+LCDCR0                            000001B8
+LCDCR1                            000001B9
+LCDDS0                            000001C0
+LCDDS1                            000001C1
+LCDDS2                            000001C2
+LCDDS3                            000001C3
+LCDDS4                            000001C4
+LCDDS5                            000001C5
+LCDDS6                            000001C6
+LCDDS7                            000001C7
+LCDDS8                            000001C8
+LCDDS9                            000001C9
+LCDDSa                            000001CA
+LCDDSb                            000001CB
+LCDDSc                            000001CC
+LCDDSd                            000001CD
+LCDDSe                            000001CE
+LCDDSf                            000001CF
+LCDIOS                            000001BA
+LVDCR                             000001AD
+MCR                               00000188
+OEP0                              00000191
+OEP1                              00000195
+OSCCAL                            000001F3
+OSCM                              000001AE
+PCL                               00000186
+PFLAG                             00000187
+PFLAGBUF                          00000001
+POWCR                             000001AF
+PUP0                              00000192
+PUP1                              00000196
+T0CNT                             000001A1
+T0CR                              000001A0
+T0DATA                            000001A3
+T0LOAD                            000001A2
+T1CNT                             000001A5
+T1CR                              000001A4
+T1DATA                            000001A7
+T1LOAD                            000001A6
+UBR                               000001A9
+UCR                               000001A8
+UFR                               000001AA
+URR                               000001AC
+UTR                               000001AB
+_.org_8_002C                      0000002C
+_.org_8_0041                      00000041
+_.org_8_0069                      00000069
+__32P21                           00000001
+directionset                      00000091
+div_loop                          0000005F
+filter                            00000073
+filterbijiao                      0000009B
+filterconst                       00000088
+filterloop                        00000095
+get_ad                            0000003F
+interrexit                        0000000C
+intter                            00000008
+main                              00000030
+mainloop                          0000003C
+mul_loop                          00000047
+noise                             000000A9
+r0                                00000003
+r0_shift                          0000006E
+r1                                00000004
+r2                                00000005
+r3                                00000006
+r4                                00000007
+r5                                00000008
+r6                                00000009
+r7                                0000000A
+result_shift                      0000004C
+start                             00000011
+updata_div                        0000006C
+xiaoyu                            0000007F
+ADCHS_0                           0<<4
+ADCHS_1                           1<<4
+ADCHS_2                           2<<4
+ADCHS_3                           3<<4
+ADCHS_4                           4<<4
+ADCHS_5                           5<<4
+ADCHS_6                           6<<4
+ADCKS_16                          0<<1
+ADCKS_2                           2<<1
+ADCKS_4                           2<<1
+ADCKS_8                           1<<1
+ADEN                              ADCR0,0
+ADEOC                             ADCR0,1
+ADIE                              INTECON,6
+ADIF                              INTF,6
+ADON                              ADCR0,0
+ADV_2V                            0
+ADV_3V                            1
+ADV_4V                            2
+ADV_ADD                           3
+ADV_EX                            4
+BUZ0OUT                           T0CR,5
+BUZ1OUT                           T1CR,5
+C                                 STATUS,0
+CLKS                              OSCM,2
+DC                                STATUS,1
+DDR10                             DDR1,0
+DDR11                             DDR1,1
+DDR12                             DDR1,2
+DDR13                             DDR1,3
+DDR20                             DDR2,0
+DDR21                             DDR2,1
+DDR22                             DDR2,2
+DDR23                             DDR2,3
+DDR24                             DDR2,4
+DDR25                             DDR2,5
+DDR26                             DDR2,6
+DDR27                             DDR2,7
+ENB                               POWCR,6
+EPEN                              UCR,3
+FREF                              UFR,7
+FSR                               FSR0
+GIE                               MCR,7
+HFEN                              OSCM,0
+INDF                              INDF0
+INT0IE                            INTECON,2
+INT0IF                            INTF,2
+INT1IE                            INTECON,3
+INT1IF                            INTF,3
+INTE                              INTECON
+INTECON                           INTE0
+INTEFLAG                          INTF0
+INTF                              INTEFLAG
+KBIE                              INTECON,4
+KBIF                              INTF,4
+LCDDS10                           LCDDSa
+LCDDS11                           LCDDSb
+LCDDS12                           LCDDSc
+LCDDS13                           LCDDSc
+LCDDS14                           LCDDSe
+LCDDS15                           LCDDSf
+LCDEN                             LCDCR0,7
+LDOEN                             POWCR,7
+LFEN                              OSCM,1
+LVD                               PLVDCR,7
+LVDS                              PLVDCR,6
+OPEN                              UCR,4
+OVEF                              UFR,5
+P0HCON                            PUP0
+P1HCON                            PUP1
+P20PH                             P2HCON,0
+P21PH                             P2HCON,1
+P22PH                             P2HCON,2
+P23PH                             P2HCON,3
+P24PH                             P2HCON,4
+P25PH                             P2HCON,5
+P26PH                             P2HCON,6
+P27PH                             P2HCON,7
+PAEF                              UFR,6
+PWM0OUT                           T0CR,6
+PWM1OUT                           T1CR,6
+RDAF                              UFR,1
+STATUS                            PFLAG
+STBH                              OSCM,4
+STBL                              OSCM,5
+T0IE                              INTECON,0
+T0IF                              INTF,0
+T1IE                              INTECON,1
+T1IF                              INTF,1
+TC0EN                             T0CR,7
+TC1EN                             T1CR,7
+THRESHOLD                         5
+TREF                              UFR,0
+TSEF                              UFR,4
+UARTEN                            UCR,2
+VLCDS                             LCDCR0,3
+Z                                 STATUS,2
+directionflag                     FLAG1,1
+filter_1st_incr                   5
+filter_1st_max                    250
+filter_adp_max                    5
+tm0flag                           FLAG1,0
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

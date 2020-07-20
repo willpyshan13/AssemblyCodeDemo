@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project MCU="mc32p21" ID="0x3221" MCU_Type="RISC" Author="Mike.Mo" Date="2012-08-28" VS="1.01">
+  <ProWindows>
+    <Explorer fName="ad_pwm1">
+      <SouceCode fName="SourceCode">
+        <asmFile fName="ad_pwm1.asm" fPath="\ad_pwm1.asm" />
+      </SouceCode>
+      <SouceCode fName="Output" />
+      <SouceCode fName="Debug" />
+    </Explorer>
+  </ProWindows>
+  <Option Value="4010" />
+  <Compiler Name="gpasm.exe" />
+  <Language Name="ASM" />
+</Project>

@@ -1,0 +1,1305 @@
+gplink-2.2.10 (Feb 22 2019)
+Listing File Generated: 2020-5-25  14:53:52
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_Power_OFF
+                                           	extern	_INDFbits
+                                           	extern	_T0CNTbits
+                                           	extern	_PCLbits
+                                           	extern	_STATUSbits
+                                           	extern	_FSRbits
+                                           	extern	_P1bits
+                                           	extern	_MCRbits
+                                           	extern	_P1KBCRbits
+                                           	extern	_PDCONbits
+                                           	extern	_ODCONbits
+                                           	extern	_PUCONbits
+                                           	extern	_INTEbits
+                                           	extern	_INTFbits
+                                           	extern	_T0CRbits
+                                           	extern	_T1DATDbits
+                                           	extern	_DDR1bits
+                                           	extern	_PWM1CR1bits
+                                           	extern	_PWM1CR0bits
+                                           	extern	_T1DATBbits
+                                           	extern	_T1DATCbits
+                                           	extern	_TM0CRbits
+                                           	extern	_T1CRbits
+                                           	extern	_T1CNTbits
+                                           	extern	_T1LOADbits
+                                           	extern	_T1DATAbits
+                                           	extern	_CMPCR0bits
+                                           	extern	_CMPCR1bits
+                                           	extern	_CMPCR2bits
+                                           	extern	_INDF
+                                           	extern	_T0CNT
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_FSR
+                                           	extern	_GPR1
+                                           	extern	_P1
+                                           	extern	_GPR0
+                                           	extern	_MCR
+                                           	extern	_P1KBCR
+                                           	extern	_PDCON
+                                           	extern	_ODCON
+                                           	extern	_PUCON
+                                           	extern	_INTE
+                                           	extern	_INTF
+                                           	extern	_T0CR
+                                           	extern	_T1DATD
+                                           	extern	_DDR1
+                                           	extern	_PWM1CR1
+                                           	extern	_PWM1CR0
+                                           	extern	_T1DATB
+                                           	extern	_T1DATC
+                                           	extern	_TM0CR
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           	extern	_CMPCR0
+                                           	extern	_CMPCR1
+                                           	extern	_CMPCR2
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_PWM_Running
+                                           	global	_Sleep
+                                           	global	_IO_initialize
+                                           	global	_LED_Running
+                                           	global	_Det_VSolar
+                                           	global	_Det_VDD
+                                           	global	_Det_VDD_FAST
+                                           	global	_CMP_ConfigSet
+                                           	global	_PWM_ConfigSet
+                                           	global	_T1_ConfigSet
+                                           	global	_T0_ConfigSet
+                                           	global	_Delay_N_5nop
+                                           	global	_Delay10us
+                                           	global	_C_RAM
+                                           	global	_int_isr
+                                           	global	_main
+                                           	global	_ABuf
+                                           	global	_StatusBuf
+                                           	global	_PWM_Value
+                                           	global	_PWM_Value_Buf
+                                           	global	_dely
+                                           	global	_Flag1
+                                           	global	_Det_VDD_Value
+                                           	global	_Det_VDD_NUM
+                                           	global	_Det_VDD_Time
+                                           	global	_Det_VDD_Value_Buf0
+                                           	global	_Det_VDD_Value_Buf1
+                                           	global	_VDD_Value
+                                           	global	_Det_VSolar_Value
+                                           	global	_Det_VSolar_NUM
+                                           	global	_Det_VSolar_Time
+                                           	global	_Det_VSolar_Value_Buf0
+                                           	global	_Det_VSolar_Value_Buf1
+                                           	global	_Sleep_Time
+                                           	global	_Timing_Value1
+                                           	global	_Temp8
+                                           	global	_Temp8_i
+                                           	global	_Temp8_j
+                                           
+                                           	global STK06
+                                           	global STK05
+                                           	global STK04
+                                           	global STK03
+                                           	global STK02
+                                           	global STK01
+                                           	global STK00
+                                           
+                                           sharebank udata_ovr 0x0010
+                                           STK06	res 1
+                                           STK05	res 1
+                                           STK04	res 1
+                                           STK03	res 1
+                                           STK02	res 1
+                                           STK01	res 1
+                                           STK00	res 1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           UD_FA502_0	udata
+                                           _ABuf	res	1
+                                           
+                                           UD_FA502_1	udata
+                                           _StatusBuf	res	1
+                                           
+                                           UD_FA502_2	udata
+                                           _PWM_Value	res	1
+                                           
+                                           UD_FA502_3	udata
+                                           _PWM_Value_Buf	res	1
+                                           
+                                           UD_FA502_4	udata
+                                           _dely	res	2
+                                           
+                                           UD_FA502_5	udata
+                                           _Flag1	res	1
+                                           
+                                           UD_FA502_6	udata
+                                           _Det_VDD_Value	res	1
+                                           
+                                           UD_FA502_7	udata
+                                           _Det_VDD_NUM	res	1
+                                           
+                                           UD_FA502_8	udata
+                                           _Det_VDD_Time	res	1
+                                           
+                                           UD_FA502_9	udata
+                                           _Det_VDD_Value_Buf0	res	1
+                                           
+                                           UD_FA502_10	udata
+                                           _Det_VDD_Value_Buf1	res	1
+                                           
+                                           UD_FA502_11	udata
+                                           _VDD_Value	res	1
+                                           
+                                           UD_FA502_12	udata
+                                           _Det_VSolar_Value	res	1
+                                           
+                                           UD_FA502_13	udata
+                                           _Det_VSolar_NUM	res	1
+                                           
+                                           UD_FA502_14	udata
+                                           _Det_VSolar_Time	res	1
+                                           
+                                           UD_FA502_15	udata
+                                           _Det_VSolar_Value_Buf0	res	1
+                                           
+                                           UD_FA502_16	udata
+                                           _Det_VSolar_Value_Buf1	res	1
+                                           
+                                           UD_FA502_17	udata
+                                           _Sleep_Time	res	1
+                                           
+                                           UD_FA502_18	udata
+                                           _Timing_Value1	res	1
+                                           
+                                           UD_FA502_19	udata
+                                           _Temp8	res	1
+                                           
+                                           UD_FA502_20	udata
+                                           _Temp8_i	res	1
+                                           
+                                           UD_FA502_21	udata
+                                           _Temp8_j	res	1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_FA502_0	udata
+                                           r0x1016	res	1
+                                           r0x1011	res	1
+                                           r0x1010	res	1
+                                           r0x1014	res	1
+                                           r0x1015	res	1
+                                           r0x1012	res	1
+                                           r0x1013	res	1
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ;@Allocation info for local variables in function 'C_RAM'
+                                           ;@C_RAM T0_ConfigSet              Allocated to registers ;size:2
+                                           ;@C_RAM T1_ConfigSet              Allocated to registers ;size:2
+                                           ;@C_RAM PWM_ConfigSet             Allocated to registers ;size:2
+                                           ;@C_RAM CMP_ConfigSet             Allocated to registers ;size:2
+                                           ;@C_RAM IO_initialize             Allocated to registers ;size:2
+                                           ;@C_RAM Delay10us                 Allocated to registers ;size:2
+                                           ;@C_RAM Delay_N_5nop              Allocated to registers ;size:2
+                                           ;@C_RAM Det_VDD                   Allocated to registers ;size:2
+                                           ;@C_RAM Det_VDD_FAST              Allocated to registers ;size:2
+                                           ;@C_RAM Det_VSolar                Allocated to registers ;size:2
+                                           ;@C_RAM Power_OFF                 Allocated to registers ;size:2
+                                           ;@C_RAM Sleep                     Allocated to registers ;size:2
+                                           ;@C_RAM PWM_Running               Allocated to registers ;size:2
+                                           ;@C_RAM LED_Running               Allocated to registers ;size:2
+                                           ;@C_RAM INDFbits                  Allocated to registers ;size:1
+                                           ;@C_RAM T0CNTbits                 Allocated to registers ;size:1
+                                           ;@C_RAM PCLbits                   Allocated to registers ;size:1
+                                           ;@C_RAM STATUSbits                Allocated to registers ;size:1
+                                           ;@C_RAM FSRbits                   Allocated to registers ;size:1
+                                           ;@C_RAM P1bits                    Allocated to registers ;size:1
+                                           ;@C_RAM MCRbits                   Allocated to registers ;size:1
+                                           ;@C_RAM P1KBCRbits                Allocated to registers ;size:1
+                                           ;@C_RAM PDCONbits                 Allocated to registers ;size:1
+                                           ;@C_RAM ODCONbits                 Allocated to registers ;size:1
+                                           ;@C_RAM PUCONbits                 Allocated to registers ;size:1
+                                           ;@C_RAM INTEbits                  Allocated to registers ;size:1
+                                           ;@C_RAM INTFbits                  Allocated to registers ;size:1
+                                           ;@C_RAM T0CRbits                  Allocated to registers ;size:1
+                                           ;@C_RAM T1DATDbits                Allocated to registers ;size:1
+                                           ;@C_RAM DDR1bits                  Allocated to registers ;size:1
+                                           ;@C_RAM PWM1CR1bits               Allocated to registers ;size:1
+                                           ;@C_RAM PWM1CR0bits               Allocated to registers ;size:1
+                                           ;@C_RAM T1DATBbits                Allocated to registers ;size:1
+                                           ;@C_RAM T1DATCbits                Allocated to registers ;size:1
+                                           ;@C_RAM TM0CRbits                 Allocated to registers ;size:1
+                                           ;@C_RAM T1CRbits                  Allocated to registers ;size:1
+                                           ;@C_RAM T1CNTbits                 Allocated to registers ;size:1
+                                           ;@C_RAM T1LOADbits                Allocated to registers ;size:1
+                                           ;@C_RAM T1DATAbits                Allocated to registers ;size:1
+                                           ;@C_RAM CMPCR0bits                Allocated to registers ;size:1
+                                           ;@C_RAM CMPCR1bits                Allocated to registers ;size:1
+                                           ;@C_RAM CMPCR2bits                Allocated to registers ;size:1
+                                           ;@C_RAM ABuf                      Allocated to registers ;size:1
+                                           ;@C_RAM StatusBuf                 Allocated to registers ;size:1
+                                           ;@C_RAM PWM_Value                 Allocated to registers ;size:1
+                                           ;@C_RAM PWM_Value_Buf             Allocated to registers ;size:1
+                                           ;@C_RAM dely                      Allocated to registers ;size:2
+                                           ;@C_RAM Flag1                     Allocated to registers ;size:1
+                                           ;@C_RAM Det_VDD_Value             Allocated to registers ;size:1
+                                           ;@C_RAM Det_VDD_NUM               Allocated to registers ;size:1
+                                           ;@C_RAM Det_VDD_Time              Allocated to registers ;size:1
+                                           ;@C_RAM Det_VDD_Value_Buf0        Allocated to registers ;size:1
+                                           ;@C_RAM Det_VDD_Value_Buf1        Allocated to registers ;size:1
+                                           ;@C_RAM VDD_Value                 Allocated to registers ;size:1
+                                           ;@C_RAM Det_VSolar_Value          Allocated to registers ;size:1
+                                           ;@C_RAM Det_VSolar_NUM            Allocated to registers ;size:1
+                                           ;@C_RAM Det_VSolar_Time           Allocated to registers ;size:1
+                                           ;@C_RAM Det_VSolar_Value_Buf0     Allocated to registers ;size:1
+                                           ;@C_RAM Det_VSolar_Value_Buf1     Allocated to registers ;size:1
+                                           ;@C_RAM Sleep_Time                Allocated to registers ;size:1
+                                           ;@C_RAM Timing_Value1             Allocated to registers ;size:1
+                                           ;@C_RAM Temp8                     Allocated to registers ;size:1
+                                           ;@C_RAM Temp8_i                   Allocated to registers ;size:1
+                                           ;@C_RAM Temp8_j                   Allocated to registers ;size:1
+                                           ;@C_RAM INDF                      Allocated to registers ;size:1
+                                           ;@C_RAM T0CNT                     Allocated to registers ;size:1
+                                           ;@C_RAM PCL                       Allocated to registers ;size:1
+                                           ;@C_RAM STATUS                    Allocated to registers ;size:1
+                                           ;@C_RAM FSR                       Allocated to registers ;size:1
+                                           ;@C_RAM GPR1                      Allocated to registers ;size:1
+                                           ;@C_RAM P1                        Allocated to registers ;size:1
+                                           ;@C_RAM GPR0                      Allocated to registers ;size:1
+                                           ;@C_RAM MCR                       Allocated to registers ;size:1
+                                           ;@C_RAM P1KBCR                    Allocated to registers ;size:1
+                                           ;@C_RAM PDCON                     Allocated to registers ;size:1
+                                           ;@C_RAM ODCON                     Allocated to registers ;size:1
+                                           ;@C_RAM PUCON                     Allocated to registers ;size:1
+                                           ;@C_RAM INTE                      Allocated to registers ;size:1
+                                           ;@C_RAM INTF                      Allocated to registers ;size:1
+                                           ;@C_RAM T0CR                      Allocated to registers ;size:1
+                                           ;@C_RAM T1DATD                    Allocated to registers ;size:1
+                                           ;@C_RAM DDR1                      Allocated to registers ;size:1
+                                           ;@C_RAM PWM1CR1                   Allocated to registers ;size:1
+                                           ;@C_RAM PWM1CR0                   Allocated to registers ;size:1
+                                           ;@C_RAM T1DATB                    Allocated to registers ;size:1
+                                           ;@C_RAM T1DATC                    Allocated to registers ;size:1
+                                           ;@C_RAM TM0CR                     Allocated to registers ;size:1
+                                           ;@C_RAM T1CR                      Allocated to registers ;size:1
+                                           ;@C_RAM T1CNT                     Allocated to registers ;size:1
+                                           ;@C_RAM T1LOAD                    Allocated to registers ;size:1
+                                           ;@C_RAM T1DATA                    Allocated to registers ;size:1
+                                           ;@C_RAM CMPCR0                    Allocated to registers ;size:1
+                                           ;@C_RAM CMPCR1                    Allocated to registers ;size:1
+                                           ;@C_RAM CMPCR2                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'C_RAM';
+                                           ;@Allocation info for local variables in function 'Delay10us'
+                                           ;@end Allocation info for local variables in function 'Delay10us';
+                                           ;@Allocation info for local variables in function 'Delay_N_5nop'
+                                           ;@Delay_N_5nop Delay_N                   Allocated to registers r0x1011 r0x1010 ;size:2
+                                           ;@end Allocation info for local variables in function 'Delay_N_5nop';
+                                           ;@Allocation info for local variables in function 'T0_ConfigSet'
+                                           ;@end Allocation info for local variables in function 'T0_ConfigSet';
+                                           ;@Allocation info for local variables in function 'T1_ConfigSet'
+                                           ;@end Allocation info for local variables in function 'T1_ConfigSet';
+                                           ;@Allocation info for local variables in function 'PWM_ConfigSet'
+                                           ;@end Allocation info for local variables in function 'PWM_ConfigSet';
+                                           ;@Allocation info for local variables in function 'CMP_ConfigSet'
+                                           ;@end Allocation info for local variables in function 'CMP_ConfigSet';
+                                           ;@Allocation info for local variables in function 'Det_VDD_FAST'
+                                           ;@end Allocation info for local variables in function 'Det_VDD_FAST';
+                                           ;@Allocation info for local variables in function 'Det_VDD'
+                                           ;@end Allocation info for local variables in function 'Det_VDD';
+                                           ;@Allocation info for local variables in function 'Det_VSolar'
+                                           ;@end Allocation info for local variables in function 'Det_VSolar';
+                                           ;@Allocation info for local variables in function 'LED_Running'
+                                           ;@end Allocation info for local variables in function 'LED_Running';
+                                           ;@Allocation info for local variables in function 'IO_initialize'
+                                           ;@end Allocation info for local variables in function 'IO_initialize';
+                                           ;@Allocation info for local variables in function 'Sleep'
+                                           ;@end Allocation info for local variables in function 'Sleep';
+                                           ;@Allocation info for local variables in function 'PWM_Running'
+                                           ;@end Allocation info for local variables in function 'PWM_Running';
+                                           ;@Allocation info for local variables in function 'int_isr'
+                                           ;@end Allocation info for local variables in function 'int_isr';
+                                           ;@Allocation info for local variables in function 'main'
+                                           ;@end Allocation info for local variables in function 'main';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; reset vector 
+                                           ;--------------------------------------------------------
+                                           STARTUP	code 0x0000
+000000   2830     goto    0x30             	goto	_main
+                                           ;--------------------------------------------------------
+                                           ; interrupt and initialization code
+                                           ;--------------------------------------------------------
+                                           c_interrupt	code	0x8
+                                           __sdcc_interrupt
+                                           ;***
+                                           ;  pBlock Stats: dbName = I
+                                           ;***
+                                           ;entry:  _int_isr	;Function start
+                                           ; 0 exit points
+                                           ;; Starting pCode block
+                                           _int_isr	;Function start
+                                           ; 0 exit points
+                                           ;	.line	507; "FA502.c"	__endasm;
+000008   15a0     movra   0x20             	movra _ABuf
+000009   1103     swapar  0x3              	swapar _STATUS
+00000a   15a1     movra   0x21             	movra _StatusBuf
+                                           ;	.line	510; "FA502.c"	if((T0IF)&&(T0IE))
+00000b   300f     jbset   0xf, 0           	JBSET	_INTFbits,0
+00000c   2821     goto    0x21             	GOTO	_00254_DS_
+00000d   300e     jbset   0xe, 0           	JBSET	_INTEbits,0
+00000e   2821     goto    0x21             	GOTO	_00254_DS_
+                                           ;	.line	512; "FA502.c"	CLR_T0IF();
+00000f   3c0f     bclr    0xf, 0           	BCLR	_INTFbits,0
+                                           ;	.line	513; "FA502.c"	T0CNT=T0_DAT_5mS;  //5mS定时器 
+000010   0bb2     movai   0xb2             	MOVAI	0xb2
+000011   1581     movra   0x1              	MOVRA	_T0CNT
+                                           ;	.line	514; "FA502.c"	Det_VDD_Time++;
+000012   19a7     incr    0x27             	INCR	_Det_VDD_Time
+                                           ;;unsigned compare: left < lit(0x2=2), size=1
+                                           ;	.line	515; "FA502.c"	if(Det_VDD_Time>=Det_VDD_Time_10ms)
+000013   0b02     movai   0x2              	MOVAI	0x02
+000014   1227     rsubar  0x27             	RSUBAR	_Det_VDD_Time
+000015   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000016   281a     goto    0x1a             	GOTO	_00250_DS_
+                                           ;;genSkipc:3195: created from rifx:00DD607C
+                                           ;	.line	517; "FA502.c"	Det_VDD_Time=0;
+000017   1da7     clrr    0x27             	CLRR	_Det_VDD_Time
+                                           ;	.line	518; "FA502.c"	Det_VDD_EN=1;
+000018   3b24     bset    0x24, 0x6        	BSET	_Flag1,6
+                                           ;	.line	519; "FA502.c"	Det_VSolar_EN=1;   	
+000019   38a4     bset    0x24, 0x1        	BSET	_Flag1,1
+                                           _00250_DS_
+                                           ;	.line	522; "FA502.c"	Timing_Value1++;
+00001a   19b1     incr    0x31             	INCR	_Timing_Value1
+                                           ;;unsigned compare: left < lit(0x14=20), size=1
+                                           ;	.line	523; "FA502.c"	if(Timing_Value1>=Time_100ms)
+00001b   0b14     movai   0x14             	MOVAI	0x14
+00001c   1231     rsubar  0x31             	RSUBAR	_Timing_Value1
+00001d   3003     jbset   0x3, 0           	JBSET	STATUS,0
+00001e   2821     goto    0x21             	GOTO	_00254_DS_
+                                           ;;genSkipc:3195: created from rifx:00DD607C
+                                           ;	.line	525; "FA502.c"	Timing_Value1=0;
+00001f   1db1     clrr    0x31             	CLRR	_Timing_Value1
+                                           ;	.line	526; "FA502.c"	PWM_EN=1;      	
+000020   3924     bset    0x24, 0x2        	BSET	_Flag1,2
+                                           _00254_DS_
+                                           ;	.line	532; "FA502.c"	if ((T1IF) && (T1IE))
+000021   304b     jbset   0x4b, 0          	JBSET	_TM0CRbits,0
+000022   2826     goto    0x26             	GOTO	_00257_DS_
+000023   30cb     jbset   0x4b, 0x1        	JBSET	_TM0CRbits,1
+000024   2826     goto    0x26             	GOTO	_00257_DS_
+                                           ;	.line	534; "FA502.c"	CLR_T1IF();
+000025   3c4b     bclr    0x4b, 0          	BCLR	_TM0CRbits,0
+                                           _00257_DS_
+                                           ;	.line	537; "FA502.c"	if ((CMPIE) && (CMPIF))
+000026   30d2     jbset   0x52, 0x1        	JBSET	_CMPCR2bits,1
+000027   282b     goto    0x2b             	GOTO	_00260_DS_
+000028   3052     jbset   0x52, 0          	JBSET	_CMPCR2bits,0
+000029   282b     goto    0x2b             	GOTO	_00260_DS_
+                                           ;	.line	540; "FA502.c"	CLR_CMPIF();
+00002a   3c52     bclr    0x52, 0          	BCLR	_CMPCR2bits,0
+                                           _00260_DS_
+                                           ;	.line	548; "FA502.c"	__endasm;
+00002b   1121     swapar  0x21             	swapar _StatusBuf
+00002c   1583     movra   0x3              	movra _STATUS
+00002d   11a0     swapr   0x20             	swapr _ABuf
+00002e   1120     swapar  0x20             	swapar _ABuf
+                                           END_OF_INTERRUPT
+00002f   000d     retie                    	RETIE	
+                                           
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_FA502	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = M
+                                           ;***
+                                           ;entry:  _main	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _C_RAM
+                                           ;   _IO_initialize
+                                           ;   _CMP_ConfigSet
+                                           ;   _T0_ConfigSet
+                                           ;   _T1_ConfigSet
+                                           ;   _PWM_ConfigSet
+                                           ;   _Det_VDD_FAST
+                                           ;   _Det_VSolar
+                                           ;   _PWM_Running
+                                           ;   _LED_Running
+                                           ;   _C_RAM
+                                           ;   _IO_initialize
+                                           ;   _CMP_ConfigSet
+                                           ;   _T0_ConfigSet
+                                           ;   _T1_ConfigSet
+                                           ;   _PWM_ConfigSet
+                                           ;   _Det_VDD_FAST
+                                           ;   _Det_VSolar
+                                           ;   _PWM_Running
+                                           ;   _LED_Running
+                                           ;; Starting pCode block
+                                           _main	;Function start
+                                           ; 2 exit points
+                                           ;	.line	555; "FA502.c"	C_RAM();
+000030   21ad     call    0x1ad            	CALL	_C_RAM
+                                           ;	.line	556; "FA502.c"	GIE_Disable();
+000031   3f8e     bclr    0xe, 0x7         	BCLR	_INTEbits,7
+                                           ;	.line	557; "FA502.c"	IO_initialize();
+000032   207b     call    0x7b             	CALL	_IO_initialize
+                                           ;	.line	558; "FA502.c"	CMP_ConfigSet();
+000033   2152     call    0x152            	CALL	_CMP_ConfigSet
+                                           ;	.line	559; "FA502.c"	T0_ConfigSet();
+000034   2170     call    0x170            	CALL	_T0_ConfigSet
+                                           ;	.line	560; "FA502.c"	T1_ConfigSet();
+000035   2161     call    0x161            	CALL	_T1_ConfigSet
+                                           ;	.line	561; "FA502.c"	PWM_ConfigSet();
+000036   2158     call    0x158            	CALL	_PWM_ConfigSet
+                                           ;	.line	562; "FA502.c"	GIE_Enable();
+000037   3b8e     bset    0xe, 0x7         	BSET	_INTEbits,7
+                                           ;	.line	563; "FA502.c"	Det_VDD_FAST();
+000038   2134     call    0x134            	CALL	_Det_VDD_FAST
+                                           _00268_DS_
+                                           ;	.line	567; "FA502.c"	VDD_Value=0x55;
+000039   0b55     movai   0x55             	MOVAI	0x55
+00003a   15aa     movra   0x2a             	MOVRA	_VDD_Value
+                                           ;	.line	568; "FA502.c"	VDD_Value=0x58;
+00003b   0b58     movai   0x58             	MOVAI	0x58
+00003c   15aa     movra   0x2a             	MOVRA	_VDD_Value
+                                           ;;unsigned compare: left < lit(0x32=50), size=1
+                                           ;	.line	569; "FA502.c"	if(VDD_Value>=0x32)
+00003d   0b32     movai   0x32             	MOVAI	0x32
+00003e   122a     rsubar  0x2a             	RSUBAR	_VDD_Value
+00003f   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000040   2843     goto    0x43             	GOTO	_00266_DS_
+                                           ;;genSkipc:3195: created from rifx:00DD607C
+                                           ;	.line	571; "FA502.c"	PWM_Value=PWM_PERCENT(80);   	   	
+000041   0b4f     movai   0x4f             	MOVAI	0x4f
+000042   15a2     movra   0x22             	MOVRA	_PWM_Value
+                                           _00266_DS_
+                                           ;	.line	576; "FA502.c"	ClrWdt();
+000043   000e     clrwdt                   	clrwdt
+                                           ;	.line	578; "FA502.c"	Det_VSolar();
+000044   20b9     call    0xb9             	CALL	_Det_VSolar
+                                           ;	.line	579; "FA502.c"	PWM_Running();
+000045   2049     call    0x49             	CALL	_PWM_Running
+                                           ;	.line	580; "FA502.c"	LED_Running();
+000046   208f     call    0x8f             	CALL	_LED_Running
+000047   2839     goto    0x39             	GOTO	_00268_DS_
+000048   000c     return                   	RETURN	
+                                           ; exit point of _main
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _PWM_Running	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _PWM_Running	;Function start
+                                           ; 2 exit points
+                                           ;	.line	447; "FA502.c"	if(PWM_EN)
+000049   3124     jbset   0x24, 0x2        	JBSET	_Flag1,2
+00004a   2879     goto    0x79             	GOTO	_00244_DS_
+                                           ;	.line	449; "FA502.c"	PWM_EN=0;
+00004b   3d24     bclr    0x24, 0x2        	BCLR	_Flag1,2
+                                           ;	.line	450; "FA502.c"	if((PWM_Value_Buf==PWM_PERCENT(100))&&(PWM_Value>=PWM_PERCENT(100)))
+00004c   1623     movar   0x23             	MOVAR	_PWM_Value_Buf
+00004d   0863     xorai   0x63             	XORAI	0x63
+00004e   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+00004f   2857     goto    0x57             	GOTO	_00231_DS_
+                                           ;;unsigned compare: left < lit(0x63=99), size=1
+000050   0b63     movai   0x63             	MOVAI	0x63
+000051   1222     rsubar  0x22             	RSUBAR	_PWM_Value
+000052   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000053   2857     goto    0x57             	GOTO	_00231_DS_
+                                           ;;genSkipc:3195: created from rifx:00DD607C
+                                           ;	.line	452; "FA502.c"	PWM1A_Stop();
+000054   3bc8     bset    0x48, 0x7        	BSET	_PWM1CR0bits,7
+                                           ;	.line	453; "FA502.c"	LED1_ON();
+000055   3906     bset    0x6, 0x2         	BSET	_P1bits,2
+                                           ;	.line	454; "FA502.c"	return;        	
+000056   2879     goto    0x79             	GOTO	_00244_DS_
+                                           _00231_DS_
+                                           ;	.line	457; "FA502.c"	if((PWM_Value_Buf==PWM_PERCENT(0))&&(PWM_Value==PWM_PERCENT(0)))
+000057   0b00     movai   0                	MOVAI	0x00
+000058   1723     orar    0x23             	ORAR	_PWM_Value_Buf
+000059   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+00005a   2862     goto    0x62             	GOTO	_00234_DS_
+00005b   0b00     movai   0                	MOVAI	0x00
+00005c   1722     orar    0x22             	ORAR	_PWM_Value
+00005d   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+00005e   2862     goto    0x62             	GOTO	_00234_DS_
+                                           ;	.line	459; "FA502.c"	PWM1A_Stop();
+00005f   3bc8     bset    0x48, 0x7        	BSET	_PWM1CR0bits,7
+                                           ;	.line	460; "FA502.c"	LED1_OFF();
+000060   3d06     bclr    0x6, 0x2         	BCLR	_P1bits,2
+                                           ;	.line	461; "FA502.c"	return;        	
+000061   2879     goto    0x79             	GOTO	_00244_DS_
+                                           _00234_DS_
+                                           ;	.line	464; "FA502.c"	if(PWM_Value>PWM_Value_Buf)
+000062   1622     movar   0x22             	MOVAR	_PWM_Value
+000063   1223     rsubar  0x23             	RSUBAR	_PWM_Value_Buf
+000064   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+000065   286a     goto    0x6a             	GOTO	_00237_DS_
+                                           ;;genSkipc:3195: created from rifx:00DD607C
+                                           ;	.line	466; "FA502.c"	PWM1A_Star();
+000066   3fc8     bclr    0x48, 0x7        	BCLR	_PWM1CR0bits,7
+                                           ;	.line	467; "FA502.c"	PWM_Value_Buf++;
+000067   19a3     incr    0x23             	INCR	_PWM_Value_Buf
+                                           ;	.line	468; "FA502.c"	PMW1A_DATA=PWM_Value_Buf; 
+000068   1623     movar   0x23             	MOVAR	_PWM_Value_Buf
+000069   15cf     movra   0x4f             	MOVRA	_T1DATA
+                                           _00237_DS_
+                                           ;	.line	470; "FA502.c"	if(PWM_Value==PWM_Value_Buf)
+00006a   1623     movar   0x23             	MOVAR	_PWM_Value_Buf
+00006b   1022     xorar   0x22             	XORAR	_PWM_Value
+00006c   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+00006d   2871     goto    0x71             	GOTO	_00239_DS_
+                                           ;	.line	472; "FA502.c"	PWM1A_Star();
+00006e   3fc8     bclr    0x48, 0x7        	BCLR	_PWM1CR0bits,7
+                                           ;	.line	473; "FA502.c"	PMW1A_DATA=PWM_Value_Buf; 
+00006f   1623     movar   0x23             	MOVAR	_PWM_Value_Buf
+000070   15cf     movra   0x4f             	MOVRA	_T1DATA
+                                           _00239_DS_
+                                           ;	.line	475; "FA502.c"	if(PWM_Value<PWM_Value_Buf)
+000071   1623     movar   0x23             	MOVAR	_PWM_Value_Buf
+000072   1222     rsubar  0x22             	RSUBAR	_PWM_Value
+000073   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+000074   2879     goto    0x79             	GOTO	_00244_DS_
+                                           ;;genSkipc:3195: created from rifx:00DD607C
+                                           ;	.line	477; "FA502.c"	PWM1A_Star();
+000075   3fc8     bclr    0x48, 0x7        	BCLR	_PWM1CR0bits,7
+                                           ;	.line	478; "FA502.c"	PWM_Value_Buf--;
+000076   1ba3     decr    0x23             	DECR	_PWM_Value_Buf
+                                           ;	.line	479; "FA502.c"	PMW1A_DATA=PWM_Value_Buf;     	   	   	
+000077   1623     movar   0x23             	MOVAR	_PWM_Value_Buf
+000078   15cf     movra   0x4f             	MOVRA	_T1DATA
+                                           _00244_DS_
+000079   000c     return                   	RETURN	
+                                           ; exit point of _PWM_Running
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _Sleep	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _Sleep	;Function start
+                                           ; 2 exit points
+                                           ;	.line	436; "FA502.c"	}
+00007a   000c     return                   	RETURN	
+                                           ; exit point of _Sleep
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _IO_initialize	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _IO_initialize	;Function start
+                                           ; 2 exit points
+                                           ;	.line	373; "FA502.c"	Set_P10_IN();
+00007b   3846     bset    0x46, 0          	BSET	_DDR1bits,0
+                                           ;	.line	374; "FA502.c"	Enable_P10_IPU();// 设置上拉电阻
+00007c   3c0d     bclr    0xd, 0           	BCLR	_PUCONbits,0
+                                           ;	.line	376; "FA502.c"	Set_P11_Push_Pull();
+00007d   3c8c     bclr    0xc, 0x1         	BCLR	_ODCONbits,1
+                                           ;	.line	377; "FA502.c"	Set_P11_OUT();
+00007e   3cc6     bclr    0x46, 0x1        	BCLR	_DDR1bits,1
+                                           ;	.line	379; "FA502.c"	Set_P12_Push_Pull();
+00007f   3d0c     bclr    0xc, 0x2         	BCLR	_ODCONbits,2
+                                           ;	.line	380; "FA502.c"	Set_P12_OUT();
+000080   3d46     bclr    0x46, 0x2        	BCLR	_DDR1bits,2
+                                           ;	.line	386; "FA502.c"	Set_P15_IN();
+000081   3ac6     bset    0x46, 0x5        	BSET	_DDR1bits,5
+                                           ;	.line	387; "FA502.c"	Disable_P15_IPU();
+000082   3a8d     bset    0xd, 0x5         	BSET	_PUCONbits,5
+                                           ;	.line	388; "FA502.c"	LED1_OFF();
+000083   3d06     bclr    0x6, 0x2         	BCLR	_P1bits,2
+                                           ;	.line	389; "FA502.c"	Open_WDT();
+000084   3b88     bset    0x8, 0x7         	BSET	_MCRbits,7
+                                           ;	.line	391; "FA502.c"	Det_VDD_Value=EVD_VDD_MIN;
+000085   0b20     movai   0x20             	MOVAI	0x20
+000086   15a5     movra   0x25             	MOVRA	_Det_VDD_Value
+                                           ;	.line	392; "FA502.c"	Det_VDD_Value_Buf0=EVD_VDD_MIN;
+000087   0b20     movai   0x20             	MOVAI	0x20
+000088   15a8     movra   0x28             	MOVRA	_Det_VDD_Value_Buf0
+                                           ;	.line	393; "FA502.c"	Det_VDD_Value_Buf1=EVD_VDD_MIN;
+000089   0b20     movai   0x20             	MOVAI	0x20
+00008a   15a9     movra   0x29             	MOVRA	_Det_VDD_Value_Buf1
+                                           ;	.line	394; "FA502.c"	Det_VDD_Time=0;
+00008b   1da7     clrr    0x27             	CLRR	_Det_VDD_Time
+                                           ;	.line	396; "FA502.c"	PWM_Value_Buf=PWM_PERCENT(80);             	
+00008c   0b4f     movai   0x4f             	MOVAI	0x4f
+00008d   15a3     movra   0x23             	MOVRA	_PWM_Value_Buf
+00008e   000c     return                   	RETURN	
+                                           ; exit point of _IO_initialize
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _LED_Running	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _LED_Running	;Function start
+                                           ; 2 exit points
+                                           ;;unsigned compare: left < lit(0x32=50), size=1
+                                           ;	.line	328; "FA502.c"	if(VDD_Value>=0x32)
+00008f   0b32     movai   0x32             	MOVAI	0x32
+000090   122a     rsubar  0x2a             	RSUBAR	_VDD_Value
+000091   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000092   2896     goto    0x96             	GOTO	_00206_DS_
+                                           ;;genSkipc:3195: created from rifx:00DD607C
+                                           ;	.line	330; "FA502.c"	PWM_Value=PWM_PERCENT(80);
+000093   0b4f     movai   0x4f             	MOVAI	0x4f
+000094   15a2     movra   0x22             	MOVRA	_PWM_Value
+                                           ;	.line	331; "FA502.c"	return;    	   	
+000095   28b8     goto    0xb8             	GOTO	_00217_DS_
+                                           ;;unsigned compare: left < lit(0x30=48), size=1
+                                           _00206_DS_
+                                           ;	.line	333; "FA502.c"	if(VDD_Value>=EVD_392)
+000096   0b30     movai   0x30             	MOVAI	0x30
+000097   122a     rsubar  0x2a             	RSUBAR	_VDD_Value
+000098   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000099   289d     goto    0x9d             	GOTO	_00208_DS_
+                                           ;;genSkipc:3195: created from rifx:00DD607C
+                                           ;	.line	335; "FA502.c"	PWM_Value=PWM_PERCENT(90);
+00009a   0b59     movai   0x59             	MOVAI	0x59
+00009b   15a2     movra   0x22             	MOVRA	_PWM_Value
+                                           ;	.line	336; "FA502.c"	return;        	   	
+00009c   28b8     goto    0xb8             	GOTO	_00217_DS_
+                                           ;;unsigned compare: left < lit(0x2C=44), size=1
+                                           _00208_DS_
+                                           ;	.line	338; "FA502.c"	if(VDD_Value>=EVD_364)
+00009d   0b2c     movai   0x2c             	MOVAI	0x2c
+00009e   122a     rsubar  0x2a             	RSUBAR	_VDD_Value
+00009f   3003     jbset   0x3, 0           	JBSET	STATUS,0
+0000a0   28a4     goto    0xa4             	GOTO	_00210_DS_
+                                           ;;genSkipc:3195: created from rifx:00DD607C
+                                           ;	.line	340; "FA502.c"	PWM_Value=PWM_PERCENT(100);
+0000a1   0b63     movai   0x63             	MOVAI	0x63
+0000a2   15a2     movra   0x22             	MOVRA	_PWM_Value
+                                           ;	.line	341; "FA502.c"	return;        	   	
+0000a3   28b8     goto    0xb8             	GOTO	_00217_DS_
+                                           ;;unsigned compare: left < lit(0x29=41), size=1
+                                           _00210_DS_
+                                           ;	.line	343; "FA502.c"	if(VDD_Value>=EVD_343)
+0000a4   0b29     movai   0x29             	MOVAI	0x29
+0000a5   122a     rsubar  0x2a             	RSUBAR	_VDD_Value
+0000a6   3003     jbset   0x3, 0           	JBSET	STATUS,0
+0000a7   28ab     goto    0xab             	GOTO	_00212_DS_
+                                           ;;genSkipc:3195: created from rifx:00DD607C
+                                           ;	.line	345; "FA502.c"	PWM_Value=PWM_PERCENT(80);
+0000a8   0b4f     movai   0x4f             	MOVAI	0x4f
+0000a9   15a2     movra   0x22             	MOVRA	_PWM_Value
+                                           ;	.line	346; "FA502.c"	return;        	   	
+0000aa   28b8     goto    0xb8             	GOTO	_00217_DS_
+                                           ;;unsigned compare: left < lit(0x27=39), size=1
+                                           _00212_DS_
+                                           ;	.line	348; "FA502.c"	if(VDD_Value>=EVD_329)
+0000ab   0b27     movai   0x27             	MOVAI	0x27
+0000ac   122a     rsubar  0x2a             	RSUBAR	_VDD_Value
+0000ad   3003     jbset   0x3, 0           	JBSET	STATUS,0
+0000ae   28b2     goto    0xb2             	GOTO	_00214_DS_
+                                           ;;genSkipc:3195: created from rifx:00DD607C
+                                           ;	.line	350; "FA502.c"	PWM_Value=PWM_PERCENT(50);
+0000af   0b31     movai   0x31             	MOVAI	0x31
+0000b0   15a2     movra   0x22             	MOVRA	_PWM_Value
+                                           ;	.line	351; "FA502.c"	return;        	   	
+0000b1   28b8     goto    0xb8             	GOTO	_00217_DS_
+                                           ;;unsigned compare: left < lit(0x23=35), size=1
+                                           _00214_DS_
+                                           ;	.line	353; "FA502.c"	if(VDD_Value>=EVD_301)
+0000b2   0b23     movai   0x23             	MOVAI	0x23
+0000b3   122a     rsubar  0x2a             	RSUBAR	_VDD_Value
+0000b4   3003     jbset   0x3, 0           	JBSET	STATUS,0
+0000b5   28b8     goto    0xb8             	GOTO	_00217_DS_
+                                           ;;genSkipc:3195: created from rifx:00DD607C
+                                           ;	.line	355; "FA502.c"	PWM_Value=PWM_PERCENT(20);
+0000b6   0b13     movai   0x13             	MOVAI	0x13
+0000b7   15a2     movra   0x22             	MOVRA	_PWM_Value
+                                           _00217_DS_
+                                           ;	.line	356; "FA502.c"	return;        	   	
+0000b8   000c     return                   	RETURN	
+                                           ; exit point of _LED_Running
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _Det_VSolar	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _Delay_N_5nop
+                                           ;   _Delay_N_5nop
+                                           ;   _Delay_N_5nop
+                                           ;   _Delay_N_5nop
+                                           ;3 compiler assigned registers:
+                                           ;   r0x1012
+                                           ;   STK00
+                                           ;   r0x1013
+                                           ;; Starting pCode block
+                                           _Det_VSolar	;Function start
+                                           ; 2 exit points
+                                           ;	.line	266; "FA502.c"	if(Det_VSolar_EN)
+0000b9   30a4     jbset   0x24, 0x1        	JBSET	_Flag1,1
+0000ba   28f0     goto    0xf0             	GOTO	_00200_DS_
+                                           ;	.line	268; "FA502.c"	CMPNS_RES_EVN1(); 
+0000bb   0bc7     movai   0xc7             	MOVAI	0xc7
+0000bc   1e50     andar   0x50             	ANDAR	_CMPCR0
+0000bd   159c     movra   0x1c             	MOVRA	r0x1012
+0000be   0b10     movai   0x10             	MOVAI	0x10
+0000bf   171c     orar    0x1c             	ORAR	r0x1012
+0000c0   15d0     movra   0x50             	MOVRA	_CMPCR0
+                                           ;	.line	269; "FA502.c"	CMPCR1=Det_VSolar_Value;
+0000c1   162b     movar   0x2b             	MOVAR	_Det_VSolar_Value
+0000c2   15d1     movra   0x51             	MOVRA	_CMPCR1
+                                           ;	.line	270; "FA502.c"	Delay_N_5nop(100);     	   	
+0000c3   0b64     movai   0x64             	MOVAI	0x64
+0000c4   1596     movra   0x16             	MOVRA	STK00
+0000c5   0b00     movai   0                	MOVAI	0x00
+0000c6   217c     call    0x17c            	CALL	_Delay_N_5nop
+                                           ;	.line	271; "FA502.c"	CMPOF_Buf=CMPOF;
+0000c7   1d9c     clrr    0x1c             	CLRR	r0x1012
+0000c8   3688     jbclr   0x8, 0x5         	JBCLR	_MCRbits,5
+0000c9   199c     incr    0x1c             	INCR	r0x1012
+0000ca   161c     movar   0x1c             	MOVAR	r0x1012
+0000cb   159d     movra   0x1d             	MOVRA	r0x1013
+0000cc   131d     rrar    0x1d             	RRAR	r0x1013
+0000cd   3003     jbset   0x3, 0           	JBSET	STATUS,0
+0000ce   3fa4     bclr    0x24, 0x7        	BCLR	_Flag1,7
+0000cf   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+0000d0   3ba4     bset    0x24, 0x7        	BSET	_Flag1,7
+                                           ;	.line	272; "FA502.c"	Delay_N_5nop(20);
+0000d1   0b14     movai   0x14             	MOVAI	0x14
+0000d2   1596     movra   0x16             	MOVRA	STK00
+0000d3   0b00     movai   0                	MOVAI	0x00
+0000d4   217c     call    0x17c            	CALL	_Delay_N_5nop
+                                           ;	.line	273; "FA502.c"	if(CMPOF&&CMPOF_Buf)
+0000d5   3288     jbset   0x8, 0x5         	JBSET	_MCRbits,5
+0000d6   28e0     goto    0xe0             	GOTO	_00183_DS_
+0000d7   33a4     jbset   0x24, 0x7        	JBSET	_Flag1,7
+0000d8   28e0     goto    0xe0             	GOTO	_00183_DS_
+                                           ;	.line	275; "FA502.c"	Det_VSolar_NUM++;
+0000d9   19ac     incr    0x2c             	INCR	_Det_VSolar_NUM
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x6=6), size=1
+                                           ;	.line	276; "FA502.c"	if(Det_VSolar_NUM>EVD_VSolar_H_CONST)
+0000da   0b06     movai   0x6              	MOVAI	0x06
+0000db   122c     rsubar  0x2c             	RSUBAR	_Det_VSolar_NUM
+0000dc   3003     jbset   0x3, 0           	JBSET	STATUS,0
+0000dd   28e0     goto    0xe0             	GOTO	_00183_DS_
+                                           ;;genSkipc:3195: created from rifx:00DD607C
+                                           ;	.line	278; "FA502.c"	Det_VSolar_NUM=EVD_VSolar_H_CONST;
+0000de   0b05     movai   0x5              	MOVAI	0x05
+0000df   15ac     movra   0x2c             	MOVRA	_Det_VSolar_NUM
+                                           _00183_DS_
+                                           ;	.line	282; "FA502.c"	if((CMPOF||CMPOF_Buf)==0)
+0000e0   3688     jbclr   0x8, 0x5         	JBCLR	_MCRbits,5
+0000e1   28e5     goto    0xe5             	GOTO	_00188_DS_
+0000e2   37a4     jbclr   0x24, 0x7        	JBCLR	_Flag1,7
+0000e3   28e5     goto    0xe5             	GOTO	_00188_DS_
+                                           ;	.line	284; "FA502.c"	Det_VSolar_NUM--;
+0000e4   1bac     decr    0x2c             	DECR	_Det_VSolar_NUM
+                                           _00188_DS_
+                                           ;	.line	291; "FA502.c"	if(Det_VSolar_NUM==EVD_VSolar_H_CONST)//
+0000e5   162c     movar   0x2c             	MOVAR	_Det_VSolar_NUM
+0000e6   0805     xorai   0x5              	XORAI	0x05
+0000e7   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+0000e8   28ef     goto    0xef             	GOTO	_00196_DS_
+                                           ;	.line	293; "FA502.c"	Det_VSolar_Value--;
+0000e9   1bab     decr    0x2b             	DECR	_Det_VSolar_Value
+                                           ;	.line	298; "FA502.c"	Det_VSolar_Value_Buf1=Det_VSolar_Value_Buf0;
+0000ea   162e     movar   0x2e             	MOVAR	_Det_VSolar_Value_Buf0
+0000eb   15af     movra   0x2f             	MOVRA	_Det_VSolar_Value_Buf1
+                                           ;	.line	299; "FA502.c"	Det_VSolar_Value_Buf0=Det_VSolar_Value;
+0000ec   162b     movar   0x2b             	MOVAR	_Det_VSolar_Value
+0000ed   15ae     movra   0x2e             	MOVRA	_Det_VSolar_Value_Buf0
+                                           ;	.line	300; "FA502.c"	Det_VSolar_NUM=0;      	   	   	
+0000ee   1dac     clrr    0x2c             	CLRR	_Det_VSolar_NUM
+                                           _00196_DS_
+                                           ;	.line	314; "FA502.c"	Det_VSolar_EN=0;   	   	
+0000ef   3ca4     bclr    0x24, 0x1        	BCLR	_Flag1,1
+                                           _00200_DS_
+0000f0   000c     return                   	RETURN	
+                                           ; exit point of _Det_VSolar
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _Det_VDD	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _Delay_N_5nop
+                                           ;   _Delay_N_5nop
+                                           ;   _Delay_N_5nop
+                                           ;   _Delay_N_5nop
+                                           ;3 compiler assigned registers:
+                                           ;   STK00
+                                           ;   r0x1014
+                                           ;   r0x1015
+                                           ;; Starting pCode block
+                                           _Det_VDD	;Function start
+                                           ; 2 exit points
+                                           ;	.line	194; "FA502.c"	if(Det_VDD_EN)
+0000f1   3324     jbset   0x24, 0x6        	JBSET	_Flag1,6
+0000f2   2933     goto    0x133            	GOTO	_00175_DS_
+                                           ;	.line	196; "FA502.c"	CMPNS_RES_VDD(); 
+0000f3   0bc7     movai   0xc7             	MOVAI	0xc7
+0000f4   1ed0     andra   0x50             	ANDRA	_CMPCR0
+                                           ;	.line	197; "FA502.c"	CMPCR1=Det_VDD_Value;
+0000f5   1625     movar   0x25             	MOVAR	_Det_VDD_Value
+0000f6   15d1     movra   0x51             	MOVRA	_CMPCR1
+                                           ;	.line	198; "FA502.c"	Delay_N_5nop(100);     	   	
+0000f7   0b64     movai   0x64             	MOVAI	0x64
+0000f8   1596     movra   0x16             	MOVRA	STK00
+0000f9   0b00     movai   0                	MOVAI	0x00
+0000fa   217c     call    0x17c            	CALL	_Delay_N_5nop
+                                           ;	.line	199; "FA502.c"	CMPOF_Buf=CMPOF;
+0000fb   1d9a     clrr    0x1a             	CLRR	r0x1014
+0000fc   3688     jbclr   0x8, 0x5         	JBCLR	_MCRbits,5
+0000fd   199a     incr    0x1a             	INCR	r0x1014
+0000fe   161a     movar   0x1a             	MOVAR	r0x1014
+0000ff   159b     movra   0x1b             	MOVRA	r0x1015
+000100   131b     rrar    0x1b             	RRAR	r0x1015
+000101   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000102   3fa4     bclr    0x24, 0x7        	BCLR	_Flag1,7
+000103   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+000104   3ba4     bset    0x24, 0x7        	BSET	_Flag1,7
+                                           ;	.line	200; "FA502.c"	Delay_N_5nop(20);
+000105   0b14     movai   0x14             	MOVAI	0x14
+000106   1596     movra   0x16             	MOVRA	STK00
+000107   0b00     movai   0                	MOVAI	0x00
+000108   217c     call    0x17c            	CALL	_Delay_N_5nop
+                                           ;	.line	201; "FA502.c"	if(CMPOF&&CMPOF_Buf)
+000109   3288     jbset   0x8, 0x5         	JBSET	_MCRbits,5
+00010a   2914     goto    0x114            	GOTO	_00155_DS_
+00010b   33a4     jbset   0x24, 0x7        	JBSET	_Flag1,7
+00010c   2914     goto    0x114            	GOTO	_00155_DS_
+                                           ;	.line	203; "FA502.c"	Det_VDD_NUM++;
+00010d   19a6     incr    0x26             	INCR	_Det_VDD_NUM
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x79=121), size=1
+                                           ;	.line	204; "FA502.c"	if(Det_VDD_NUM>EVD_VDD_H_CONST)
+00010e   0b79     movai   0x79             	MOVAI	0x79
+00010f   1226     rsubar  0x26             	RSUBAR	_Det_VDD_NUM
+000110   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000111   2914     goto    0x114            	GOTO	_00155_DS_
+                                           ;;genSkipc:3195: created from rifx:00DD607C
+                                           ;	.line	206; "FA502.c"	Det_VDD_NUM=EVD_VDD_H_CONST;
+000112   0b78     movai   0x78             	MOVAI	0x78
+000113   15a6     movra   0x26             	MOVRA	_Det_VDD_NUM
+                                           _00155_DS_
+                                           ;	.line	210; "FA502.c"	if((CMPOF||CMPOF_Buf)==0)
+000114   3688     jbclr   0x8, 0x5         	JBCLR	_MCRbits,5
+000115   2919     goto    0x119            	GOTO	_00160_DS_
+000116   37a4     jbclr   0x24, 0x7        	JBCLR	_Flag1,7
+000117   2919     goto    0x119            	GOTO	_00160_DS_
+                                           ;	.line	212; "FA502.c"	Det_VDD_NUM--;
+000118   1ba6     decr    0x26             	DECR	_Det_VDD_NUM
+                                           _00160_DS_
+                                           ;	.line	219; "FA502.c"	if(Det_VDD_NUM==EVD_VDD_H_CONST)//
+000119   1626     movar   0x26             	MOVAR	_Det_VDD_NUM
+00011a   0878     xorai   0x78             	XORAI	0x78
+00011b   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+00011c   2929     goto    0x129            	GOTO	_00168_DS_
+                                           ;	.line	221; "FA502.c"	Det_VDD_Value--;
+00011d   1ba5     decr    0x25             	DECR	_Det_VDD_Value
+                                           ;;unsigned compare: left < lit(0x20=32), size=1
+                                           ;	.line	222; "FA502.c"	if(Det_VDD_Value<EVD_VDD_MIN)
+00011e   0b20     movai   0x20             	MOVAI	0x20
+00011f   1225     rsubar  0x25             	RSUBAR	_Det_VDD_Value
+000120   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+000121   2924     goto    0x124            	GOTO	_00162_DS_
+                                           ;;genSkipc:3195: created from rifx:00DD607C
+                                           ;	.line	224; "FA502.c"	Det_VDD_Value=EVD_VDD_MIN;
+000122   0b20     movai   0x20             	MOVAI	0x20
+000123   15a5     movra   0x25             	MOVRA	_Det_VDD_Value
+                                           _00162_DS_
+                                           ;	.line	226; "FA502.c"	Det_VDD_Value_Buf1=Det_VDD_Value_Buf0;
+000124   1628     movar   0x28             	MOVAR	_Det_VDD_Value_Buf0
+000125   15a9     movra   0x29             	MOVRA	_Det_VDD_Value_Buf1
+                                           ;	.line	227; "FA502.c"	Det_VDD_Value_Buf0=Det_VDD_Value;
+000126   1625     movar   0x25             	MOVAR	_Det_VDD_Value
+000127   15a8     movra   0x28             	MOVRA	_Det_VDD_Value_Buf0
+                                           ;	.line	228; "FA502.c"	Det_VDD_NUM=0;     	   	   	
+000128   1da6     clrr    0x26             	CLRR	_Det_VDD_NUM
+                                           _00168_DS_
+                                           ;	.line	243; "FA502.c"	if(Det_VDD_Value_Buf1>=Det_VDD_Value_Buf0)
+000129   1628     movar   0x28             	MOVAR	_Det_VDD_Value_Buf0
+00012a   1229     rsubar  0x29             	RSUBAR	_Det_VDD_Value_Buf1
+00012b   3003     jbset   0x3, 0           	JBSET	STATUS,0
+00012c   2930     goto    0x130            	GOTO	_00170_DS_
+                                           ;;genSkipc:3195: created from rifx:00DD607C
+                                           ;	.line	245; "FA502.c"	VDD_Value=Det_VDD_Value_Buf0;
+00012d   1628     movar   0x28             	MOVAR	_Det_VDD_Value_Buf0
+00012e   15aa     movra   0x2a             	MOVRA	_VDD_Value
+00012f   2932     goto    0x132            	GOTO	_00171_DS_
+                                           _00170_DS_
+                                           ;	.line	249; "FA502.c"	VDD_Value=Det_VDD_Value_Buf1;      	   	
+000130   1629     movar   0x29             	MOVAR	_Det_VDD_Value_Buf1
+000131   15aa     movra   0x2a             	MOVRA	_VDD_Value
+                                           _00171_DS_
+                                           ;	.line	251; "FA502.c"	Det_VDD_EN=0;  	   	
+000132   3f24     bclr    0x24, 0x6        	BCLR	_Flag1,6
+                                           _00175_DS_
+000133   000c     return                   	RETURN	
+                                           ; exit point of _Det_VDD
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _Det_VDD_FAST	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _Delay_N_5nop
+                                           ;   _Delay_N_5nop
+                                           ;   _Delay_N_5nop
+                                           ;   _Delay_N_5nop
+                                           ;1 compiler assigned register :
+                                           ;   STK00
+                                           ;; Starting pCode block
+                                           _Det_VDD_FAST	;Function start
+                                           ; 2 exit points
+                                           ;	.line	168; "FA502.c"	CMPNS_RES_VDD(); 
+000134   0bc7     movai   0xc7             	MOVAI	0xc7
+000135   1ed0     andra   0x50             	ANDRA	_CMPCR0
+                                           ;	.line	169; "FA502.c"	CMPCR1=Det_VDD_Value;
+000136   1625     movar   0x25             	MOVAR	_Det_VDD_Value
+000137   15d1     movra   0x51             	MOVRA	_CMPCR1
+                                           ;	.line	170; "FA502.c"	Delay_N_5nop(100); 
+000138   0b64     movai   0x64             	MOVAI	0x64
+000139   1596     movra   0x16             	MOVRA	STK00
+00013a   0b00     movai   0                	MOVAI	0x00
+00013b   217c     call    0x17c            	CALL	_Delay_N_5nop
+                                           _00145_DS_
+                                           ;	.line	171; "FA502.c"	while(!CMPOF)
+00013c   3688     jbclr   0x8, 0x5         	JBCLR	_MCRbits,5
+00013d   294d     goto    0x14d            	GOTO	_00147_DS_
+                                           ;	.line	173; "FA502.c"	Det_VDD_Value++;
+00013e   19a5     incr    0x25             	INCR	_Det_VDD_Value
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x37=55), size=1
+                                           ;	.line	174; "FA502.c"	if(Det_VDD_Value>EVD_VDD_MAX)
+00013f   0b37     movai   0x37             	MOVAI	0x37
+000140   1225     rsubar  0x25             	RSUBAR	_Det_VDD_Value
+000141   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000142   2946     goto    0x146            	GOTO	_00144_DS_
+                                           ;;genSkipc:3195: created from rifx:00DD607C
+                                           ;	.line	176; "FA502.c"	Det_VDD_Value=EVD_VDD_MAX;
+000143   0b36     movai   0x36             	MOVAI	0x36
+000144   15a5     movra   0x25             	MOVRA	_Det_VDD_Value
+                                           ;	.line	177; "FA502.c"	break;
+000145   294d     goto    0x14d            	GOTO	_00147_DS_
+                                           _00144_DS_
+                                           ;	.line	179; "FA502.c"	CMPCR1=Det_VDD_Value;
+000146   1625     movar   0x25             	MOVAR	_Det_VDD_Value
+000147   15d1     movra   0x51             	MOVRA	_CMPCR1
+                                           ;	.line	180; "FA502.c"	Delay_N_5nop(100);     	   	   	   	
+000148   0b64     movai   0x64             	MOVAI	0x64
+000149   1596     movra   0x16             	MOVRA	STK00
+00014a   0b00     movai   0                	MOVAI	0x00
+00014b   217c     call    0x17c            	CALL	_Delay_N_5nop
+00014c   293c     goto    0x13c            	GOTO	_00145_DS_
+                                           _00147_DS_
+                                           ;	.line	182; "FA502.c"	Det_VDD_Value_Buf0=Det_VDD_Value;
+00014d   1625     movar   0x25             	MOVAR	_Det_VDD_Value
+00014e   15a8     movra   0x28             	MOVRA	_Det_VDD_Value_Buf0
+                                           ;	.line	183; "FA502.c"	Det_VDD_Value_Buf1=Det_VDD_Value;      	
+00014f   1625     movar   0x25             	MOVAR	_Det_VDD_Value
+000150   15a9     movra   0x29             	MOVRA	_Det_VDD_Value_Buf1
+000151   000c     return                   	RETURN	
+                                           ; exit point of _Det_VDD_FAST
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _CMP_ConfigSet	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _CMP_ConfigSet	;Function start
+                                           ; 2 exit points
+                                           ;	.line	153; "FA502.c"	CMP_Enable();
+000152   3bd0     bset    0x50, 0x7        	BSET	_CMPCR0bits,7
+                                           ;	.line	154; "FA502.c"	CMPPS_VIR();
+000153   3f50     bclr    0x50, 0x6        	BCLR	_CMPCR0bits,6
+                                           ;	.line	157; "FA502.c"	CMPOE_Disable();//禁止端口输出
+000154   3c50     bclr    0x50, 0          	BCLR	_CMPCR0bits,0
+                                           ;	.line	158; "FA502.c"	CMPIE_Disable();//     	   	
+000155   0bfc     movai   0xfc             	MOVAI	0xfc
+000156   1ed2     andra   0x52             	ANDRA	_CMPCR2
+000157   000c     return                   	RETURN	
+                                           ; exit point of _CMP_ConfigSet
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _PWM_ConfigSet	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _PWM_ConfigSet	;Function start
+                                           ; 2 exit points
+                                           ;	.line	134; "FA502.c"	PWM1A_Enable();    	       	
+000158   3b4c     bset    0x4c, 0x6        	BSET	_T1CRbits,6
+                                           ;	.line	135; "FA502.c"	PWM1B_Disable();
+000159   3cc8     bclr    0x48, 0x1        	BCLR	_PWM1CR0bits,1
+                                           ;	.line	136; "FA502.c"	PWM1C_Disable();   	
+00015a   3c48     bclr    0x48, 0          	BCLR	_PWM1CR0bits,0
+                                           ;	.line	137; "FA502.c"	PWM1D_Disable();
+00015b   3c47     bclr    0x47, 0          	BCLR	_PWM1CR1bits,0
+                                           ;	.line	138; "FA502.c"	PWM1A_Stop();
+00015c   3bc8     bset    0x48, 0x7        	BSET	_PWM1CR0bits,7
+                                           ;	.line	139; "FA502.c"	PWM1B_Stop();
+00015d   3f48     bclr    0x48, 0x6        	BCLR	_PWM1CR0bits,6
+                                           ;	.line	140; "FA502.c"	PWM1C_Stop();
+00015e   3ec8     bclr    0x48, 0x5        	BCLR	_PWM1CR0bits,5
+                                           ;	.line	141; "FA502.c"	PWM1D_Stop();          	
+00015f   3cc7     bclr    0x47, 0x1        	BCLR	_PWM1CR1bits,1
+000160   000c     return                   	RETURN	
+                                           ; exit point of _PWM_ConfigSet
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _T1_ConfigSet	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;1 compiler assigned register :
+                                           ;   r0x1010
+                                           ;; Starting pCode block
+                                           _T1_ConfigSet	;Function start
+                                           ; 2 exit points
+                                           ;	.line	118; "FA502.c"	T1CLK_IN_Fcpu();
+000161   0be7     movai   0xe7             	MOVAI	0xe7
+000162   1ecc     andra   0x4c             	ANDRA	_T1CR
+                                           ;	.line	119; "FA502.c"	T1CLK_DIV2();
+000163   0bf8     movai   0xf8             	MOVAI	0xf8
+000164   1e4c     andar   0x4c             	ANDAR	_T1CR
+000165   1599     movra   0x19             	MOVRA	r0x1010
+000166   0b01     movai   0x1              	MOVAI	0x01
+000167   1719     orar    0x19             	ORAR	r0x1010
+000168   15cc     movra   0x4c             	MOVRA	_T1CR
+                                           ;	.line	120; "FA502.c"	T1LOAD=PWM_DAT;
+000169   0b63     movai   0x63             	MOVAI	0x63
+00016a   15ce     movra   0x4e             	MOVRA	_T1LOAD
+                                           ;	.line	121; "FA502.c"	T1CNT=PWM_DAT;
+00016b   0b63     movai   0x63             	MOVAI	0x63
+00016c   15cd     movra   0x4d             	MOVRA	_T1CNT
+                                           ;	.line	122; "FA502.c"	T1_Star();         	           	 
+00016d   3bcc     bset    0x4c, 0x7        	BSET	_T1CRbits,7
+                                           ;	.line	123; "FA502.c"	T1IE=1;    	
+00016e   38cb     bset    0x4b, 0x1        	BSET	_TM0CRbits,1
+00016f   000c     return                   	RETURN	
+                                           ; exit point of _T1_ConfigSet
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _T0_ConfigSet	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;1 compiler assigned register :
+                                           ;   r0x1010
+                                           ;; Starting pCode block
+                                           _T0_ConfigSet	;Function start
+                                           ; 2 exit points
+                                           ;	.line	86; "FA502.c"	T0CLK_IN_Fcpu();
+000170   3fcb     bclr    0x4b, 0x7        	BCLR	_TM0CRbits,7
+000171   3ec1     bclr    0x41, 0x5        	BCLR	_T0CRbits,5
+                                           ;	.line	87; "FA502.c"	T0CLK_DIV256();
+000172   0bf0     movai   0xf0             	MOVAI	0xf0
+000173   1e41     andar   0x41             	ANDAR	_T0CR
+000174   1599     movra   0x19             	MOVRA	r0x1010
+000175   0b07     movai   0x7              	MOVAI	0x07
+000176   1719     orar    0x19             	ORAR	r0x1010
+000177   15c1     movra   0x41             	MOVRA	_T0CR
+                                           ;	.line	88; "FA502.c"	T0CNT=T0_DAT_5mS;          	//5mS中断一次 
+000178   0bb2     movai   0xb2             	MOVAI	0xb2
+000179   1581     movra   0x1              	MOVRA	_T0CNT
+                                           ;	.line	89; "FA502.c"	T0IE=1;    	
+00017a   380e     bset    0xe, 0           	BSET	_INTEbits,0
+00017b   000c     return                   	RETURN	
+                                           ; exit point of _T0_ConfigSet
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _Delay_N_5nop	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;3 compiler assigned registers:
+                                           ;   r0x1010
+                                           ;   STK00
+                                           ;   r0x1011
+                                           ;; Starting pCode block
+                                           _Delay_N_5nop	;Function start
+                                           ; 2 exit points
+                                           ;	.line	67; "FA502.c"	void Delay_N_5nop(u16 Delay_N)
+00017c   1599     movra   0x19             	MOVRA	r0x1010
+00017d   1616     movar   0x16             	MOVAR	STK00
+00017e   159e     movra   0x1e             	MOVRA	(_dely + 0)
+00017f   1598     movra   0x18             	MOVRA	r0x1011
+                                           ;;gen.c:6449: size=1/2, offset=0, AOP_TYPE(res)=8
+                                           ;;99	MOVAR	r0x1011
+                                           ;;gen.c:6449: size=0/2, offset=1, AOP_TYPE(res)=8
+                                           ;	.line	69; "FA502.c"	for(b_u16=Delay_N;b_u16>0;b_u16--)
+000180   1619     movar   0x19             	MOVAR	r0x1010
+000181   159f     movra   0x1f             	MOVRA	(_dely + 1)
+                                           _00118_DS_
+000182   161e     movar   0x1e             	MOVAR	(_dely + 0)
+000183   1598     movra   0x18             	MOVRA	r0x1011
+000184   161f     movar   0x1f             	MOVAR	(_dely + 1)
+000185   1599     movra   0x19             	MOVRA	r0x1010
+000186   1618     movar   0x18             	MOVAR	r0x1011
+000187   1719     orar    0x19             	ORAR	r0x1010
+000188   3503     jbclr   0x3, 0x2         	JBCLR	STATUS,2
+000189   299c     goto    0x19c            	GOTO	_00122_DS_
+                                           ;	.line	71; "FA502.c"	NOP();
+00018a   0000     nop                      	NOP 
+                                           ;	.line	72; "FA502.c"	NOP();
+00018b   0000     nop                      	NOP 
+                                           ;	.line	73; "FA502.c"	NOP();
+00018c   0000     nop                      	NOP 
+                                           ;	.line	74; "FA502.c"	NOP();
+00018d   0000     nop                      	NOP 
+                                           ;	.line	75; "FA502.c"	NOP();
+00018e   0000     nop                      	NOP 
+                                           ;	.line	69; "FA502.c"	for(b_u16=Delay_N;b_u16>0;b_u16--)
+00018f   161e     movar   0x1e             	MOVAR	(_dely + 0)
+000190   1598     movra   0x18             	MOVRA	r0x1011
+000191   161f     movar   0x1f             	MOVAR	(_dely + 1)
+000192   1599     movra   0x19             	MOVRA	r0x1010
+000193   0bff     movai   0xff             	MOVAI	0xff
+000194   1f98     addra   0x18             	ADDRA	r0x1011
+000195   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000196   1b99     decr    0x19             	DECR	r0x1010
+                                           ;;gen.c:6449: size=1/2, offset=0, AOP_TYPE(res)=8
+000197   1618     movar   0x18             	MOVAR	r0x1011
+000198   159e     movra   0x1e             	MOVRA	(_dely + 0)
+                                           ;;gen.c:6449: size=0/2, offset=1, AOP_TYPE(res)=8
+000199   1619     movar   0x19             	MOVAR	r0x1010
+00019a   159f     movra   0x1f             	MOVRA	(_dely + 1)
+00019b   2982     goto    0x182            	GOTO	_00118_DS_
+                                           _00122_DS_
+00019c   000c     return                   	RETURN	
+                                           ; exit point of _Delay_N_5nop
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _Delay10us	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;1 compiler assigned register :
+                                           ;   r0x1016
+                                           ;; Starting pCode block
+                                           _Delay10us	;Function start
+                                           ; 2 exit points
+                                           ;;gen.c:6449: size=0/1, offset=0, AOP_TYPE(res)=8
+                                           ;	.line	54; "FA502.c"	for(a_u8=1;a_u8>0;a_u8--)
+00019d   0b01     movai   0x1              	MOVAI	0x01
+00019e   159e     movra   0x1e             	MOVRA	(_dely + 0)
+                                           _00109_DS_
+00019f   161e     movar   0x1e             	MOVAR	(_dely + 0)
+0001a0   1597     movra   0x17             	MOVRA	r0x1016
+0001a1   0b00     movai   0                	MOVAI	0x00
+0001a2   1717     orar    0x17             	ORAR	r0x1016
+0001a3   3503     jbclr   0x3, 0x2         	JBCLR	STATUS,2
+0001a4   29ac     goto    0x1ac            	GOTO	_00113_DS_
+                                           ;	.line	56; "FA502.c"	NOP();
+0001a5   0000     nop                      	NOP 
+                                           ;	.line	54; "FA502.c"	for(a_u8=1;a_u8>0;a_u8--)
+0001a6   161e     movar   0x1e             	MOVAR	(_dely + 0)
+0001a7   1597     movra   0x17             	MOVRA	r0x1016
+0001a8   1b97     decr    0x17             	DECR	r0x1016
+                                           ;;gen.c:6449: size=0/1, offset=0, AOP_TYPE(res)=8
+0001a9   1617     movar   0x17             	MOVAR	r0x1016
+0001aa   159e     movra   0x1e             	MOVRA	(_dely + 0)
+0001ab   299f     goto    0x19f            	GOTO	_00109_DS_
+                                           _00113_DS_
+0001ac   000c     return                   	RETURN	
+                                           ; exit point of _Delay10us
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _C_RAM	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _C_RAM	;Function start
+                                           ; 2 exit points
+                                           ;	.line	44; "FA502.c"	__endasm;
+0001ad   0b40     movai   0x40             	movai 0x40
+0001ae   1584     movra   0x4              	movra FSR
+0001af   0b30     movai   0x30             	movai 48
+0001b0   1587     movra   0x7              	movra 0x07
+0001b1   1b84     decr    0x4              	decr FSR
+0001b2   1d80     clrr    0                	clrr INDF
+0001b3   1a87     djzr    0x7              	djzr 0x07
+0001b4   29b1     goto    0x1b1            	goto $ -3;
+                                           	; clrr INDF
+0001b5   1d87     clrr    0x7              	clrr 0x07
+                                           	
+0001b6   000c     return                   	RETURN	
+                                           ; exit point of _C_RAM
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	  408+    0 =   408 instructions (  816 byte)
+                                           
+                                           	end
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XX-------------- XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0100 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0140 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0180 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+01C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0200 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0240 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0280 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+02C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0300 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0340 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXX-- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:   432
+

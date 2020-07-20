@@ -1,0 +1,193 @@
+
+endc
+   at 0x01F3  xxxx.x  0000 to 0000
+movai            at 0x0010  xxxx.x  0000 to 0000
+ACCBUF                             at 0x0000  xxxx.x  0000 to 0000
+ADCR0                              at 0x01B0  xxxx.x  0000 to 0000
+ADCR1                              at 0x01B1  xxxx.x  0000 to 0000
+ADCR2                              at 0x01B2  xxxx.x  0000 to 0000
+ADCR3                              at 0x01B3  xxxx.x  0000 to 0000
+ADRH                               at 0x01B4  xxxx.x  0000 to 0000
+ADRL                               at 0x01B6  xxxx.x  0000 to 0000
+ADRM                               at 0x01B5  xxxx.x  0000 to 0000
+ANSEL                              at 0x0193  xxxx.x  0000 to 0000
+FLAG1                              at 0x0002  xxxx.x  0000 to 0000
+FSR0                               at 0x0184  xxxx.x  0000 to 0000
+FSR1                               at 0x0185  xxxx.x  0000 to 0000
+FUNCTION_DIV                       at 0x0051  xxxx.x  0000 to 0000
+FUNCTION_MUL                       at 0x0043  xxxx.x  0000 to 0000
+Filter_adp                         at 0x000F  xxxx.x  0000 to 0000
+Filter_const                       at 0x000E  xxxx.x  0000 to 0000
+Filter_flag                        at 0x0010  xxxx.x  0000 to 0000
+Filter_new                         at 0x000B  xxxx.x  0000 to 0000
+Filter_old                         at 0x000C  xxxx.x  0000 to 0000
+Filter_temp                        at 0x000D  xxxx.x  0000 to 0000
+HIBYTE                             at 0x0183  xxxx.x  0000 to 0000
+INDF0                              at 0x0180  xxxx.x  0000 to 0000
+INDF1                              at 0x0181  xxxx.x  0000 to 0000
+INDF2                              at 0x0182  xxxx.x  0000 to 0000
+INDF3                              at 0x0189  xxxx.x  0000 to 0000
+INTE0                              at 0x018A  xxxx.x  0000 to 0000
+INTF0                              at 0x018B  xxxx.x  0000 to 0000
+INVALID_ADDR0                      at 0x018C  xxxx.x  0000 to 0000
+INVALID_ADDR1                      at 0x018D  xxxx.x  0000 to 0000
+INVALID_ADDR10                     at 0x01BD  xxxx.x  0000 to 0000
+INVALID_ADDR11                     at 0x01BE  xxxx.x  0000 to 0000
+INVALID_ADDR12                     at 0x01BF  xxxx.x  0000 to 0000
+INVALID_ADDR2                      at 0x018E  xxxx.x  0000 to 0000
+INVALID_ADDR3                      at 0x018F  xxxx.x  0000 to 0000
+INVALID_ADDR5                      at 0x0198  xxxx.x  0000 to 0000
+INVALID_ADDR6                      at 0x0199  xxxx.x  0000 to 0000
+INVALID_ADDR7                      at 0x019A  xxxx.x  0000 to 0000
+INVALID_ADDR8                      at 0x019B  xxxx.x  0000 to 0000
+INVALID_ADDR9                      at 0x019C  xxxx.x  0000 to 0000
+INVALID_ADDRA                      at 0x019D  xxxx.x  0000 to 0000
+INVALID_ADDRB                      at 0x019E  xxxx.x  0000 to 0000
+INVALID_ADDRC                      at 0x019F  xxxx.x  0000 to 0000
+INVALID_ADDRD                      at 0x01B7  xxxx.x  0000 to 0000
+INVALID_ADDRE                      at 0x01BB  xxxx.x  0000 to 0000
+INVALID_ADDRF                      at 0x01BC  xxxx.x  0000 to 0000
+IOP0                               at 0x0190  xxxx.x  0000 to 0000
+IOP1                               at 0x0194  xxxx.x  0000 to 0000
+KBIM                               at 0x0197  xxxx.x  0000 to 0000
+LCDCR0                             at 0x01B8  xxxx.x  0000 to 0000
+LCDCR1                             at 0x01B9  xxxx.x  0000 to 0000
+LCDDS0                             at 0x01C0  xxxx.x  0000 to 0000
+LCDDS1                             at 0x01C1  xxxx.x  0000 to 0000
+LCDDS2                             at 0x01C2  xxxx.x  0000 to 0000
+LCDDS3                             at 0x01C3  xxxx.x  0000 to 0000
+LCDDS4                             at 0x01C4  xxxx.x  0000 to 0000
+LCDDS5                             at 0x01C5  xxxx.x  0000 to 0000
+LCDDS6                             at 0x01C6  xxxx.x  0000 to 0000
+LCDDS7                             at 0x01C7  xxxx.x  0000 to 0000
+LCDDS8                             at 0x01C8  xxxx.x  0000 to 0000
+LCDDS9                             at 0x01C9  xxxx.x  0000 to 0000
+LCDDSa                             at 0x01CA  xxxx.x  0000 to 0000
+LCDDSb                             at 0x01CB  xxxx.x  0000 to 0000
+LCDDSc                             at 0x01CC  xxxx.x  0000 to 0000
+LCDDSd                             at 0x01CD  xxxx.x  0000 to 0000
+LCDDSe                             at 0x01CE  xxxx.x  0000 to 0000
+LCDDSf                             at 0x01CF  xxxx.x  0000 to 0000
+LCDIOS                             at 0x01BA  xxxx.x  0000 to 0000
+LVDCR                              at 0x01AD  xxxx.x  0000 to 0000
+MCR                                at 0x0188  xxxx.x  0000 to 0000
+OEP0                               at 0x0191  xxxx.x  0000 to 0000
+OEP1                               at 0x0195  xxxx.x  0000 to 0000
+OSCCAL                             at 0x01F3  xxxx.x  0000 to 0000
+OSCM                               at 0x01AE  xxxx.x  0000 to 0000
+PCL                                at 0x0186  xxxx.x  0000 to 0000
+PFLAG                              at 0x0187  xxxx.x  0000 to 0000
+PFLAGBUF                           at 0x0001  xxxx.x  0000 to 0000
+POWCR                              at 0x01AF  xxxx.x  0000 to 0000
+PUP0                               at 0x0192  xxxx.x  0000 to 0000
+PUP1                               at 0x0196  xxxx.x  0000 to 0000
+T0CNT                              at 0x01A1  xxxx.x  0000 to 0000
+T0CR                               at 0x01A0  xxxx.x  0000 to 0000
+T0DATA                             at 0x01A3  xxxx.x  0000 to 0000
+T0LOAD                             at 0x01A2  xxxx.x  0000 to 0000
+T1CNT                              at 0x01A5  xxxx.x  0000 to 0000
+T1CR                               at 0x01A4  xxxx.x  0000 to 0000
+T1DATA                             at 0x01A7  xxxx.x  0000 to 0000
+T1LOAD                             at 0x01A6  xxxx.x  0000 to 0000
+UBR                                at 0x01A9  xxxx.x  0000 to 0000
+UCR                                at 0x01A8  xxxx.x  0000 to 0000
+UFR                                at 0x01AA  xxxx.x  0000 to 0000
+URR                                at 0x01AC  xxxx.x  0000 to 0000
+UTR                                at 0x01AB  xxxx.x  0000 to 0000
+org_8_002C                       at 0x002C  xxxx.x  0000 to 0000
+org_8_0041                       at 0x0041  xxxx.x  0000 to 0000
+org_8_0069                       at 0x0069  xxxx.x  0000 to 0000
+__32P21                            at 0x0001  xxxx.x  0000 to 0000
+directionset                       at 0x0091  xxxx.x  0000 to 0000
+div_loop                           at 0x005F  xxxx.x  0000 to 0000
+filter                             at 0x0073  xxxx.x  0000 to 0000
+filterbijiao                       at 0x009B  xxxx.x  0000 to 0000
+filterconst                        at 0x0088  xxxx.x  0000 to 0000
+filterloop                         at 0x0095  xxxx.x  0000 to 0000
+get_ad                             at 0x003F  xxxx.x  0000 to 0000
+interrexit                         at 0x000C  xxxx.x  0000 to 0000
+intter                             at 0x0008  xxxx.x  0000 to 0000
+main                               at 0x0030  xxxx.x  0000 to 0000
+mainloop                           at 0x003C  xxxx.x  0000 to 0000
+mul_loop                           at 0x0047  xxxx.x  0000 to 0000
+noise                              at 0x00A9  xxxx.x  0000 to 0000
+r0                                 at 0x0003  xxxx.x  0000 to 0000
+r0_shift                           at 0x006E  xxxx.x  0000 to 0000
+r1                                 at 0x0004  xxxx.x  0000 to 0000
+r2                                 at 0x0005  xxxx.x  0000 to 0000
+r3                                 at 0x0006  xxxx.x  0000 to 0000
+r4                                 at 0x0007  xxxx.x  0000 to 0000
+r5                                 at 0x0008  xxxx.x  0000 to 0000
+r6                                 at 0x0009  xxxx.x  0000 to 0000
+r7                                 at 0x000A  xxxx.x  0000 to 0000
+result_shift                       at 0x004C  xxxx.x  0000 to 0000
+start                              at 0x0011  xxxx.x  0000 to 0000
+updata_div                         at 0x006C  xxxx.x  0000 to 0000
+xiaoyu                             at 0x007F  xxxx.x  0000 to 0000
+#define Z       STATUS.bitn.bit2
+#define DC      STATUS.bitn.bit1
+#define C       STATUS.bitn.bit0
+#define GIE     MCR.bitn.bit7
+#define P20PH   P2HCON.bitn.bit0
+#define P21PH   P2HCON.bitn.bit1
+#define P22PH   P2HCON.bitn.bit2
+#define P23PH   P2HCON.bitn.bit3
+#define P24PH   P2HCON.bitn.bit4
+#define P25PH   P2HCON.bitn.bit5
+#define P26PH   P2HCON.bitn.bit6
+#define P27PH   P2HCON.bitn.bit7
+#define ADIE    INTECON.bitn.bit6
+#define KBIE    INTECON.bitn.bit4
+#define INT1IE  INTECON.bitn.bit3
+#define INT0IE  INTECON.bitn.bit2
+#define T1IE    INTECON.bitn.bit1
+#define T0IE    INTECON.bitn.bit0
+#define ADIF    INTF.bitn.bit6
+#define KBIF    INTF.bitn.bit4
+#define INT1IF  INTF.bitn.bit3
+#define INT0IF  INTF.bitn.bit2
+#define T1IF    INTF.bitn.bit1
+#define T0IF    INTF.bitn.bit0
+#define OPEN    UCR.bitn.bit4
+#define EPEN    UCR.bitn.bit3
+#define UARTEN  UCR.bitn.bit2
+#define FREF    UFR.bitn.bit7
+#define PAEF    UFR.bitn.bit6
+#define OVEF    UFR.bitn.bit5
+#define TSEF    UFR.bitn.bit4
+#define RDAF    UFR.bitn.bit1
+#define TREF    UFR.bitn.bit0
+#define    ADEN     ADCR0.bitn.bit0
+#define    ADON     ADCR0.bitn.bit0
+#define    ADEOC          ADCR0.bitn.bit1
+#define LCDEN   LCDCR0.bitn.bit7
+#define VLCDS   LCDCR0.bitn.bit3
+#define TC0EN   T0CR.bitn.bit7
+#define PWM0OUT T0CR.bitn.bit6
+#define BUZ0OUT T0CR.bitn.bit5
+#define TC1EN   T1CR.bitn.bit7
+#define PWM1OUT T1CR.bitn.bit6
+#define BUZ1OUT T1CR.bitn.bit5
+#define STBL    OSCM.bitn.bit5
+#define STBH    OSCM.bitn.bit4
+#define CLKS    OSCM.bitn.bit2
+#define LFEN    OSCM.bitn.bit1
+#define HFEN    OSCM.bitn.bit0
+#define LDOEN   POWCR.bitn.bit7
+#define ENB     POWCR.bitn.bit6
+#define LVD     PLVDCR.bitn.bit7
+#define LVDS    PLVDCR.bitn.bit6
+#define DDR10   DDR1.bitn.bit0
+#define DDR11   DDR1.bitn.bit1
+#define DDR12   DDR1.bitn.bit2
+#define DDR13   DDR1.bitn.bit3
+#define DDR20   DDR2.bitn.bit0
+#define DDR21   DDR2.bitn.bit1
+#define DDR22   DDR2.bitn.bit2
+#define DDR23   DDR2.bitn.bit3
+#define DDR24   DDR2.bitn.bit4
+#define DDR25   DDR2.bitn.bit5
+#define DDR26   DDR2.bitn.bit6
+#define DDR27   DDR2.bitn.bit7
+#define       tm0flag           FLAG1.bitn.bit0
+#define       directionflag     FLAG1.bitn.bit1

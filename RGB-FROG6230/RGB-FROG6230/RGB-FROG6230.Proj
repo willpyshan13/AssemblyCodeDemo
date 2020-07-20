@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project MCU="MC30P6230" ID="0x6230" MCU_Type="CRISC" Date="2012-08-28" VS="1.01">
+  <ProWindows>
+    <Explorer fName="RGB-FROG6230">
+      <SouceCode fName="SourceCode">
+        <asmFile fName="RGB-FROG6230.c" fPath="\RGB-FROG6230.c" />
+      </SouceCode>
+      <SouceCode fName="Output" />
+      <SouceCode fName="Debug">
+        <asmFile fName="user.h" fPath="\user.h" />
+      </SouceCode>
+    </Explorer>
+  </ProWindows>
+  <Option Value="0" Value0="5" Value1="b1d" Value2="" Value3="4" Value4="0" Value5="" Value6="" Value7="" Value8="" Value9="" Value10="" />
+  <Compiler Name="gpasm.exe" />
+  <Language Name="C" />
+</Project>

@@ -1,0 +1,509 @@
+gplink-1.6.1 (Jan 23 2014)
+Listing File Generated: 2014-8-12  11:18:39
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           #include     "mc32p21.inc"
+                                           
+                                           ;==========================================================================
+                                           ;
+                                           ;       Revision History
+                                           ;
+                                           ;==========================================================================
+                                           
+                                           ;Rev:   Date:    Reason:
+                                           
+                                           ;1.00   12/06/21 Initial Release
+                                           
+                                           ;==========================================================================
+                                           ;
+                                           ;       Register Definitions
+                                           ;
+                                           ;==========================================================================
+                                           
+                                           ;W                            EQU     H'0000'
+                                           ;F                            EQU     H'0001'
+                                           
+                                           ;----- Register Files------------------------------------------------------
+                                           cblock	0x180
+                                           INDF0			
+                                           INDF1			
+                                           INDF2			
+                                           HIBYTE			
+                                           FSR0			
+                                           FSR1			
+                                           PCL			
+                                           PFLAG			
+                                           ;----0x188
+                                           MCR			
+                                           INDF3			
+                                           INTE0			
+                                           INTF0			
+                                           INVALID_ADDR0		
+                                           INVALID_ADDR1		
+                                           INVALID_ADDR2		
+                                           INVALID_ADDR3		
+                                           ;----0x190
+                                           IOP0			
+                                           OEP0                    
+                                           PUP0           
+                                           ANSEL
+                                           IOP1                      
+                                           OEP1                    
+                                           PUP1                    
+                                           KBIM           
+                                           ;-----0x198                        
+                                           INVALID_ADDR5                      
+                                           INVALID_ADDR6                    
+                                           INVALID_ADDR7           
+                                           INVALID_ADDR8           
+                                           INVALID_ADDR9           
+                                           INVALID_ADDRA           
+                                           INVALID_ADDRB           
+                                           INVALID_ADDRC           
+                                           ;-----0x1a0
+                                           T0CR			
+                                           T0CNT                   
+                                           T0LOAD                  
+                                           T0DATA                  
+                                           T1CR                    
+                                           T1CNT                   
+                                           T1LOAD                  
+                                           T1DATA                  
+                                           ;-----0x1a8                        
+                                           UCR                     
+                                           UBR                     
+                                           UFR                     
+                                           UTR                     
+                                           URR                     
+                                           LVDCR                   
+                                           OSCM                    
+                                           POWCR                   
+                                           ;-----0x1b0
+                                           ADCR0			
+                                           ADCR1                   
+                                           ADCR2                   
+                                           ADCR3                   
+                                           ADRH                    
+                                           ADRM                    
+                                           ADRL                    
+                                           INVALID_ADDRD           
+                                           ;----0x1b8                        
+                                           LCDCR0                  
+                                           LCDCR1                  
+                                           LCDIOS                  
+                                           INVALID_ADDRE           
+                                           INVALID_ADDRF           
+                                           INVALID_ADDR10          
+                                           INVALID_ADDR11          
+                                           INVALID_ADDR12          
+                                           ;----0x1c0
+                                           LCDDS0			
+                                           LCDDS1                  
+                                           LCDDS2                  
+                                           LCDDS3                  
+                                           LCDDS4                  
+                                           LCDDS5                  
+                                           LCDDS6                  
+                                           LCDDS7                  
+                                           ;----0x1c8                        
+                                           LCDDS8                  
+                                           LCDDS9                  
+                                           LCDDSa                  
+                                           LCDDSb                  
+                                           LCDDSc                  
+                                           LCDDSd                  
+                                           LCDDSe                  
+                                           LCDDSf                  
+                                           endc
+                                           OSCCAL		equ	0x1f3
+                                           
+                                           ;#define		sleep			stop
+                                           #define		STATUS		PFLAG
+                                           #define		INDF		INDF0
+                                           #define		FSR		FSR0
+                                           #define		P0HCON		PUP0
+                                           #define		P1HCON		PUP1
+                                           #define		INTECON		INTE0
+                                           #define		INTEFLAG	INTF0	
+                                           #define		LCDDS10		LCDDSa
+                                           #define		LCDDS11		LCDDSb
+                                           #define		LCDDS12		LCDDSc
+                                           #define		LCDDS13		LCDDSc
+                                           #define		LCDDS14		LCDDSe
+                                           #define		LCDDS15		LCDDSf
+                                           
+                                           ;----- STATUS Bits --------------------------
+                                           #define	Z	STATUS,2
+                                           #define	DC	STATUS,1
+                                           #define	C	STATUS,0
+                                           
+                                           ;----- MCR Bits --------------------------
+                                           #define	GIE	MCR,7
+                                           
+                                           ;-----  P2HCON Bits -----------------------
+                                           #define	P20PH	P2HCON,0
+                                           #define	P21PH	P2HCON,1
+                                           #define	P22PH	P2HCON,2
+                                           #define	P23PH	P2HCON,3
+                                           #define	P24PH	P2HCON,4
+                                           #define	P25PH	P2HCON,5
+                                           #define	P26PH	P2HCON,6
+                                           #define	P27PH	P2HCON,7
+                                           ;----- INTECON Bits --------------------------
+                                           #define	INTE	INTECON
+                                           #define	ADIE	INTECON,6
+                                           #define	KBIE	INTECON,4
+                                           #define	INT1IE	INTECON,3
+                                           #define	INT0IE	INTECON,2
+                                           #define	T1IE	INTECON,1
+                                           #define	T0IE	INTECON,0
+                                           
+                                           ;----- INTEFLAG Bits --------------------------
+                                           #define	INTF	INTEFLAG
+                                           #define	ADIF	INTF,6
+                                           #define	KBIF	INTF,4
+                                           #define	INT1IF	INTF,3
+                                           #define	INT0IF	INTF,2
+                                           #define	T1IF	INTF,1
+                                           #define	T0IF	INTF,0
+                                           ;----- UCR Bits--------------------------
+                                           #define	OPEN	UCR,4
+                                           #define	EPEN	UCR,3
+                                           #define	UARTEN	UCR,2
+                                           ;----- UFR ----------------------
+                                           #define FREF	UFR,7
+                                           #define	PAEF	UFR,6
+                                           #define	OVEF	UFR,5
+                                           #define	TSEF	UFR,4
+                                           #define	RDAF	UFR,1
+                                           #define	TREF	UFR,0
+                                           ;---- ADCR0 Bits -----------------
+                                           #define	   ADCKS_16	0<<1	;Fcpu/16
+                                           #define	   ADCKS_8 	1<<1	;Fcpu/8
+                                           #define	   ADCKS_4 	2<<1	;Fcpu/4
+                                           #define	   ADCKS_2 	2<<1	;Fcpu/2
+                                           #define	   ADCHS_0	0<<4	;AN0
+                                           #define	   ADCHS_1	1<<4	;AN1
+                                           #define	   ADCHS_2	2<<4	;AN2
+                                           #define	   ADCHS_3	3<<4	;AN3
+                                           #define	   ADCHS_4	4<<4	;AN4
+                                           #define	   ADCHS_5	5<<4	;AN5
+                                           #define	   ADCHS_6	6<<4	;AN6
+                                           #define    ADEN	    ADCR0,0
+                                           #define    ADON	    ADCR0,0
+                                           #define	   ADEOC	  ADCR0,1
+                                           ;---- ADCR1 Bits -----------------
+                                           #define	   ADV_ADD	3	;VDD
+                                           #define	   ADV_4V	2	;4V
+                                           #define	   ADV_3V	1	;3V
+                                           #define	   ADV_2V	0	;2V
+                                           #define	   ADV_EX	4	;外部参考电压
+                                           ;----- LCDCR0 Bits --------------------------
+                                           #define	LCDEN	LCDCR0,7
+                                           #define	VLCDS	LCDCR0,3
+                                           ;----- T0CR  Bits ----------------
+                                           #define	TC0EN	T0CR,7
+                                           #define	PWM0OUT	T0CR,6
+                                           #define	BUZ0OUT	T0CR,5
+                                           
+                                           ;----- T1CR  Bits ----------------
+                                           #define	TC1EN	T1CR,7
+                                           #define	PWM1OUT	T1CR,6
+                                           #define	BUZ1OUT	T1CR,5
+                                           
+                                           ;----- OSCM  Bits ----------------
+                                           #define	STBL	OSCM,5
+                                           #define	STBH	OSCM,4
+                                           #define	CLKS	OSCM,2
+                                           #define	LFEN	OSCM,1
+                                           #define	HFEN	OSCM,0
+                                           
+                                           ;-----  POWCR Bits -------
+                                           #define LDOEN	POWCR,7
+                                           #define	ENB	POWCR,6
+                                           ;-----  LVDCR Bits -------
+                                           #define LVD	PLVDCR,7
+                                           #define	LVDS	PLVDCR,6
+                                           ;***********DDR1 DDR2 **********
+                                           #define	DDR10	DDR1,0
+                                           #define	DDR11	DDR1,1
+                                           #define	DDR12	DDR1,2
+                                           #define	DDR13	DDR1,3
+                                           
+                                           #define	DDR20	DDR2,0
+                                           #define	DDR21	DDR2,1
+                                           #define	DDR22	DDR2,2
+                                           #define	DDR23	DDR2,3
+                                           #define	DDR24	DDR2,4
+                                           #define	DDR25	DDR2,5
+                                           #define	DDR26	DDR2,6
+                                           #define	DDR27	DDR2,7
+                                           ;******************************
+                                           
+                                           
+                                           ;#define	inca	addai 1
+                                           #include     "user.inc"
+                                           ;==========================================
+                                           ;********user ram********************
+                                           cblock                  0x00
+                                           ACCBUF       
+                                           PFLAGBUF  
+                                           ;***********************************   
+                                           FLAG1   
+                                           r0              
+                                           r1                 
+                                           r2                
+                                           r3                 
+                                           r4                
+                                           r5                 
+                                           r6                 
+                                           r7
+                                           Filter_new                     ;新采样值
+                                           Filter_old                     ;上次采样值
+                                           Filter_temp       
+                                           Filter_const                   ;
+                                           Filter_adp                     ;
+                                           Filter_flag                    ;
+                                              
+                                           endc
+                                           ;************************************
+                                           #define       tm0flag           FLAG1,0
+                                           ;============================================================
+                                           #define       directionflag     FLAG1,1          ;0=dec,1=inc
+                                           ;---------------------------------------------
+                                           #define       filter_adp_max    5                ;消抖计数器最大值
+                                           #define       filter_1st_incr   5                
+                                           #define       filter_1st_max    250              
+                                           #define       THRESHOLD         5                ;变化阀值
+                                                           
+                                           ;==============================================================
+                                           ;********user io*********************
+                                           ;************************************
+                                           
+                                                   org                 00h
+000000   df88     bclr    0x188, 0x7               bclr                GIE
+000001   a011     goto    0x11                     goto                start
+                                                   org                 08h
+                                           intter:
+000008   5600     movra   0                        movra               ACCBUF
+000009   4587     swapar  0x187                    swapar              STATUS
+00000a   5601     movra   0x1                      movra               PFLAGBUF        
+                                                   ;**************************************        
+00000b   d18b     bclr    0x18b, 0                 bclr                T0IF
+                                                   
+                                                   ;**************************************
+                                           interrexit:        
+00000c   4401     swapar  0x1                      swapar              PFLAGBUF       
+00000d   5787     movra   0x187                    movra               STATUS
+00000e   4600     swapr   0                        swapr               ACCBUF
+00000f   4400     swapar  0                        swapar              ACCBUF
+000010   000d     retie                            retie                       
+                                           start:  
+                                                   ;============io======================
+000011   77ae     clrr    0x1ae                    clrr               OSCM
+000012   3c00     movai   0                        movai              0
+000013   5791     movra   0x191                    movra              OEP0
+000014   3cff     movai   0xff                     movai              0xff
+000015   5792     movra   0x192                    movra              PUP0
+                                                   ;====================================
+000016   3c08     movai   0x8                      movai              0x08
+000017   5795     movra   0x195                    movra              OEP1                        
+                                                   ;====================================
+000018   3c00     movai   0                        movai              0
+000019   57a0     movra   0x1a0                    movra              T0CR
+00001a   3cfa     movai   0xfa                     movai              250
+00001b   57a2     movra   0x1a2                    movra              T0LOAD
+                                                   ;=====================================
+00001c   3c43     movai   0x43                     movai              0x43
+00001d   57a4     movra   0x1a4                    movra              T1CR
+00001e   3cff     movai   0xff                     movai              255
+00001f   57a6     movra   0x1a6                    movra              T1LOAD
+000020   3c00     movai   0                        movai              0
+000021   57a7     movra   0x1a7                    movra              T1DATA
+                                                   ;======================================
+000022   3c20     movai   0x20                     movai           0x20
+000023   5793     movra   0x193                    movra           ANSEL
+000024   3c52     movai   0x52                     movai           01010010b
+000025   57b0     movra   0x1b0                    movra           ADCR0  
+000026   3c03     movai   0x3                      movai           0x03
+000027   57b1     movra   0x1b1                    movra           ADCR1      
+                                                   ;*********clr  ram**************00-7f
+000028   3c7f     movai   0x7f                     movai  		0x07f
+000029   5784     movra   0x184                    movra  		FSR0
+00002a   7780     clrr    0x180                    clrr   		INDF0
+00002b   6b84     djzr    0x184                    djzr   		FSR0
+00002c   a02a     goto    0x2a                     goto   		$-2
+00002d   7780     clrr    0x180                    clrr   		INDF0       
+00002e   c1b0     bset    0x1b0, 0                 bset            ADON 
+00002f   cfa4     bset    0x1a4, 0x7               bset            TC1EN
+                                                   ;=================================                 
+                                           main:
+000030   000e     clrwdt                           clrwdt
+000031   803f     call    0x3f                     call            get_ad
+000032   59b4     movar   0x1b4                    movar           ADRH
+000033   560b     movra   0xb                      movra           Filter_new
+000034   8073     call    0x73                     call            filter            
+000035   3c0a     movai   0xa                      movai           10
+000036   480c     rsubar  0xc                      rsubar          Filter_old
+000037   f187     jbclr   0x187, 0                 jbclr           C
+000038   a03c     goto    0x3c                     goto            mainloop            
+000039   3c00     movai   0                        movai           0
+00003a   57a7     movra   0x1a7                    movra           T1DATA
+00003b   a030     goto    0x30                     goto            main 
+                                           mainloop:
+00003c   580c     movar   0xc                      movar           Filter_old
+00003d   57a7     movra   0x1a7                    movra           T1DATA        
+00003e   a030     goto    0x30                     goto            main                 
+                                           ;********************************************                      
+                                           ;********user  function**********************
+                                           ;==========================================================
+                                           get_ad:
+                                           
+00003f   d3b0     bclr    0x1b0, 0x1              bclr            ADEOC
+000040   e3b0     jbset   0x1b0, 0x1              jbset           ADEOC
+000041   a040     goto    0x40                    goto            $-1
+000042   000c     return                          return
+                                           ;==========================================================
+                                           FUNCTION_MUL:
+000043   3c08     movai   0x8              	movai	8
+000044   5605     movra   0x5              	movra	r2	
+000045   7603     clrr    0x3              	clrr	r0
+000046   7604     clrr    0x4              	clrr	r1
+                                           mul_loop:
+000047   4e06     rrr     0x6              	rrr	r3	
+000048   e187     jbset   0x187, 0         	jbset	C  
+000049   a04c     goto    0x4c             	goto	result_shift
+00004a   5807     movar   0x7              	movar	r4
+00004b   7e04     addra   0x4              	addra	r1	
+                                           result_shift:	   	       	       	  			             
+00004c   4e04     rrr     0x4              	rrr	r1	
+00004d   4e03     rrr     0x3              	rrr	r0	
+00004e   6a05     djzr    0x5              	djzr	r2
+00004f   a047     goto    0x47             	goto	mul_loop
+000050   000c     return                   	return	 
+                                           ;===============================================
+                                           FUNCTION_DIV:
+000051   7603     clrr    0x3                      clrr	    r0	
+000052   7604     clrr    0x4                      clrr	    r1
+000053   7605     clrr    0x5                      clrr	    r2	
+000054   5a08     movr    0x8                      movr	    r5
+000055   f587     jbclr   0x187, 0x2               jbclr	    Z
+000056   000c     return                           return					         
+000057   3c10     movai   0x10                     movai	    16
+000058   5609     movra   0x9                 	movra	    r6	
+000059   5a06     movr    0x6                      movr	    r3
+00005a   e587     jbset   0x187, 0x2               jbset	    Z
+00005b   a05f     goto    0x5f                     goto	    div_loop
+00005c   5a07     movr    0x7                      movr	    r4
+00005d   f587     jbclr   0x187, 0x2       	jbclr	    Z
+00005e   000c     return                   	return					         
+                                           div_loop:
+00005f   d187     bclr    0x187, 0         	bclr		C
+000060   5207     rlr     0x7              	rlr		r4	
+000061   5206     rlr     0x6              	rlr	        r3	
+000062   5205     rlr     0x5              	rlr	        r2	
+000063   520a     rlr     0xa              	rlr	        r7
+000064   5808     movar   0x8              	movar	        r5
+000065   4805     rsubar  0x5              	rsubar		 r2
+000066   f187     jbclr   0x187, 0         	jbclr		C
+000067   a06c     goto    0x6c             	goto 		 updata_div
+000068   f00a     jbclr   0xa, 0           	jbclr	         r7,0
+000069   a06c     goto    0x6c             	goto		$+3
+00006a   d187     bclr    0x187, 0         	bclr		C
+00006b   a06e     goto    0x6e             	goto	        r0_shift
+                                           updata_div:	   	       	       	  				          
+00006c   5605     movra   0x5              	movra		 r2
+00006d   c187     bset    0x187, 0         	bset	        C
+                                           r0_shift:
+00006e   5203     rlr     0x3              	rlr		r0
+00006f   5204     rlr     0x4              	rlr		r1
+000070   6a09     djzr    0x9              	djzr		r6
+000071   a05f     goto    0x5f             	goto		div_loop
+000072   000c     return                   	return         
+                                           ;********************************************                           
+                                           filter:
+000073   8088     call    0x88                       call                filterconst
+000074   580c     movar   0xc                        movar               Filter_old
+000075   480b     rsubar  0xb                        rsubar              Filter_new
+000076   e187     jbset   0x187, 0                   jbset               C
+000077   a07f     goto    0x7f                       goto                xiaoyu
+000078   5606     movra   0x6                        movra               r3
+000079   580e     movar   0xe                        movar               Filter_const
+00007a   5607     movra   0x7                        movra               r4
+00007b   8043     call    0x43                       call                FUNCTION_MUL
+00007c   5804     movar   0x4                        movar               r1
+00007d   7e0c     addra   0xc                        addra               Filter_old
+00007e   000c     return                             return          
+                                           xiaoyu:          
+00007f   580b     movar   0xb                        movar               Filter_new
+000080   480c     rsubar  0xc                        rsubar              Filter_old          
+                                                     ;(Filter_old-Filter_new)*Filter_const/256
+000081   5606     movra   0x6                        movra               r3
+000082   580e     movar   0xe                        movar               Filter_const
+000083   5607     movra   0x7                        movra               r4
+000084   8043     call    0x43                       call                FUNCTION_MUL
+000085   5804     movar   0x4                        movar               r1
+000086   4a0c     rsubra  0xc                        rsubra              Filter_old
+000087   000c     return                             return
+                                           ;------------------------------------------------------------------
+                                           filterconst:
+000088   580c     movar   0xc                        movar               Filter_old
+000089   480b     rsubar  0xb                        rsubar              Filter_new     ;
+00008a   560d     movra   0xd                        movra               Filter_temp
+00008b   f187     jbclr   0x187, 0                   jbclr               C
+00008c   a091     goto    0x91                       goto                directionset
+                                                     ;-----Filter_new<Filter_old-------------
+00008d   e202     jbset   0x2, 0x1                   jbset               directionflag
+00008e   a095     goto    0x95                       goto                filterloop
+00008f   d202     bclr    0x2, 0x1                   bclr                directionflag
+000090   a0a9     goto    0xa9                       goto                noise           
+                                           directionset:;-----Filter_new>Filter_old-------------
+000091   f202     jbclr   0x2, 0x1                   jbclr               directionflag
+000092   a095     goto    0x95                       goto                filterloop
+000093   c202     bset    0x2, 0x1                   bset                directionflag
+000094   a0a9     goto    0xa9                       goto                noise
+                                           filterloop:
+000095   660f     incr    0xf                        incr                Filter_adp
+000096   3a05     isubai  0x5                        isubai              THRESHOLD    ;
+000097   f187     jbclr   0x187, 0                   jbclr               C
+000098   a09b     goto    0x9b                       goto                filterbijiao
+000099   660f     incr    0xf                        incr                Filter_adp
+00009a   660f     incr    0xf                        incr                Filter_adp
+                                           filterbijiao:  
+00009b   3c05     movai   0x5                        movai               filter_adp_max
+00009c   480f     rsubar  0xf                        rsubar              Filter_adp   
+00009d   e187     jbset   0x187, 0                   jbset               C
+00009e   000c     return                             return
+00009f   760f     clrr    0xf                        clrr                Filter_adp
+0000a0   3c05     movai   0x5                        movai               filter_1st_incr
+0000a1   7e0e     addra   0xe                        addra               Filter_const
+0000a2   3cfa     movai   0xfa                       movai               filter_1st_max
+0000a3   480e     rsubar  0xe                        rsubar              Filter_const 
+0000a4   e187     jbset   0x187, 0                   jbset               C
+0000a5   000c     return                             return
+0000a6   3cfa     movai   0xfa                       movai               filter_1st_max
+0000a7   560e     movra   0xe                        movra               Filter_const
+0000a8   000c     return                             return
+                                           noise:                
+0000a9   760f     clrr    0xf                        clrr                Filter_adp 
+0000aa   760e     clrr    0xe                        clrr                Filter_const
+0000ab   000c     return                             return                
+                                           ;********************************************
+                                                     end
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXX------------ XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0100 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0140 : XXXXXXXXXXXXXXXX XXXXXXXX-------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:   166
+

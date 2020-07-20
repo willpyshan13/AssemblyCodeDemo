@@ -1,0 +1,732 @@
+gplink-2.2.18 (Apr 13 2020)
+Listing File Generated: 2020-7-13  13:43:51
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_HalSysInit
+                                           	extern	_HalTim0Init
+                                           	extern	_HalExtiInit
+                                           	extern	_INDFbits
+                                           	extern	_T0CNTbits
+                                           	extern	_PCLbits
+                                           	extern	_STATUSbits
+                                           	extern	_FSRbits
+                                           	extern	_P0bits
+                                           	extern	_P1bits
+                                           	extern	_MCRbits
+                                           	extern	_KBIMbits
+                                           	extern	_PCLATHbits
+                                           	extern	_PDCONbits
+                                           	extern	_ODCONbits
+                                           	extern	_PUCONbits
+                                           	extern	_INTECONbits
+                                           	extern	_INTFLAGbits
+                                           	extern	_T0CRbits
+                                           	extern	_DDR0bits
+                                           	extern	_DDR1bits
+                                           	extern	_PWMCRbits
+                                           	extern	_T1DAT1bits
+                                           	extern	_T1DAT2bits
+                                           	extern	_TM0CRbits
+                                           	extern	_T1CRbits
+                                           	extern	_T1CNTbits
+                                           	extern	_T1LOADbits
+                                           	extern	_T1DAT0bits
+                                           	extern	_INDF
+                                           	extern	_T0CNT
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_FSR
+                                           	extern	_P0
+                                           	extern	_P1
+                                           	extern	_MCR
+                                           	extern	_KBIM
+                                           	extern	_PCLATH
+                                           	extern	_PDCON
+                                           	extern	_ODCON
+                                           	extern	_PUCON
+                                           	extern	_INTECON
+                                           	extern	_INTFLAG
+                                           	extern	_T0CR
+                                           	extern	_DDR0
+                                           	extern	_DDR1
+                                           	extern	_PWMCR
+                                           	extern	_T1DAT1
+                                           	extern	_T1DAT2
+                                           	extern	_TM0CR
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DAT0
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_funInit
+                                           	global	_control
+                                           	global	_sleepManage
+                                           	global	_main
+                                           	global	_int_isr
+                                           	global	_ABuf
+                                           	global	_StatusBuf
+                                           	global	_state
+                                           	global	_sleepTime
+                                           	global	_bts
+                                           
+                                           	global STK06
+                                           	global STK05
+                                           	global STK04
+                                           	global STK03
+                                           	global STK02
+                                           	global STK01
+                                           	global STK00
+                                           
+                                           sharebank udata_ovr 0x0010
+                                           STK06	res 1
+                                           STK05	res 1
+                                           STK04	res 1
+                                           STK03	res 1
+                                           STK02	res 1
+                                           STK01	res 1
+                                           STK00	res 1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           UD_MC30P6080_PRO_0	udata
+                                           _ABuf	res	1
+                                           
+                                           UD_MC30P6080_PRO_1	udata
+                                           _StatusBuf	res	1
+                                           
+                                           UD_MC30P6080_PRO_2	udata
+                                           _state	res	2
+                                           
+                                           UD_MC30P6080_PRO_3	udata
+                                           _sleepTime	res	2
+                                           
+                                           UD_MC30P6080_PRO_4	udata
+                                           _bts	res	1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_MC30P6080_PRO_0	udata
+                                           r0x1005	res	1
+                                           r0x1006	res	1
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ;@Allocation info for local variables in function 'funInit'
+                                           ;@funInit HalSysInit                Allocated to registers ;size:2
+                                           ;@funInit HalTim0Init               Allocated to registers ;size:2
+                                           ;@funInit HalExtiInit               Allocated to registers ;size:2
+                                           ;@funInit funInit                   Allocated to registers ;size:2
+                                           ;@funInit INDFbits                  Allocated to registers ;size:1
+                                           ;@funInit T0CNTbits                 Allocated to registers ;size:1
+                                           ;@funInit PCLbits                   Allocated to registers ;size:1
+                                           ;@funInit STATUSbits                Allocated to registers ;size:1
+                                           ;@funInit FSRbits                   Allocated to registers ;size:1
+                                           ;@funInit P0bits                    Allocated to registers ;size:1
+                                           ;@funInit P1bits                    Allocated to registers ;size:1
+                                           ;@funInit MCRbits                   Allocated to registers ;size:1
+                                           ;@funInit KBIMbits                  Allocated to registers ;size:1
+                                           ;@funInit PCLATHbits                Allocated to registers ;size:1
+                                           ;@funInit PDCONbits                 Allocated to registers ;size:1
+                                           ;@funInit ODCONbits                 Allocated to registers ;size:1
+                                           ;@funInit PUCONbits                 Allocated to registers ;size:1
+                                           ;@funInit INTECONbits               Allocated to registers ;size:1
+                                           ;@funInit INTFLAGbits               Allocated to registers ;size:1
+                                           ;@funInit T0CRbits                  Allocated to registers ;size:1
+                                           ;@funInit DDR0bits                  Allocated to registers ;size:1
+                                           ;@funInit DDR1bits                  Allocated to registers ;size:1
+                                           ;@funInit PWMCRbits                 Allocated to registers ;size:1
+                                           ;@funInit T1DAT1bits                Allocated to registers ;size:1
+                                           ;@funInit T1DAT2bits                Allocated to registers ;size:1
+                                           ;@funInit TM0CRbits                 Allocated to registers ;size:1
+                                           ;@funInit T1CRbits                  Allocated to registers ;size:1
+                                           ;@funInit T1CNTbits                 Allocated to registers ;size:1
+                                           ;@funInit T1LOADbits                Allocated to registers ;size:1
+                                           ;@funInit T1DAT0bits                Allocated to registers ;size:1
+                                           ;@funInit ABuf                      Allocated to registers ;size:1
+                                           ;@funInit StatusBuf                 Allocated to registers ;size:1
+                                           ;@funInit state                     Allocated to registers ;size:2
+                                           ;@funInit sleepTime                 Allocated to registers ;size:2
+                                           ;@funInit bts                       Allocated to registers ;size:1
+                                           ;@funInit INDF                      Allocated to registers ;size:1
+                                           ;@funInit T0CNT                     Allocated to registers ;size:1
+                                           ;@funInit PCL                       Allocated to registers ;size:1
+                                           ;@funInit STATUS                    Allocated to registers ;size:1
+                                           ;@funInit FSR                       Allocated to registers ;size:1
+                                           ;@funInit P0                        Allocated to registers ;size:1
+                                           ;@funInit P1                        Allocated to registers ;size:1
+                                           ;@funInit MCR                       Allocated to registers ;size:1
+                                           ;@funInit KBIM                      Allocated to registers ;size:1
+                                           ;@funInit PCLATH                    Allocated to registers ;size:1
+                                           ;@funInit PDCON                     Allocated to registers ;size:1
+                                           ;@funInit ODCON                     Allocated to registers ;size:1
+                                           ;@funInit PUCON                     Allocated to registers ;size:1
+                                           ;@funInit INTECON                   Allocated to registers ;size:1
+                                           ;@funInit INTFLAG                   Allocated to registers ;size:1
+                                           ;@funInit T0CR                      Allocated to registers ;size:1
+                                           ;@funInit DDR0                      Allocated to registers ;size:1
+                                           ;@funInit DDR1                      Allocated to registers ;size:1
+                                           ;@funInit PWMCR                     Allocated to registers ;size:1
+                                           ;@funInit T1DAT1                    Allocated to registers ;size:1
+                                           ;@funInit T1DAT2                    Allocated to registers ;size:1
+                                           ;@funInit TM0CR                     Allocated to registers ;size:1
+                                           ;@funInit T1CR                      Allocated to registers ;size:1
+                                           ;@funInit T1CNT                     Allocated to registers ;size:1
+                                           ;@funInit T1LOAD                    Allocated to registers ;size:1
+                                           ;@funInit T1DAT0                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'funInit';
+                                           ;@Allocation info for local variables in function 'control'
+                                           ;@end Allocation info for local variables in function 'control';
+                                           ;@Allocation info for local variables in function 'sleepManage'
+                                           ;@end Allocation info for local variables in function 'sleepManage';
+                                           ;@Allocation info for local variables in function 'main'
+                                           ;@end Allocation info for local variables in function 'main';
+                                           ;@Allocation info for local variables in function 'int_isr'
+                                           ;@end Allocation info for local variables in function 'int_isr';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; reset vector 
+                                           ;--------------------------------------------------------
+                                           STARTUP	code 0x0000
+000000   283e     goto    0x3e             	goto	_main
+                                           ;--------------------------------------------------------
+                                           ; interrupt and initialization code
+                                           ;--------------------------------------------------------
+                                           c_interrupt	code	0x8
+                                           __sdcc_interrupt
+                                           ;***
+                                           ;  pBlock Stats: dbName = I
+                                           ;***
+                                           ;entry:  _int_isr	;Function start
+                                           ; 0 exit points
+                                           ;2 compiler assigned registers:
+                                           ;   r0x1005
+                                           ;   r0x1006
+                                           ;; Starting pCode block
+                                           _int_isr	;Function start
+                                           ; 0 exit points
+                                           ;	.line	84; "MC30P6080_PRO.c"	__endasm;
+000008   1587     movra   0x7              	movra	_ABuf
+000009   1103     swapar  0x3              	swapar	_STATUS
+00000a   159d     movra   0x1d             	movra	_StatusBuf
+                                           	
+                                           ;	.line	87; "MC30P6080_PRO.c"	if(T0IE && T0IF)//1ms
+00000b   300e     jbset   0xe, 0           	JBSET	_INTECONbits,0
+00000c   2834     goto    0x34             	GOTO	_00130_DS_
+00000d   300f     jbset   0xf, 0           	JBSET	_INTFLAGbits,0
+00000e   2834     goto    0x34             	GOTO	_00130_DS_
+                                           ;	.line	89; "MC30P6080_PRO.c"	T0CNT=TIM0_CNT;
+00000f   0b10     movai   0x10             	MOVAI	0x10
+000010   1581     movra   0x1              	MOVRA	_T0CNT
+                                           ;	.line	90; "MC30P6080_PRO.c"	T0IF = 0;
+000011   3c0f     bclr    0xf, 0           	BCLR	_INTFLAGbits,0
+                                           ;	.line	91; "MC30P6080_PRO.c"	bts.testflg=!bts.testflg;
+000012   1d9b     clrr    0x1b             	CLRR	r0x1005
+000013   341e     jbclr   0x1e, 0          	JBCLR	_bts,0
+000014   199b     incr    0x1b             	INCR	r0x1005
+000015   161b     movar   0x1b             	MOVAR	r0x1005
+000016   0b00     movai   0                	MOVAI	0x00
+000017   3503     jbclr   0x3, 0x2         	JBCLR	STATUS,2
+000018   0b01     movai   0x1              	MOVAI	0x01
+000019   159b     movra   0x1b             	MOVRA	r0x1005
+00001a   159c     movra   0x1c             	MOVRA	r0x1006
+                                           ;;99	MOVAR	r0x1006
+00001b   131b     rrar    0x1b             	RRAR	r0x1005
+00001c   3003     jbset   0x3, 0           	JBSET	STATUS,0
+00001d   3c1e     bclr    0x1e, 0          	BCLR	_bts,0
+00001e   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+00001f   381e     bset    0x1e, 0          	BSET	_bts,0
+                                           ;	.line	97; "MC30P6080_PRO.c"	LED=bts.testflg;
+000020   1d9b     clrr    0x1b             	CLRR	r0x1005
+000021   341e     jbclr   0x1e, 0          	JBCLR	_bts,0
+000022   199b     incr    0x1b             	INCR	r0x1005
+000023   161b     movar   0x1b             	MOVAR	r0x1005
+000024   159c     movra   0x1c             	MOVRA	r0x1006
+000025   131c     rrar    0x1c             	RRAR	r0x1006
+000026   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000027   3d06     bclr    0x6, 0x2         	BCLR	_P1bits,2
+000028   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+000029   3906     bset    0x6, 0x2         	BSET	_P1bits,2
+                                           ;	.line	98; "MC30P6080_PRO.c"	BOOST_EN=bts.testflg;
+00002a   1d9b     clrr    0x1b             	CLRR	r0x1005
+00002b   341e     jbclr   0x1e, 0          	JBCLR	_bts,0
+00002c   199b     incr    0x1b             	INCR	r0x1005
+00002d   161b     movar   0x1b             	MOVAR	r0x1005
+00002e   159c     movra   0x1c             	MOVRA	r0x1006
+00002f   131c     rrar    0x1c             	RRAR	r0x1006
+000030   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000031   3e06     bclr    0x6, 0x4         	BCLR	_P1bits,4
+000032   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+000033   3a06     bset    0x6, 0x4         	BSET	_P1bits,4
+                                           _00130_DS_
+                                           ;	.line	112; "MC30P6080_PRO.c"	if(KBIE && KBIF)
+000034   308e     jbset   0xe, 0x1         	JBSET	_INTECONbits,1
+000035   2839     goto    0x39             	GOTO	_00133_DS_
+000036   308f     jbset   0xf, 0x1         	JBSET	_INTFLAGbits,1
+000037   2839     goto    0x39             	GOTO	_00133_DS_
+                                           ;	.line	114; "MC30P6080_PRO.c"	KBIF = 0;
+000038   3c8f     bclr    0xf, 0x1         	BCLR	_INTFLAGbits,1
+                                           _00133_DS_
+                                           ;	.line	122; "MC30P6080_PRO.c"	__endasm;
+000039   111d     swapar  0x1d             	swapar	_StatusBuf
+00003a   1583     movra   0x3              	movra	_STATUS
+00003b   1187     swapr   0x7              	swapr	_ABuf
+00003c   1107     swapar  0x7              	swapar	_ABuf
+                                           	
+                                           END_OF_INTERRUPT
+                                           ;	.line	123; "MC30P6080_PRO.c"	}
+00003d   000d     retie                    	RETIE	
+                                           
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_MC30P6080_PRO	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = M
+                                           ;***
+                                           ;entry:  _main	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _HalSysInit
+                                           ;   _HalTim0Init
+                                           ;   _funInit
+                                           ;   _control
+                                           ;   _sleepManage
+                                           ;   _HalSysInit
+                                           ;   _HalTim0Init
+                                           ;   _funInit
+                                           ;   _control
+                                           ;   _sleepManage
+                                           ;; Starting pCode block
+                                           _main	;Function start
+                                           ; 2 exit points
+                                           ;	.line	67; "MC30P6080_PRO.c"	HalSysInit();
+00003e   2082     call    0x82             	CALL	_HalSysInit
+                                           ;	.line	68; "MC30P6080_PRO.c"	HalTim0Init();
+00003f   207c     call    0x7c             	CALL	_HalTim0Init
+                                           ;	.line	69; "MC30P6080_PRO.c"	funInit();
+000040   2063     call    0x63             	CALL	_funInit
+                                           _00124_DS_
+                                           ;	.line	73; "MC30P6080_PRO.c"	control();
+000041   2062     call    0x62             	CALL	_control
+                                           ;	.line	74; "MC30P6080_PRO.c"	sleepManage();
+000042   2045     call    0x45             	CALL	_sleepManage
+000043   2841     goto    0x41             	GOTO	_00124_DS_
+                                           ;	.line	76; "MC30P6080_PRO.c"	}
+000044   000c     return                   	RETURN	
+                                           ; exit point of _main
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _sleepManage	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _sleepManage	;Function start
+                                           ; 2 exit points
+                                           ;	.line	43; "MC30P6080_PRO.c"	if(BOOST_EN || (state & STA_HALL_ON))
+000045   3606     jbclr   0x6, 0x4         	JBCLR	_P1bits,4
+000046   2849     goto    0x49             	GOTO	_00113_DS_
+000047   3097     jbset   0x17, 0x1        	JBSET	_state,1
+000048   284d     goto    0x4d             	GOTO	_00114_DS_
+                                           _00113_DS_
+                                           ;	.line	44; "MC30P6080_PRO.c"	sleepTime = SLEEP_TIME;
+000049   0b10     movai   0x10             	MOVAI	0x10
+00004a   1599     movra   0x19             	MOVRA	_sleepTime
+00004b   0b27     movai   0x27             	MOVAI	0x27
+00004c   159a     movra   0x1a             	MOVRA	(_sleepTime + 1)
+                                           _00114_DS_
+                                           ;	.line	46; "MC30P6080_PRO.c"	if(sleepTime == 0)
+00004d   1619     movar   0x19             	MOVAR	_sleepTime
+00004e   171a     orar    0x1a             	ORAR	(_sleepTime + 1)
+00004f   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000050   2861     goto    0x61             	GOTO	_00118_DS_
+                                           ;	.line	48; "MC30P6080_PRO.c"	LED = 1;
+000051   3906     bset    0x6, 0x2         	BSET	_P1bits,2
+                                           ;	.line	49; "MC30P6080_PRO.c"	KBIE = 1;  	   	// 使能键盘中断
+000052   388e     bset    0xe, 0x1         	BSET	_INTECONbits,1
+                                           ;	.line	50; "MC30P6080_PRO.c"	KBIM = BV(0);
+000053   0b01     movai   0x1              	MOVAI	0x01
+000054   1589     movra   0x9              	MOVRA	_KBIM
+                                           ;	.line	51; "MC30P6080_PRO.c"	T0IE = 0;
+000055   3c0e     bclr    0xe, 0           	BCLR	_INTECONbits,0
+                                           ;	.line	52; "MC30P6080_PRO.c"	STOP;      	   	// 执行STOP指令
+                                           	
+000056   000b     sleep                    	STOP; 
+                                           	
+                                           ;	.line	54; "MC30P6080_PRO.c"	NOP;
+                                           	
+000057   0000     nop                      	NOP; 
+                                           	
+                                           ;	.line	55; "MC30P6080_PRO.c"	NOP;
+                                           	
+000058   0000     nop                      	NOP; 
+                                           	
+                                           ;	.line	56; "MC30P6080_PRO.c"	NOP;
+                                           	
+000059   0000     nop                      	NOP; 
+                                           	
+                                           ;	.line	57; "MC30P6080_PRO.c"	NOP;
+                                           	
+00005a   0000     nop                      	NOP; 
+                                           	
+                                           ;	.line	59; "MC30P6080_PRO.c"	sleepTime = SLEEP_TIME;
+00005b   0b10     movai   0x10             	MOVAI	0x10
+00005c   1599     movra   0x19             	MOVRA	_sleepTime
+00005d   0b27     movai   0x27             	MOVAI	0x27
+00005e   159a     movra   0x1a             	MOVRA	(_sleepTime + 1)
+                                           ;	.line	60; "MC30P6080_PRO.c"	KBIE = 0;
+00005f   3c8e     bclr    0xe, 0x1         	BCLR	_INTECONbits,1
+                                           ;	.line	61; "MC30P6080_PRO.c"	T0IE = 1;
+000060   380e     bset    0xe, 0           	BSET	_INTECONbits,0
+                                           _00118_DS_
+                                           ;	.line	63; "MC30P6080_PRO.c"	}
+000061   000c     return                   	RETURN	
+                                           ; exit point of _sleepManage
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _control	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _control	;Function start
+                                           ; 2 exit points
+                                           ;	.line	39; "MC30P6080_PRO.c"	}
+000062   000c     return                   	RETURN	
+                                           ; exit point of _control
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _funInit	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _funInit	;Function start
+                                           ; 2 exit points
+                                           ;	.line	33; "MC30P6080_PRO.c"	bts.testflg=0;
+000063   3c1e     bclr    0x1e, 0          	BCLR	_bts,0
+                                           ;	.line	34; "MC30P6080_PRO.c"	}
+000064   000c     return                   	RETURN	
+                                           ; exit point of _funInit
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	   81+    0 =    81 instructions (  162 byte)
+                                           
+                                           	end
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
+                                           ; Version 2.0.0 (Dec 11 2019) (MINGW32)
+                                           ; This file was generated Mon Jul 13 13:43:51 2020
+                                           ;--------------------------------------------------------
+                                           ; MC30 port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"hal_sys.c"
+                                           	list	p=6060
+                                           	radix dec
+                                           	include "6060.inc"
+                                           		LIST
+                                           ;mc30p6080.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_HalExtiInit
+                                           	extern	_INDFbits
+                                           	extern	_T0CNTbits
+                                           	extern	_PCLbits
+                                           	extern	_STATUSbits
+                                           	extern	_FSRbits
+                                           	extern	_P0bits
+                                           	extern	_P1bits
+                                           	extern	_MCRbits
+                                           	extern	_KBIMbits
+                                           	extern	_PCLATHbits
+                                           	extern	_PDCONbits
+                                           	extern	_ODCONbits
+                                           	extern	_PUCONbits
+                                           	extern	_INTECONbits
+                                           	extern	_INTFLAGbits
+                                           	extern	_T0CRbits
+                                           	extern	_DDR0bits
+                                           	extern	_DDR1bits
+                                           	extern	_PWMCRbits
+                                           	extern	_T1DAT1bits
+                                           	extern	_T1DAT2bits
+                                           	extern	_TM0CRbits
+                                           	extern	_T1CRbits
+                                           	extern	_T1CNTbits
+                                           	extern	_T1LOADbits
+                                           	extern	_T1DAT0bits
+                                           	extern	_INDF
+                                           	extern	_T0CNT
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_FSR
+                                           	extern	_P0
+                                           	extern	_P1
+                                           	extern	_MCR
+                                           	extern	_KBIM
+                                           	extern	_PCLATH
+                                           	extern	_PDCON
+                                           	extern	_ODCON
+                                           	extern	_PUCON
+                                           	extern	_INTECON
+                                           	extern	_INTFLAG
+                                           	extern	_T0CR
+                                           	extern	_DDR0
+                                           	extern	_DDR1
+                                           	extern	_PWMCR
+                                           	extern	_T1DAT1
+                                           	extern	_T1DAT2
+                                           	extern	_TM0CR
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DAT0
+                                           
+                                           	extern STK06
+                                           	extern STK05
+                                           	extern STK04
+                                           	extern STK03
+                                           	extern STK02
+                                           	extern STK01
+                                           	extern STK00
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_HalTim0Init
+                                           	global	_HalSysInit
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ;@Allocation info for local variables in function 'HalSysInit'
+                                           ;@HalSysInit HalTim0Init               Allocated to registers ;size:2
+                                           ;@HalSysInit HalExtiInit               Allocated to registers ;size:2
+                                           ;@HalSysInit InitRam                   Allocated to registers ;size:2
+                                           ;@HalSysInit config                    Allocated to registers ;size:2
+                                           ;@HalSysInit INDFbits                  Allocated to registers ;size:1
+                                           ;@HalSysInit T0CNTbits                 Allocated to registers ;size:1
+                                           ;@HalSysInit PCLbits                   Allocated to registers ;size:1
+                                           ;@HalSysInit STATUSbits                Allocated to registers ;size:1
+                                           ;@HalSysInit FSRbits                   Allocated to registers ;size:1
+                                           ;@HalSysInit P0bits                    Allocated to registers ;size:1
+                                           ;@HalSysInit P1bits                    Allocated to registers ;size:1
+                                           ;@HalSysInit MCRbits                   Allocated to registers ;size:1
+                                           ;@HalSysInit KBIMbits                  Allocated to registers ;size:1
+                                           ;@HalSysInit PCLATHbits                Allocated to registers ;size:1
+                                           ;@HalSysInit PDCONbits                 Allocated to registers ;size:1
+                                           ;@HalSysInit ODCONbits                 Allocated to registers ;size:1
+                                           ;@HalSysInit PUCONbits                 Allocated to registers ;size:1
+                                           ;@HalSysInit INTECONbits               Allocated to registers ;size:1
+                                           ;@HalSysInit INTFLAGbits               Allocated to registers ;size:1
+                                           ;@HalSysInit T0CRbits                  Allocated to registers ;size:1
+                                           ;@HalSysInit DDR0bits                  Allocated to registers ;size:1
+                                           ;@HalSysInit DDR1bits                  Allocated to registers ;size:1
+                                           ;@HalSysInit PWMCRbits                 Allocated to registers ;size:1
+                                           ;@HalSysInit T1DAT1bits                Allocated to registers ;size:1
+                                           ;@HalSysInit T1DAT2bits                Allocated to registers ;size:1
+                                           ;@HalSysInit TM0CRbits                 Allocated to registers ;size:1
+                                           ;@HalSysInit T1CRbits                  Allocated to registers ;size:1
+                                           ;@HalSysInit T1CNTbits                 Allocated to registers ;size:1
+                                           ;@HalSysInit T1LOADbits                Allocated to registers ;size:1
+                                           ;@HalSysInit T1DAT0bits                Allocated to registers ;size:1
+                                           ;@HalSysInit INDF                      Allocated to registers ;size:1
+                                           ;@HalSysInit T0CNT                     Allocated to registers ;size:1
+                                           ;@HalSysInit PCL                       Allocated to registers ;size:1
+                                           ;@HalSysInit STATUS                    Allocated to registers ;size:1
+                                           ;@HalSysInit FSR                       Allocated to registers ;size:1
+                                           ;@HalSysInit P0                        Allocated to registers ;size:1
+                                           ;@HalSysInit P1                        Allocated to registers ;size:1
+                                           ;@HalSysInit MCR                       Allocated to registers ;size:1
+                                           ;@HalSysInit KBIM                      Allocated to registers ;size:1
+                                           ;@HalSysInit PCLATH                    Allocated to registers ;size:1
+                                           ;@HalSysInit PDCON                     Allocated to registers ;size:1
+                                           ;@HalSysInit ODCON                     Allocated to registers ;size:1
+                                           ;@HalSysInit PUCON                     Allocated to registers ;size:1
+                                           ;@HalSysInit INTECON                   Allocated to registers ;size:1
+                                           ;@HalSysInit INTFLAG                   Allocated to registers ;size:1
+                                           ;@HalSysInit T0CR                      Allocated to registers ;size:1
+                                           ;@HalSysInit DDR0                      Allocated to registers ;size:1
+                                           ;@HalSysInit DDR1                      Allocated to registers ;size:1
+                                           ;@HalSysInit PWMCR                     Allocated to registers ;size:1
+                                           ;@HalSysInit T1DAT1                    Allocated to registers ;size:1
+                                           ;@HalSysInit T1DAT2                    Allocated to registers ;size:1
+                                           ;@HalSysInit TM0CR                     Allocated to registers ;size:1
+                                           ;@HalSysInit T1CR                      Allocated to registers ;size:1
+                                           ;@HalSysInit T1CNT                     Allocated to registers ;size:1
+                                           ;@HalSysInit T1LOAD                    Allocated to registers ;size:1
+                                           ;@HalSysInit T1DAT0                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'HalSysInit';
+                                           ;@Allocation info for local variables in function 'HalTim0Init'
+                                           ;@end Allocation info for local variables in function 'HalTim0Init';
+                                           ;@Allocation info for local variables in function 'config'
+                                           ;@end Allocation info for local variables in function 'config';
+                                           ;@Allocation info for local variables in function 'InitRam'
+                                           ;@end Allocation info for local variables in function 'InitRam';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_hal_sys	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _InitRam	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _InitRam	;Function start
+                                           ; 2 exit points
+                                           ;	.line	56; "hal_sys.c"	}
+000065   0b40     movai   0x40             	movai	0x40
+000066   1584     movra   0x4              	movra	FSR
+000067   0b30     movai   0x30             	movai	48
+000068   1587     movra   0x7              	movra	0x07
+000069   1b84     decr    0x4              	decr	FSR
+00006a   1d80     clrr    0                	clrr	INDF
+00006b   1a87     djzr    0x7              	djzr	0x07
+00006c   2869     goto    0x69             	goto	$-3
+00006d   1d80     clrr    0                	clrr	INDF
+00006e   1d87     clrr    0x7              	clrr	0x07
+                                           	
+                                           ;	.line	57; "hal_sys.c"	
+00006f   000c     return                   	RETURN	
+                                           ; exit point of _InitRam
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _config	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _config	;Function start
+                                           ; 2 exit points
+                                           ;	.line	33; "hal_sys.c"	P1 = BV(2);
+000070   1d85     clrr    0x5              	CLRR	_P0
+                                           ;	.line	34; "hal_sys.c"	DDR0 = 0x00;   			//1:输入 0:输出
+000071   0b04     movai   0x4              	MOVAI	0x04
+000072   1586     movra   0x6              	MOVRA	_P1
+                                           ;	.line	35; "hal_sys.c"	DDR1 = BV(0)|BV(1);     	   	
+000073   1dc5     clrr    0x45             	CLRR	_DDR0
+                                           ;	.line	36; "hal_sys.c"	PDCON = 0xFF;  			//上拉：0:有效 1:无效
+000074   0b03     movai   0x3              	MOVAI	0x03
+000075   15c6     movra   0x46             	MOVRA	_DDR1
+                                           ;	.line	37; "hal_sys.c"	PUCON = 0xff;  			//下拉：0:有效 1:无效    
+000076   0bff     movai   0xff             	MOVAI	0xff
+000077   158b     movra   0xb              	MOVRA	_PDCON
+                                           ;	.line	38; "hal_sys.c"	ODCON = 0x00;			//是否开漏：1使能：0普通推挽输出 所有P1输出为推完输出
+000078   0bff     movai   0xff             	MOVAI	0xff
+000079   158d     movra   0xd              	MOVRA	_PUCON
+                                           ;	.line	39; "hal_sys.c"	}
+00007a   1d8c     clrr    0xc              	CLRR	_ODCON
+                                           ;	.line	40; "hal_sys.c"	
+00007b   000c     return                   	RETURN	
+                                           ; exit point of _config
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _HalTim0Init	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _HalTim0Init	;Function start
+                                           ; 2 exit points
+                                           ;	.line	18; "hal_sys.c"	T0CNT = TIM0_CNT;
+00007c   0b04     movai   0x4              	MOVAI	0x04
+00007d   15c1     movra   0x41             	MOVRA	_T0CR
+                                           ;	.line	19; "hal_sys.c"	T0IE  = TIM0_EN;
+00007e   0b10     movai   0x10             	MOVAI	0x10
+00007f   1581     movra   0x1              	MOVRA	_T0CNT
+                                           ;	.line	20; "hal_sys.c"	}
+000080   380e     bset    0xe, 0           	BSET	_INTECONbits,0
+                                           ;	.line	21; "hal_sys.c"	/*
+000081   000c     return                   	RETURN	
+                                           ; exit point of _HalTim0Init
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _HalSysInit	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _InitRam
+                                           ;   _config
+                                           ;   _InitRam
+                                           ;   _config
+                                           ;; Starting pCode block
+                                           _HalSysInit	;Function start
+                                           ; 2 exit points
+                                           ;	.line	8; "hal_sys.c"	GIE = 0;
+000082   3f8e     bclr    0xe, 0x7         	BCLR	_INTECONbits,7
+                                           ;	.line	9; "hal_sys.c"	InitRam();
+000083   2065     call    0x65             	CALL	_InitRam
+                                           ;	.line	10; "hal_sys.c"	config();
+000084   2070     call    0x70             	CALL	_config
+                                           ;	.line	11; "hal_sys.c"	GIE = 1;
+000085   3b8e     bset    0xe, 0x7         	BSET	_INTECONbits,7
+                                           ;	.line	12; "hal_sys.c"	MCR |= (10<<1)|(1<<0);//开启低电压检测 3.0V
+000086   0b15     movai   0x15             	MOVAI	0x15
+000087   1788     orra    0x8              	ORRA	_MCR
+                                           ;	.line	13; "hal_sys.c"	}
+000088   000c     return                   	RETURN	
+                                           ; exit point of _HalSysInit
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	   26+    0 =    26 instructions (   52 byte)
+                                           
+                                           	end
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XX-------------- XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0100 : XXXXXXXXXXXXXXXX XX-------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:   130
+

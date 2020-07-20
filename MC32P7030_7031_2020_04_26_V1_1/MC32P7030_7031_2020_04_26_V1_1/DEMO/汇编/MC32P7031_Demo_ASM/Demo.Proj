@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project MCU="MC32P7031" ID="0x7031" MCU_Type="RISC" Date="2012-08-28" VS="1.01">
+  <ProWindows>
+    <Explorer fName="Demo">
+      <SouceCode fName="SourceCode">
+        <asmFile fName="Demo.asm" fPath="\Demo.asm" />
+      </SouceCode>
+      <SouceCode fName="Output" />
+      <SouceCode fName="Debug" />
+    </Explorer>
+  </ProWindows>
+  <Option Value="4" Value0="4" Value1="C040" Value2="" Value3="B0" Value4="80" Value5="" Value6="" Value7="" Value8="" Value9="" Value10="" />
+  <Compiler Name="gpasm.exe" />
+  <Language Name="ASM" />
+  <WatchSymbol Name="R_WorkCntH" Addr="??" Value="Error:not found" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+  <WatchSymbol Name="R_WorkCntL" Addr="??" Value="Error:not found" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+</Project>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project MCU="MC30P6080" ID="0x6080" MCU_Type="CRISC" Date="2012-08-28" VS="1.01">
+  <ProWindows>
+    <Explorer fName="MC30P6080_PRO">
+      <SouceCode fName="SourceCode">
+        <asmFile fName="MC30P6080_PRO.c" fPath="\MC30P6080_PRO.c" />
+        <asmFile fName="hal_sys.c" fPath="\hal_sys.c" />
+      </SouceCode>
+      <SouceCode fName="Output" />
+      <SouceCode fName="Debug" />
+    </Explorer>
+  </ProWindows>
+  <Option Value="0" Value0="0" Value1="3f08" Value2="" Value3="6" Value4="1842" Value5="" Value6="" Value7="" Value8="" Value9="" Value10="" />
+  <Compiler Name="gpasm.exe" />
+  <Language Name="C" />
+</Project>
