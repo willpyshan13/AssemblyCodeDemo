@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project MCU="MC32P7311" ID="0x7311" MCU_Type="RISC" Date="2012-08-28" VS="1.01">
+  <ProWindows>
+    <Explorer fName="I2C_Sensor">
+      <SouceCode fName="SourceCode">
+        <asmFile fName="I2C_Sensor.asm" fPath="\I2C_Sensor.asm" />
+      </SouceCode>
+      <SouceCode fName="Output" />
+      <SouceCode fName="Debug" />
+    </Explorer>
+  </ProWindows>
+  <Option Value="8080" Value0="" Value1="" Value2="" Value3="" Value4="" Value5="" />
+  <Compiler Name="gpasm.exe" />
+  <Language Name="ASM" />
+  <WatchSymbol Name="write_value" Addr="??" Value="Error:not found" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+  <WatchSymbol Name="read_value" Addr="??" Value="Error:not found" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+  <WatchSymbol Name="_status" Addr="??" Value="Error:not found" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+  <WatchSymbol Name="Xout_M" Addr="??" Value="Error:not found" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+  <WatchSymbol Name="Xout_L" Addr="??" Value="Error:not found" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+  <WatchSymbol Name="Yout_M" Addr="??" Value="Error:not found" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+  <WatchSymbol Name="Yout_L" Addr="??" Value="Error:not found" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+  <WatchSymbol Name="Array" Addr="0007" Value="??" BitFlag="False" Bit="0" DataRes="124" Array="False" />
+  <WatchSymbol Name="ArrayCnt" Addr="??" Value="Error:not found" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+  <WatchSymbol Name="R9" Addr="??" Value="Error:not found" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+  <WatchSymbol Name="RA" Addr="??" Value="Error:not found" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+  <WatchSymbol Name="RB" Addr="??" Value="Error:not found" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+  <WatchSymbol Name="RC" Addr="??" Value="Error:not found" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+  <WatchSymbol Name="RD" Addr="??" Value="Error:not found" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+  <WatchSymbol Name="RE" Addr="??" Value="Error:not found" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+  <WatchSymbol Name="RF" Addr="??" Value="Error:not found" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+</Project>

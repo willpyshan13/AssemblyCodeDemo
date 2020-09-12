@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project MCU="mc32P7311(试用)" ID="0x7311" MCU_Type="CRISC" Date="2012-08-28" VS="1.01">
+  <ProWindows>
+    <Explorer fName="7311c">
+      <SouceCode fName="SourceCode">
+        <asmFile fName="7311c.c" fPath="\7311c.c" />
+      </SouceCode>
+      <SouceCode fName="Output" />
+      <SouceCode fName="Debug" />
+    </Explorer>
+  </ProWindows>
+  <Option Value="80" Value0="" Value1="" Value2="" Value3="" Value4="" Value5="" />
+  <Compiler Name="gpasm.exe" />
+  <Language Name="C" />
+  <WatchSymbol Name="Array" Addr="0007" Value="??" BitFlag="False" Bit="0" DataRes="124" Array="False" />
+  <WatchSymbol Name="n" Addr="0095" Value="??" BitFlag="False" Bit="0" DataRes="0" Array="False" />
+  <WatchSymbol Name="read_temp" Addr="008E" Value="??" BitFlag="False" Bit="0" DataRes="1" Array="False" />
+  <WatchSymbol Name="m" Addr="0090" Value="??" BitFlag="False" Bit="0" DataRes="1" Array="False" />
+</Project>

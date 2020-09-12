@@ -1,0 +1,2356 @@
+gpasm-1.7.0_beta1 (Apr 28 2016)7311c.asm          2016-12-8  17:32:23          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : ANSI-C Compiler
+                      00003 ; Version 0.0.4 (Apr 28 2016) (MINGW32)
+                      00004 ; This file was generated Thu Dec 08 17:32:23 2016
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC3X port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "7311c.c"
+                      00009         list    p=7311
+                      00010         radix dec
+                      00011         include "7311.inc"
+                      00001 
+                      00002 
+                      00003 ;mc32p7311 header file
+                      00004 ;
+                      00005 ; 
+                      00006 
+                      00007 ;define must write at first row
+                      00008        
+  00000180            00009 INDF0   EQU     0x180
+  00000181            00010 INDF1   EQU     0x181
+  00000182            00011 INDF2   EQU     0x182
+  00000183            00012 HIBYTE  EQU     0x183
+  00000184            00013 FSR0    EQU     0x184
+  00000185            00014 FSR1    EQU     0x185
+  00000186            00015 PCL     EQU     0x186
+  00000187            00016 PFLAG   EQU     0x187
+  00000188            00017 MCR     EQU     0x188
+  00000189            00018 INDF3   EQU     0x189   
+  0000018A            00019 INTE    EQU     0x18A
+  0000018B            00020 INTF    EQU     0x18B
+  0000018C            00021 DRVCR   EQU     0x18C
+  0000018E            00022 KBCR    EQU     0x18E
+                      00023 
+  00000190            00024 IOP0    EQU     0x190
+  00000191            00025 OEP0    EQU     0x191
+  00000192            00026 PUP0    EQU     0x192
+  00000193            00027 PDP0    EQU     0x193
+  00000194            00028 IOP1    EQU     0x194
+  00000195            00029 OEP1    EQU     0x195
+  00000196            00030 PUP1    EQU     0x196
+  00000197            00031 PDP1    EQU     0x197
+                      00032 
+  00000198            00033 T0CR    EQU     0x198
+  00000199            00034 T0CNT   EQU     0x199
+  0000019A            00035 T0LOAD  EQU     0x19A
+  0000019B            00036 T0DATA  EQU     0x19B
+  0000019C            00037 T1CR    EQU     0x19C
+  0000019D            00038 T1CNT   EQU     0x19D
+  0000019E            00039 T1LOAD  EQU     0x19E
+  0000019F            00040 T1DATA  EQU     0x19F
+                      00041 
+  000001A0            00042 T2CR    EQU     0x1A0
+  000001A1            00043 T2CNT   EQU     0x1A1
+  000001A2            00044 T2LOAD  EQU     0x1A2
+  000001A3            00045 T2DATA  EQU     0x1A3
+  000001A4            00046 T3CR    EQU     0x1A4
+  000001A5            00047 T3CNT   EQU     0x1A5
+  000001A6            00048 T3LOAD  EQU     0x1A6
+                      00049 
+  000001A8            00050 PWM0DE  EQU     0x1A8
+  000001A9            00051 PWM1DE  EQU     0x1A9
+  000001AA            00052 PWM2DE  EQU     0x1AA
+  000001AC            00053 PWMCR0  EQU     0x1AC
+  000001AD            00054 PWMCR1  EQU     0x1AD
+  000001AE            00055 OSCM    EQU     0x1AE
+  000001AF            00056 LVDCR   EQU     0x1AF
+                      00057 
+  000001B0            00058 ADCR0   EQU     0x1B0
+  000001B1            00059 ADCR1   EQU     0x1B1
+  000001B2            00060 ADCR2   EQU     0x1B2
+                      00061 
+  000001B4            00062 ADRH    EQU     0x1B4
+  000001B5            00063 ADRL    EQU     0x1B5
+  000001B6            00064 ANSEL0  EQU     0x1B6
+  000001B7            00065 ANSEL1  EQU     0x1B7
+                      00066 
+  000001F8            00067 VBGCAL  EQU     0x1F8
+  000001FB            00068 OSCCALH EQU     0x1FB
+  000001FC            00069 OSCCALL EQU     0x1FC
+                      00070 
+                      00071 #define         STATUS          PFLAG
+                      00072 #define         INDF              INDF0
+                      00073 #define         FSR                 FSR0
+                      00074 #define         P0HCON          PUP0
+                      00075 #define         P1HCON          PUP1
+                      00076 #define         INTECON         INTE
+                      00077 #define         INTFLAG   INTF  
+                      00078 
+                      00079 
+                      00080 ;INDF0
+                      00081 #define         INDF07          INDF0,7
+                      00082 #define         INDF06          INDF0,6
+                      00083 #define         INDF05          INDF0,5
+                      00084 #define         INDF04          INDF0,4
+                      00085 #define         INDF03          INDF0,3
+                      00086 #define         INDF02          INDF0,2
+                      00087 #define         INDF01          INDF0,1
+                      00088 #define         INDF00          INDF0,0
+                      00089 
+                      00090 ;INDF1
+                      00091 #define         INDF17          INDF1,7
+                      00092 #define         INDF16          INDF1,6
+                      00093 #define         INDF15          INDF1,5
+                      00094 #define         INDF14          INDF1,4
+                      00095 #define         INDF13          INDF1,3
+                      00096 #define         INDF12          INDF1,2
+                      00097 #define         INDF11          INDF1,1
+                      00098 #define         INDF10          INDF1,0
+                      00099 
+                      00100 ;INDF2
+                      00101 #define         INDF27          INDF2,7
+                      00102 #define         INDF26          INDF2,6
+                      00103 #define         INDF25          INDF2,5
+                      00104 #define         INDF24          INDF2,4
+                      00105 #define         INDF23          INDF2,3
+                      00106 #define         INDF22          INDF2,2
+                      00107 #define         INDF21          INDF2,1
+                      00108 #define         INDF20          INDF2,0
+                      00109 
+                      00110 ;HIBYTE
+                      00111 #define         HIBYTE7         HIBYTE,7
+                      00112 #define         HIBYTE6         HIBYTE,6
+                      00113 #define         HIBYTE5         HIBYTE,5
+                      00114 #define         HIBYTE4         HIBYTE,4
+                      00115 #define         HIBYTE3         HIBYTE,3
+                      00116 #define         HIBYTE2         HIBYTE,2
+                      00117 #define         HIBYTE1         HIBYTE,1
+                      00118 #define         HIBYTE0         HIBYTE,0
+                      00119 
+                      00120 ;FSR0
+                      00121 #define         FSR07           FSR0,7
+                      00122 #define         FSR06           FSR0,6
+                      00123 #define         FSR05           FSR0,5
+                      00124 #define         FSR04           FSR0,4
+                      00125 #define         FSR03           FSR0,3
+                      00126 #define         FSR02           FSR0,2
+                      00127 #define         FSR01           FSR0,1
+                      00128 #define         FSR00           FSR0,0
+                      00129 
+                      00130 ;FSR1
+                      00131 #define         FSR17           FSR1,7
+                      00132 #define         FSR16           FSR1,6
+                      00133 #define         FSR15           FSR1,5
+                      00134 #define         FSR14           FSR1,4
+                      00135 #define         FSR13           FSR1,3
+                      00136 #define         FSR12           FSR1,2
+                      00137 #define         FSR11           FSR1,1
+                      00138 #define         FSR10           FSR1,0
+                      00139 
+                      00140 ;PCL
+                      00141 #define         PC7             PCL,7
+                      00142 #define         PC6             PCL,6
+                      00143 #define         PC5             PCL,5
+                      00144 #define         PC4             PCL,4
+                      00145 #define         PC3             PCL,3
+                      00146 #define         PC2             PCL,2
+                      00147 #define         PC1             PCL,1
+                      00148 #define         PC0             PCL,0
+                      00149 
+                      00150 ;pflag bit 
+                      00151 #define         Z               PFLAG,2
+                      00152 #define         DC              PFLAG,1
+                      00153 #define         C               PFLAG,0
+                      00154 
+                      00155 ;MCR 
+                      00156 #define         GIE             MCR,7
+                      00157 #define         T0              MCR,5
+                      00158 #define         PD              MCR,4
+                      00159 #define         MINT11          MCR,3
+                      00160 #define         MINT10          MCR,2
+                      00161 #define         MINT01          MCR,1
+                      00162 #define         MINT00          MCR,0
+                      00163 
+                      00164 ;INDF3
+                      00165 #define         INDF37          INDF3,7
+                      00166 #define         INDF36          INDF3,6
+                      00167 #define         INDF35          INDF3,5
+                      00168 #define         INDF34          INDF3,4
+                      00169 #define         INDF33          INDF3,3
+                      00170 #define         INDF32          INDF3,2
+                      00171 #define         INDF31          INDF3,1
+                      00172 #define         INDF30          INDF3,0
+                      00173 
+                      00174 ;INTE
+                      00175 #define         T3IE    INTE,7
+                      00176 #define         ADIE    INTE,6
+                      00177 #define         T2IE    INTE,5
+                      00178 #define         KBIE    INTE,4
+                      00179 #define         INT1IE  INTE,3
+                      00180 #define         INT0IE  INTE,2
+                      00181 #define         T1IE    INTE,1
+                      00182 #define         T0IE    INTE,0
+                      00183 
+                      00184 ;INTF
+                      00185 #define         T3IF    INTFLAG,7
+                      00186 #define         ADIF    INTFLAG,6 
+                      00187 #define         T2IF    INTFLAG,5
+                      00188 #define         KBIF    INTFLAG,4
+                      00189 #define         INT1IF  INTFLAG,3
+                      00190 #define         INT0IF  INTFLAG,2
+                      00191 #define         T1IF    INTFLAG,1
+                      00192 #define         T0IF    INTFLAG,0
+                      00193 
+                      00194 ;DRVCR
+                      00195 #define         DRVS    DRVCR,7
+                      00196 #define         LDRVS   DRVCR,6 
+                      00197 #define         PDRVS   DRVCR,5
+                      00198 #define         PDRVS0  DRVCR,4
+                      00199 #define         PDLYS1  DRVCR,3
+                      00200 #define         PDLYS0  DRVCR,2
+                      00201 #define         PSPDS1  DRVCR,1
+                      00202 #define         PSPDS0  DRVCR,0
+                      00203 
+                      00204 ;KBCR
+                      00205 #define         KBCR6   KBCR,6 
+                      00206 #define         KBCR5   KBCR,5
+                      00207 #define         KBCR4   KBCR,4
+                      00208 #define         KBCR3   KBCR,3
+                      00209 #define         KBCR2   KBCR,2
+                      00210 #define         KBCR1   KBCR,1
+                      00211 #define         KBCR0   KBCR,0
+                      00212 
+                      00213 ;IOP0
+                      00214 #define         P05D    IOP0,5
+                      00215 #define         P04D    IOP0,4
+                      00216 #define         P03D    IOP0,3
+                      00217 #define         P02D    IOP0,2
+                      00218 #define         P01D    IOP0,1
+                      00219 #define         P00D    IOP0,0
+                      00220 
+                      00221 ;OEP0
+                      00222 #define         P05OE    OEP0,5
+                      00223 #define         P04OE    OEP0,4
+                      00224 #define         P03OE    OEP0,3
+                      00225 #define         P02OE    OEP0,2
+                      00226 #define         P01OE    OEP0,1
+                      00227 #define         P00OE    OEP0,0
+                      00228 
+                      00229 ;PUP0
+                      00230 #define         P05PU    PUP0,5
+                      00231 #define         P04PU    PUP0,4
+                      00232 #define         P03PU    PUP0,3
+                      00233 #define         P02PU    PUP0,2
+                      00234 #define         P01PU    PUP0,1
+                      00235 #define         P00PU    PUP0,0
+                      00236 
+                      00237 ;PDP0
+                      00238 #define         P05PD    PDP0,5
+                      00239 #define         P04PD    PDP0,4
+                      00240 #define         P03PD    PDP0,3
+                      00241 #define         P02PD    PDP0,2
+                      00242 #define         P01PD    PDP0,1
+                      00243 #define         P00PD    PDP0,0
+                      00244 
+                      00245 ;IOP1
+                      00246 #define         P17D    IOP1,7
+                      00247 #define         P16D    IOP1,6
+                      00248 #define         P15D    IOP1,5
+                      00249 #define         P14D    IOP1,4
+                      00250 #define         P13D    IOP1,3
+                      00251 #define         P12D    IOP1,2
+                      00252 #define         P11D    IOP1,1
+                      00253 #define         P10D    IOP1,0
+                      00254 
+                      00255 ;OEP1
+                      00256 #define         P17OE    OEP1,7
+                      00257 #define         P16OE    OEP1,6
+                      00258 #define         P15OE    OEP1,5
+                      00259 #define         P14OE    OEP1,4
+                      00260 #define         P13OE    OEP1,3
+                      00261 #define         P12OE    OEP1,2
+                      00262 #define         P11OE    OEP1,1
+                      00263 #define         P10OE    OEP1,0
+                      00264 
+                      00265 ;PUP1
+                      00266 #define         P17PU    PUP1,7
+                      00267 #define         P16PU    PUP1,6
+                      00268 #define         P15PU    PUP1,5
+                      00269 #define         P14PU    PUP1,4
+                      00270 #define         P13PU    PUP1,3
+                      00271 #define         P12PU    PUP1,2
+                      00272 #define         P11PU    PUP1,1
+                      00273 #define         P10PU    PUP1,0
+                      00274 
+                      00275 ;PDP1
+                      00276 #define         P17PD    PDP1,7
+                      00277 #define         P16PD    PDP1,6
+                      00278 #define         P15PD    PDP1,5
+                      00279 #define         P14PD    PDP1,4
+                      00280 #define         P13PD    PDP1,3
+                      00281 #define         P12PD    PDP1,2
+                      00282 #define         P11PD    PDP1,1
+                      00283 #define         P10PD    PDP1,0
+                      00284 
+                      00285 ;T0CR
+                      00286 #define         TC0EN           T0CR,7
+                      00287 #define         PWM0OE          T0CR,6
+                      00288 #define         BUZ0OE          T0CR,5
+                      00289 #define         T0PS1           T0CR,4
+                      00290 #define         T0PS0           T0CR,3
+                      00291 #define         T0PR2           T0CR,2
+                      00292 #define         T0PR1           T0CR,1
+                      00293 #define         T0PR0           T0CR,0
+                      00294 
+                      00295 ;T0CNT
+                      00296 #define         T0C7    T0CNT,7
+                      00297 #define         T0C6    T0CNT,6
+                      00298 #define         T0C5    T0CNT,5
+                      00299 #define         T0C4    T0CNT,4
+                      00300 #define         T0C3    T0CNT,3
+                      00301 #define         T0C2    T0CNT,2
+                      00302 #define         T0C1    T0CNT,1
+                      00303 #define         T0C0    T0CNT,0
+                      00304 
+                      00305 ;T0LOAD
+                      00306 #define         T0LOAD7    T0LOAD,7
+                      00307 #define         T0LOAD6    T0LOAD,6
+                      00308 #define         T0LOAD5    T0LOAD,5
+                      00309 #define         T0LOAD4    T0LOAD,4
+                      00310 #define         T0LOAD3    T0LOAD,3
+                      00311 #define         T0LOAD2    T0LOAD,2
+                      00312 #define         T0LOAD1    T0LOAD,1
+                      00313 #define         T0LOAD0    T0LOAD,0
+                      00314 
+                      00315 ;T0DATA
+                      00316 #define         T0DATA7    T0DATA,7
+                      00317 #define         T0DATA6    T0DATA,6
+                      00318 #define         T0DATA5    T0DATA,5
+                      00319 #define         T0DATA4    T0DATA,4
+                      00320 #define         T0DATA3    T0DATA,3
+                      00321 #define         T0DATA2    T0DATA,2
+                      00322 #define         T0DATA1    T0DATA,1
+                      00323 #define         T0DATA0    T0DATA,0
+                      00324 
+                      00325 ;T1CR
+                      00326 #define         TC1EN           T1CR,7
+                      00327 #define         PWM1OE          T1CR,6
+                      00328 #define         BUZ1OE          T1CR,5
+                      00329 #define         T1PS1           T1CR,4
+                      00330 #define         T1PS0           T1CR,3
+                      00331 #define         T1PR2           T1CR,2
+                      00332 #define         T1PR1           T1CR,1
+                      00333 #define         T1PR0           T1CR,0
+                      00334 
+                      00335 ;T1CNT
+                      00336 #define         T1C7    T1CNT,7
+                      00337 #define         T1C6    T1CNT,6
+                      00338 #define         T1C5    T1CNT,5
+                      00339 #define         T1C4    T1CNT,4
+                      00340 #define         T1C3    T1CNT,3
+                      00341 #define         T1C2    T1CNT,2
+                      00342 #define         T1C1    T1CNT,1
+                      00343 #define         T1C0    T1CNT,0
+                      00344 
+                      00345 ;T1LOAD
+                      00346 #define         T1LOAD7    T1LOAD,7
+                      00347 #define         T1LOAD6    T1LOAD,6
+                      00348 #define         T1LOAD5    T1LOAD,5
+                      00349 #define         T1LOAD4    T1LOAD,4
+                      00350 #define         T1LOAD3    T1LOAD,3
+                      00351 #define         T1LOAD2    T1LOAD,2
+                      00352 #define         T1LOAD1    T1LOAD,1
+                      00353 #define         T1LOAD0    T1LOAD,0
+                      00354 
+                      00355 ;T1DATA
+                      00356 #define         T1DATA7    T1DATA,7
+                      00357 #define         T1DATA6    T1DATA,6
+                      00358 #define         T1DATA5    T1DATA,5
+                      00359 #define         T1DATA4    T1DATA,4
+                      00360 #define         T1DATA3    T1DATA,3
+                      00361 #define         T1DATA2    T1DATA,2
+                      00362 #define         T1DATA1    T1DATA,1
+                      00363 #define         T1DATA0    T1DATA,0
+                      00364 
+                      00365 ;T2CR
+                      00366 #define         TC2EN           T2CR,7
+                      00367 #define         PWM2OE          T2CR,6
+                      00368 #define         BUZ2OE          T2CR,5
+                      00369 #define         T2PS1           T2CR,4
+                      00370 #define         T2PS0           T2CR,3
+                      00371 #define         T2PR2           T2CR,2
+                      00372 #define         T2PR1           T2CR,1
+                      00373 #define         T2PR0           T2CR,0
+                      00374 
+                      00375 ;T2CNT
+                      00376 #define         T2C7    T2CNT,7
+                      00377 #define         T2C6    T2CNT,6
+                      00378 #define         T2C5    T2CNT,5
+                      00379 #define         T2C4    T2CNT,4
+                      00380 #define         T2C3    T2CNT,3
+                      00381 #define         T2C2    T2CNT,2
+                      00382 #define         T2C1    T2CNT,1
+                      00383 #define         T2C0    T2CNT,0
+                      00384 
+                      00385 ;T2LOAD
+                      00386 #define         T2LOAD7    T2LOAD,7
+                      00387 #define         T2LOAD6    T2LOAD,6
+                      00388 #define         T2LOAD5    T2LOAD,5
+                      00389 #define         T2LOAD4    T2LOAD,4
+                      00390 #define         T2LOAD3    T2LOAD,3
+                      00391 #define         T2LOAD2    T2LOAD,2
+                      00392 #define         T2LOAD1    T2LOAD,1
+                      00393 #define         T2LOAD0    T2LOAD,0
+                      00394 
+                      00395 ;T2DATA
+                      00396 #define         T2DATA7    T2DATA,7
+                      00397 #define         T2DATA6    T2DATA,6
+                      00398 #define         T2DATA5    T2DATA,5
+                      00399 #define         T2DATA4    T2DATA,4
+                      00400 #define         T2DATA3    T2DATA,3
+                      00401 #define         T2DATA2    T2DATA,2
+                      00402 #define         T2DATA1    T2DATA,1
+                      00403 #define         T2DATA0    T2DATA,0
+                      00404 
+                      00405 ;T3CR
+                      00406 #define         TC3EN           T3CR,7
+                      00407 #define         T3PS1           T3CR,4
+                      00408 #define         T3PS0           T3CR,3
+                      00409 #define         T3PR2           T3CR,2
+                      00410 #define         T3PR1           T3CR,1
+                      00411 #define         T3PR0           T3CR,0
+                      00412 
+                      00413 ;T3CNT
+                      00414 #define         T3C7    T3CNT,7
+                      00415 #define         T3C6    T3CNT,6
+                      00416 #define         T3C5    T3CNT,5
+                      00417 #define         T3C4    T3CNT,4
+                      00418 #define         T3C3    T3CNT,3
+                      00419 #define         T3C2    T3CNT,2
+                      00420 #define         T3C1    T3CNT,1
+                      00421 #define         T3C0    T3CNT,0
+                      00422 
+                      00423 ;T3LOAD
+                      00424 #define         T3LOAD7    T3LOAD,7
+                      00425 #define         T3LOAD6    T3LOAD,6
+                      00426 #define         T3LOAD5    T3LOAD,5
+                      00427 #define         T3LOAD4    T3LOAD,4
+                      00428 #define         T3LOAD3    T3LOAD,3
+                      00429 #define         T3LOAD2    T3LOAD,2
+                      00430 #define         T3LOAD1    T3LOAD,1
+                      00431 #define         T3LOAD0    T3LOAD,0
+                      00432 
+                      00433 ;PWM0DE
+                      00434 #define         PWM0DE2    PWM0DE,2
+                      00435 #define         PWM0DE1    PWM0DE,1
+                      00436 #define         PWM0DE0    PWM0DE,0
+                      00437 
+                      00438 ;PWM1DE
+                      00439 #define         PWM1DE2    PWM1DE,2
+                      00440 #define         PWM1DE1    PWM1DE,1
+                      00441 #define         PWM1DE0    PWM1DE,0
+                      00442 
+                      00443 ;PWM2DE
+                      00444 #define         PWM2DE2    PWM2DE,2
+                      00445 #define         PWM2DE1    PWM2DE,1
+                      00446 #define         PWM2DE0    PWM2DE,0
+                      00447 
+                      00448 ;PWMCR0
+                      00449 #define         FPWMEN     PWMCR0,7
+                      00450 #define         PWM2INV    PWMCR0,6
+                      00451 #define         PWM1INV    PWMCR0,5
+                      00452 #define         PWM0INV    PWMCR0,4
+                      00453 #define         FPWMR1     PWMCR0,3
+                      00454 #define         FPWMR0     PWMCR0,2
+                      00455 #define         FPWMF1     PWMCR0,1
+                      00456 #define         FPWMF0     PWMCR0,0
+                      00457 
+                      00458 ;PWMCR1
+                      00459 #define         TMRCKS1    PWMCR1,4
+                      00460 #define         TMRCKS0    PWMCR1,3
+                      00461 #define         PMODE2     PWMCR1,2
+                      00462 #define         PMODE1     PWMCR1,1
+                      00463 #define         PMODE0     PWMCR1,0
+                      00464 
+                      00465 ;OSCM
+                      00466 #define         STBL    OSCM,5
+                      00467 #define         STBH    OSCM,4
+                      00468 #define         CLKS    OSCM,2
+                      00469 #define         LFEN    OSCM,1
+                      00470 #define         HFEN    OSCM,0          
+                      00471 
+                      00472 ;LVDCR
+                      00473 #define         LVDEN    LVDCR,7
+                      00474 #define         LVDS3    LVDCR,6
+                      00475 #define         LVDS2    LVDCR,5
+                      00476 #define         LVDS1    LVDCR,4
+                      00477 #define         LVDS0    LVDCR,3
+                      00478 #define         LVDF     LVDCR,0
+                      00479 
+                      00480 ;ADCR0
+                      00481 #define         ADCHS3    ADCR0,7
+                      00482 #define         ADCHS2    ADCR0,6
+                      00483 #define         ADCHS1    ADCR0,5
+                      00484 #define         ADCHS0    ADCR0,4
+                      00485 #define         ADLEN     ADCR0,3
+                      00486 #define         ADEOC     ADCR0,1
+                      00487 #define         ADON      ADCR0,0
+                      00488 
+                      00489 ;ADCR1
+                      00490 #define         ADCKS2    ADCR1,7
+                      00491 #define         ADCKS1    ADCR1,6
+                      00492 #define         ADCKS0    ADCR1,5
+                      00493 #define         ADTST     ADCR1,4
+                      00494 #define         RESS0     ADCR1,3
+                      00495 #define         VRS2      ADCR1,2
+                      00496 #define         VRS1      ADCR1,1
+                      00497 #define         VRS0      ADCR1,0
+                      00498 
+                      00499 ;ADCR2
+                      00500 #define         ADSMP3    ADCR2,3
+                      00501 #define         ADSMP2    ADCR2,2
+                      00502 #define         ADSMP1    ADCR2,1
+                      00503 #define         ADSMP0    ADCR2,0
+                      00504 
+                      00505 ;ADRH
+                      00506 #define         ADR11     ADRH,7
+                      00507 #define         ADR10     ADRH,6
+                      00508 #define         ADR9      ADRH,5
+                      00509 #define         ADR8      ADRH,4
+                      00510 #define         ADR7      ADRH,3
+                      00511 #define         ADR6      ADRH,2
+                      00512 #define         ADR5      ADRH,1
+                      00513 #define         ADR4      ADRH,0
+                      00514 
+                      00515 ;ADRL
+                      00516 #define         ADR3      ADRL,3
+                      00517 #define         ADR2      ADRL,2
+                      00518 #define         ADR1      ADRL,1
+                      00519 #define         ADR0      ADRL,0
+                      00520 
+                      00521 ;ANSEL0
+                      00522 #define         P12ANS    ANSEL0,7
+                      00523 #define         P11ANS    ANSEL0,6
+                      00524 #define         P05ANS    ANSEL0,5
+                      00525 #define         P04ANS    ANSEL0,4
+                      00526 #define         P03ANS    ANSEL0,3
+                      00527 #define         P02ANS    ANSEL0,2
+                      00528 #define         P01ANS    ANSEL0,1
+                      00529 #define         P00ANS    ANSEL0,0
+                      00530 
+                      00531 ;ANSEL1
+                      00532 #define         P15ANS    ANSEL1,1
+                      00533 #define         P14ANS    ANSEL1,0
+                      00534 
+                      00535 ;VBGCAL
+                      00536 #define         VBGCAL7    VBGCAL,7
+                      00537 #define         VBGCAL6    VBGCAL,6
+                      00538 #define         VBGCAL5    VBGCAL,5
+                      00539 #define         VBGCAL4    VBGCAL,4
+                      00540 #define         VBGCAL3    VBGCAL,3
+                      00541 #define         VBGCAL2    VBGCAL,2
+                      00542 #define         VBGCAL1    VBGCAL,1
+                      00543 #define         VBGCAL0    VBGCAL,0
+                      00544 
+                      00545 ;OSCCALL
+                      00546 #define         OSCCAL7    OSCCALL,7
+                      00547 #define         OSCCAL6    OSCCALL,6
+                      00548 #define         OSCCAL5    OSCCALL,5
+                      00549 #define         OSCCAL4    OSCCALL,4
+                      00550 #define         OSCCAL3    OSCCALL,3
+                      00551 #define         OSCCAL2    OSCCALL,2
+                      00552 #define         OSCCAL1    OSCCALL,1
+                      00553 #define         OSCCAL0    OSCCALL,0
+                      00554 
+                      00555 ;OSCCALH
+                      00556 #define         OSCCAL10   OSCCALH,2
+                      00557 #define         OSCCAL9    OSCCALH,1
+                      00558 #define         OSCCAL8    OSCCALH,0
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _I2C_Delay10us
+                      00016         extern  _Delay10ms
+                      00017         extern  _INDF0bits
+                      00018         extern  _INDF1bits
+                      00019         extern  _INDF2bits
+                      00020         extern  _HIBYTEbits
+                      00021         extern  _FSR0bits
+                      00022         extern  _FSR1bits
+                      00023         extern  _PCLbits
+                      00024         extern  _STATUSbits
+                      00025         extern  _MCRbits
+                      00026         extern  _INDF3bits
+                      00027         extern  _INTEbits
+                      00028         extern  _INTFbits
+                      00029         extern  _DRVCRbits
+                      00030         extern  _KBCRbits
+                      00031         extern  _IOP0bits
+                      00032         extern  _OEP0bits
+                      00033         extern  _PUP0bits
+                      00034         extern  _PDP0bits
+                      00035         extern  _IOP1bits
+                      00036         extern  _OEP1bits
+                      00037         extern  _PUP1bits
+                      00038         extern  _PDP1bits
+                      00039         extern  _T0CRbits
+                      00040         extern  _T0CNTbits
+                      00041         extern  _T0LOADbits
+                      00042         extern  _T0DATAbits
+                      00043         extern  _T1CRbits
+                      00044         extern  _T1CNTbits
+                      00045         extern  _T1LOADbits
+                      00046         extern  _T1DATAbits
+                      00047         extern  _T2CRbits
+                      00048         extern  _T2CNTbits
+                      00049         extern  _T2LOADbits
+                      00050         extern  _T2DATAbits
+                      00051         extern  _T3CRbits
+                      00052         extern  _T3CNTbits
+                      00053         extern  _T3LOADbits
+                      00054         extern  _PWM0DEbits
+                      00055         extern  _PWM1DEbits
+                      00056         extern  _OPCR0bits
+                      00057         extern  _PWMCR0bits
+                      00058         extern  _PWMCR1bits
+                      00059         extern  _OSCMbits
+                      00060         extern  _LVDCRbits
+                      00061         extern  _ADCR0bits
+                      00062         extern  _ADCR1bits
+                      00063         extern  _ADCR2bits
+                      00064         extern  _ADRHbits
+                      00065         extern  _ADRLbits
+                      00066         extern  _ANSEL0bits
+                      00067         extern  _ANSEL1bits
+                      00068         extern  _VBGCALbits
+                      00069         extern  _OSCCALLbits
+                      00070         extern  _OSCCALHbits
+                      00071         extern  _INDF
+                      00072         extern  _INDF0
+                      00073         extern  _INDF1
+                      00074         extern  _INDF2
+                      00075         extern  _HIBYTE
+                      00076         extern  _FSR
+                      00077         extern  _FSR0
+                      00078         extern  _FSR1
+                      00079         extern  _PCL
+                      00080         extern  _STATUS
+                      00081         extern  _PFLAG
+                      00082         extern  _MCR
+                      00083         extern  _INDF3
+                      00084         extern  _INTE
+                      00085         extern  _INTF
+                      00086         extern  _DRVCR
+                      00087         extern  _KBCR
+                      00088         extern  _IOP0
+                      00089         extern  _OEP0
+                      00090         extern  _PUP0
+                      00091         extern  _PDP0
+                      00092         extern  _IOP1
+                      00093         extern  _OEP1
+                      00094         extern  _PUP1
+                      00095         extern  _PDP1
+                      00096         extern  _T0CR
+                      00097         extern  _T0CNT
+                      00098         extern  _T0LOAD
+                      00099         extern  _T0DATA
+                      00100         extern  _T1CR
+                      00101         extern  _T1CNT
+                      00102         extern  _T1LOAD
+                      00103         extern  _T1DATA
+                      00104         extern  _T2CR
+                      00105         extern  _T2CNT
+                      00106         extern  _T2LOAD
+                      00107         extern  _T2DATA
+                      00108         extern  _T3CR
+                      00109         extern  _T3CNT
+                      00110         extern  _T3LOAD
+                      00111         extern  _PWM0DE
+                      00112         extern  _PWM1DE
+                      00113         extern  _PWM2DE
+                      00114         extern  _PWMCR0
+                      00115         extern  _PWMCR1
+                      00116         extern  _OSCM
+                      00117         extern  _LVDCR
+                      00118         extern  _ADCR0
+                      00119         extern  _ADCR1
+                      00120         extern  _ADCR2
+                      00121         extern  _ADRH
+                      00122         extern  _ADRL
+                      00123         extern  _ANSEL0
+                      00124         extern  _ANSEL1
+                      00125         extern  _VBGCAL
+                      00126         extern  _OSCCALH
+                      00127         extern  _OSCCALL
+                      00128 ;--------------------------------------------------------
+                      00129 ; global declarations
+                      00130 ;--------------------------------------------------------
+                      00131         global  _IIC_read_onebyte
+                      00132         global  _IIC_write_onebyte
+                      00133         global  _I2C_ReceiveByte
+                      00134         global  _I2C_SendByte
+                      00135         global  _I2C_NoAck
+                      00136         global  _I2C_Ack
+                      00137         global  _I2C_Stop
+                      00138         global  _I2C_Start
+                      00139         global  _I2C_delay
+                      00140         global  _delay
+                      00141         global  _InitSub
+                      00142         global  _RamInit
+                      00143         global  _IRQInit
+                      00144         global  _IOPortInit
+                      00145         global  _URAT_SendData
+                      00146         global  _main
+                      00147         global  _int_isr
+                      00148         global  _pflagtemp
+                      00149         global  _acctemp
+                      00150         global  _read_temp
+                      00151         global  _time_1ms
+                      00152         global  _m
+                      00153         global  _Array
+                      00154         global  _flg
+                      00155         global  _flg1
+                      00156         global  _flg2
+                      00157         global  _flg3
+                      00158         global  _n
+                      00159 
+                      00160         global STK06
+                      00161         global STK05
+                      00162         global STK04
+                      00163         global STK03
+                      00164         global STK02
+                      00165         global STK01
+                      00166         global STK00
+                      00167 
+                      00168 sharebank udata_ovr 0x0000
+0000                  00169 STK06   res 1
+0000                  00170 STK05   res 1
+0001                  00171 STK04   res 1
+0001                  00172 STK03   res 1
+0002                  00173 STK02   res 1
+0002                  00174 STK01   res 1
+0003                  00175 STK00   res 1
+                      00176 
+                      00177 ;--------------------------------------------------------
+                      00178 ; global definitions
+                      00179 ;--------------------------------------------------------
+                      00180 UD_7311c_0      udata
+0000                  00181 _pflagtemp      res     1
+                      00182 
+                      00183 UD_7311c_1      udata
+0000                  00184 _acctemp        res     1
+                      00185 
+                      00186 UD_7311c_2      udata
+0000                  00187 _read_temp      res     1
+                      00188 
+                      00189 UD_7311c_3      udata
+0000                  00190 _time_1ms       res     1
+                      00191 
+                      00192 UD_7311c_4      udata
+0000                  00193 _m      res     1
+                      00194 
+                      00195 UD_7311c_5      udata
+0000                  00196 _Array  res     124
+                      00197 
+                      00198 UD_7311c_6      udata
+0000                  00199 _flg    res     1
+                      00200 
+                      00201 UD_7311c_7      udata
+0000                  00202 _flg1   res     1
+                      00203 
+                      00204 UD_7311c_8      udata
+0000                  00205 _flg2   res     1
+                      00206 
+                      00207 UD_7311c_9      udata
+0000                  00208 _flg3   res     1
+                      00209 
+                      00210 ;--------------------------------------------------------
+                      00211 ; absolute symbol definitions
+                      00212 ;--------------------------------------------------------
+                      00213 ;--------------------------------------------------------
+                      00214 ; compiler-defined variables
+                      00215 ;--------------------------------------------------------
+                      00216 UDL_7311c_0     udata
+0000                  00217 r0x1080 res     1
+0000                  00218 r0x1081 res     1
+0001                  00219 r0x1082 res     1
+0001                  00220 r0x1087 res     1
+0002                  00221 r0x1088 res     1
+0002                  00222 r0x1083 res     1
+0003                  00223 r0x1084 res     1
+0003                  00224 r0x1085 res     1
+0004                  00225 r0x1086 res     1
+                      00226 ;--------------------------------------------------------
+                      00227 ; initialized data
+                      00228 ;--------------------------------------------------------
+                      00229 
+                      00230 ID_7311c_0      idata
+0000                  00231 _n
+0000                  00232         db      0x00
+                      00233 
+                      00234 
+                      00235 ;@Allocation info for local variables in function 'IOPortInit'
+                      00236 ;@IOPortInit RamInit                   Allocated to registers ;size:2
+                      00237 ;@IOPortInit InitSub                   Allocated to registers ;size:2
+                      00238 ;@IOPortInit IRQInit                   Allocated to registers ;size:2
+                      00239 ;@IOPortInit I2C_Delay10us             Allocated to registers ;size:2
+                      00240 ;@IOPortInit delay                     Allocated to registers ;size:2
+                      00241 ;@IOPortInit I2C_delay                 Allocated to registers ;size:2
+                      00242 ;@IOPortInit I2C_Start                 Allocated to registers ;size:2
+                      00243 ;@IOPortInit I2C_Stop                  Allocated to registers ;size:2
+                      00244 ;@IOPortInit I2C_Ack                   Allocated to registers ;size:2
+                      00245 ;@IOPortInit I2C_NoAck                 Allocated to registers ;size:2
+                      00246 ;@IOPortInit I2C_SendByte              Allocated to registers ;size:2
+                      00247 ;@IOPortInit I2C_ReceiveByte           Allocated to registers ;size:2
+                      00248 ;@IOPortInit IIC_write_onebyte         Allocated to registers ;size:2
+                      00249 ;@IOPortInit IIC_read_onebyte          Allocated to registers ;size:2
+                      00250 ;@IOPortInit Delay10ms                 Allocated to registers ;size:2
+                      00251 ;@IOPortInit INDF0bits                 Allocated to registers ;size:1
+                      00252 ;@IOPortInit INDF1bits                 Allocated to registers ;size:1
+                      00253 ;@IOPortInit INDF2bits                 Allocated to registers ;size:1
+                      00254 ;@IOPortInit HIBYTEbits                Allocated to registers ;size:1
+                      00255 ;@IOPortInit FSR0bits                  Allocated to registers ;size:1
+                      00256 ;@IOPortInit FSR1bits                  Allocated to registers ;size:1
+                      00257 ;@IOPortInit PCLbits                   Allocated to registers ;size:1
+                      00258 ;@IOPortInit STATUSbits                Allocated to registers ;size:1
+                      00259 ;@IOPortInit MCRbits                   Allocated to registers ;size:1
+                      00260 ;@IOPortInit INDF3bits                 Allocated to registers ;size:1
+                      00261 ;@IOPortInit INTEbits                  Allocated to registers ;size:1
+                      00262 ;@IOPortInit INTFbits                  Allocated to registers ;size:1
+                      00263 ;@IOPortInit DRVCRbits                 Allocated to registers ;size:1
+                      00264 ;@IOPortInit KBCRbits                  Allocated to registers ;size:1
+                      00265 ;@IOPortInit IOP0bits                  Allocated to registers ;size:1
+                      00266 ;@IOPortInit OEP0bits                  Allocated to registers ;size:1
+                      00267 ;@IOPortInit PUP0bits                  Allocated to registers ;size:1
+                      00268 ;@IOPortInit PDP0bits                  Allocated to registers ;size:1
+                      00269 ;@IOPortInit IOP1bits                  Allocated to registers ;size:1
+                      00270 ;@IOPortInit OEP1bits                  Allocated to registers ;size:1
+                      00271 ;@IOPortInit PUP1bits                  Allocated to registers ;size:1
+                      00272 ;@IOPortInit PDP1bits                  Allocated to registers ;size:1
+                      00273 ;@IOPortInit T0CRbits                  Allocated to registers ;size:1
+                      00274 ;@IOPortInit T0CNTbits                 Allocated to registers ;size:1
+                      00275 ;@IOPortInit T0LOADbits                Allocated to registers ;size:1
+                      00276 ;@IOPortInit T0DATAbits                Allocated to registers ;size:1
+                      00277 ;@IOPortInit T1CRbits                  Allocated to registers ;size:1
+                      00278 ;@IOPortInit T1CNTbits                 Allocated to registers ;size:1
+                      00279 ;@IOPortInit T1LOADbits                Allocated to registers ;size:1
+                      00280 ;@IOPortInit T1DATAbits                Allocated to registers ;size:1
+                      00281 ;@IOPortInit T2CRbits                  Allocated to registers ;size:1
+                      00282 ;@IOPortInit T2CNTbits                 Allocated to registers ;size:1
+                      00283 ;@IOPortInit T2LOADbits                Allocated to registers ;size:1
+                      00284 ;@IOPortInit T2DATAbits                Allocated to registers ;size:1
+                      00285 ;@IOPortInit T3CRbits                  Allocated to registers ;size:1
+                      00286 ;@IOPortInit T3CNTbits                 Allocated to registers ;size:1
+                      00287 ;@IOPortInit T3LOADbits                Allocated to registers ;size:1
+                      00288 ;@IOPortInit PWM0DEbits                Allocated to registers ;size:1
+                      00289 ;@IOPortInit PWM1DEbits                Allocated to registers ;size:1
+                      00290 ;@IOPortInit OPCR0bits                 Allocated to registers ;size:1
+                      00291 ;@IOPortInit PWMCR0bits                Allocated to registers ;size:1
+                      00292 ;@IOPortInit PWMCR1bits                Allocated to registers ;size:1
+                      00293 ;@IOPortInit OSCMbits                  Allocated to registers ;size:1
+                      00294 ;@IOPortInit LVDCRbits                 Allocated to registers ;size:1
+                      00295 ;@IOPortInit ADCR0bits                 Allocated to registers ;size:1
+                      00296 ;@IOPortInit ADCR1bits                 Allocated to registers ;size:1
+                      00297 ;@IOPortInit ADCR2bits                 Allocated to registers ;size:1
+                      00298 ;@IOPortInit ADRHbits                  Allocated to registers ;size:1
+                      00299 ;@IOPortInit ADRLbits                  Allocated to registers ;size:1
+                      00300 ;@IOPortInit ANSEL0bits                Allocated to registers ;size:1
+                      00301 ;@IOPortInit ANSEL1bits                Allocated to registers ;size:1
+                      00302 ;@IOPortInit VBGCALbits                Allocated to registers ;size:1
+                      00303 ;@IOPortInit OSCCALLbits               Allocated to registers ;size:1
+                      00304 ;@IOPortInit OSCCALHbits               Allocated to registers ;size:1
+                      00305 ;@IOPortInit pflagtemp                 Allocated to registers ;size:1
+                      00306 ;@IOPortInit acctemp                   Allocated to registers ;size:1
+                      00307 ;@IOPortInit read_temp                 Allocated to registers ;size:1
+                      00308 ;@IOPortInit time_1ms                  Allocated to registers ;size:1
+                      00309 ;@IOPortInit m                         Allocated to registers ;size:1
+                      00310 ;@IOPortInit Array                     Allocated to registers ;size:124
+                      00311 ;@IOPortInit flg                       Allocated to registers ;size:1
+                      00312 ;@IOPortInit flg1                      Allocated to registers ;size:1
+                      00313 ;@IOPortInit flg2                      Allocated to registers ;size:1
+                      00314 ;@IOPortInit flg3                      Allocated to registers ;size:1
+                      00315 ;@IOPortInit n                         Allocated to registers ;size:1
+                      00316 ;@IOPortInit INDF                      Allocated to registers ;size:1
+                      00317 ;@IOPortInit INDF0                     Allocated to registers ;size:1
+                      00318 ;@IOPortInit INDF1                     Allocated to registers ;size:1
+                      00319 ;@IOPortInit INDF2                     Allocated to registers ;size:1
+                      00320 ;@IOPortInit HIBYTE                    Allocated to registers ;size:1
+                      00321 ;@IOPortInit FSR                       Allocated to registers ;size:1
+                      00322 ;@IOPortInit FSR0                      Allocated to registers ;size:1
+                      00323 ;@IOPortInit FSR1                      Allocated to registers ;size:1
+                      00324 ;@IOPortInit PCL                       Allocated to registers ;size:1
+                      00325 ;@IOPortInit STATUS                    Allocated to registers ;size:1
+                      00326 ;@IOPortInit PFLAG                     Allocated to registers ;size:1
+                      00327 ;@IOPortInit MCR                       Allocated to registers ;size:1
+                      00328 ;@IOPortInit INDF3                     Allocated to registers ;size:1
+                      00329 ;@IOPortInit INTE                      Allocated to registers ;size:1
+                      00330 ;@IOPortInit INTF                      Allocated to registers ;size:1
+                      00331 ;@IOPortInit DRVCR                     Allocated to registers ;size:1
+                      00332 ;@IOPortInit KBCR                      Allocated to registers ;size:1
+                      00333 ;@IOPortInit IOP0                      Allocated to registers ;size:1
+                      00334 ;@IOPortInit OEP0                      Allocated to registers ;size:1
+                      00335 ;@IOPortInit PUP0                      Allocated to registers ;size:1
+                      00336 ;@IOPortInit PDP0                      Allocated to registers ;size:1
+                      00337 ;@IOPortInit IOP1                      Allocated to registers ;size:1
+                      00338 ;@IOPortInit OEP1                      Allocated to registers ;size:1
+                      00339 ;@IOPortInit PUP1                      Allocated to registers ;size:1
+                      00340 ;@IOPortInit PDP1                      Allocated to registers ;size:1
+                      00341 ;@IOPortInit T0CR                      Allocated to registers ;size:1
+                      00342 ;@IOPortInit T0CNT                     Allocated to registers ;size:1
+                      00343 ;@IOPortInit T0LOAD                    Allocated to registers ;size:1
+                      00344 ;@IOPortInit T0DATA                    Allocated to registers ;size:1
+                      00345 ;@IOPortInit T1CR                      Allocated to registers ;size:1
+                      00346 ;@IOPortInit T1CNT                     Allocated to registers ;size:1
+                      00347 ;@IOPortInit T1LOAD                    Allocated to registers ;size:1
+                      00348 ;@IOPortInit T1DATA                    Allocated to registers ;size:1
+                      00349 ;@IOPortInit T2CR                      Allocated to registers ;size:1
+                      00350 ;@IOPortInit T2CNT                     Allocated to registers ;size:1
+                      00351 ;@IOPortInit T2LOAD                    Allocated to registers ;size:1
+                      00352 ;@IOPortInit T2DATA                    Allocated to registers ;size:1
+                      00353 ;@IOPortInit T3CR                      Allocated to registers ;size:1
+                      00354 ;@IOPortInit T3CNT                     Allocated to registers ;size:1
+                      00355 ;@IOPortInit T3LOAD                    Allocated to registers ;size:1
+                      00356 ;@IOPortInit PWM0DE                    Allocated to registers ;size:1
+                      00357 ;@IOPortInit PWM1DE                    Allocated to registers ;size:1
+                      00358 ;@IOPortInit PWM2DE                    Allocated to registers ;size:1
+                      00359 ;@IOPortInit PWMCR0                    Allocated to registers ;size:1
+                      00360 ;@IOPortInit PWMCR1                    Allocated to registers ;size:1
+                      00361 ;@IOPortInit OSCM                      Allocated to registers ;size:1
+                      00362 ;@IOPortInit LVDCR                     Allocated to registers ;size:1
+                      00363 ;@IOPortInit ADCR0                     Allocated to registers ;size:1
+                      00364 ;@IOPortInit ADCR1                     Allocated to registers ;size:1
+                      00365 ;@IOPortInit ADCR2                     Allocated to registers ;size:1
+                      00366 ;@IOPortInit ADRH                      Allocated to registers ;size:1
+                      00367 ;@IOPortInit ADRL                      Allocated to registers ;size:1
+                      00368 ;@IOPortInit ANSEL0                    Allocated to registers ;size:1
+                      00369 ;@IOPortInit ANSEL1                    Allocated to registers ;size:1
+                      00370 ;@IOPortInit VBGCAL                    Allocated to registers ;size:1
+                      00371 ;@IOPortInit OSCCALH                   Allocated to registers ;size:1
+                      00372 ;@IOPortInit OSCCALL                   Allocated to registers ;size:1
+                      00373 ;@end Allocation info for local variables in function 'IOPortInit';
+                      00374 ;@Allocation info for local variables in function 'IRQInit'
+                      00375 ;@end Allocation info for local variables in function 'IRQInit';
+                      00376 ;@Allocation info for local variables in function 'RamInit'
+                      00377 ;@end Allocation info for local variables in function 'RamInit';
+                      00378 ;@Allocation info for local variables in function 'InitSub'
+                      00379 ;@end Allocation info for local variables in function 'InitSub';
+                      00380 ;@Allocation info for local variables in function 'delay'
+                      00381 ;@delay x                         Allocated to registers ;size:1
+                      00382 ;@delay a                         Allocated to registers r0x1080 ;size:1
+                      00383 ;@delay b                         Allocated to registers r0x1081 ;size:1
+                      00384 ;@end Allocation info for local variables in function 'delay';
+                      00385 ;@Allocation info for local variables in function 'I2C_delay'
+                      00386 ;@I2C_delay i                         Allocated to registers r0x1080 ;size:1
+                      00387 ;@end Allocation info for local variables in function 'I2C_delay';
+                      00388 ;@Allocation info for local variables in function 'I2C_Start'
+                      00389 ;@end Allocation info for local variables in function 'I2C_Start';
+                      00390 ;@Allocation info for local variables in function 'I2C_Stop'
+                      00391 ;@end Allocation info for local variables in function 'I2C_Stop';
+                      00392 ;@Allocation info for local variables in function 'I2C_Ack'
+                      00393 ;@end Allocation info for local variables in function 'I2C_Ack';
+                      00394 ;@Allocation info for local variables in function 'I2C_NoAck'
+                      00395 ;@end Allocation info for local variables in function 'I2C_NoAck';
+                      00396 ;@Allocation info for local variables in function 'I2C_SendByte'
+                      00397 ;@I2C_SendByte SendByte                  Allocated to registers r0x1081 ;size:1
+                      00398 ;@I2C_SendByte i                         Allocated to registers r0x1082 ;size:1
+                      00399 ;@end Allocation info for local variables in function 'I2C_SendByte';
+                      00400 ;@Allocation info for local variables in function 'I2C_ReceiveByte'
+                      00401 ;@I2C_ReceiveByte i                         Allocated to registers r0x1082 ;size:1
+                      00402 ;@I2C_ReceiveByte ReceiveByte               Allocated to registers r0x1081 ;size:1
+                      00403 ;@end Allocation info for local variables in function 'I2C_ReceiveByte';
+                      00404 ;@Allocation info for local variables in function 'IIC_write_onebyte'
+                      00405 ;@IIC_write_onebyte write_data                Allocated to registers r0x1088 ;size:1
+                      00406 ;@IIC_write_onebyte write_add                 Allocated to registers r0x1087 ;size:1
+                      00407 ;@end Allocation info for local variables in function 'IIC_write_onebyte';
+                      00408 ;@Allocation info for local variables in function 'IIC_read_onebyte'
+                      00409 ;@IIC_read_onebyte read_add                  Allocated to registers r0x1083 ;size:1
+                      00410 ;@IIC_read_onebyte i                         Allocated to registers r0x1083 ;size:1
+                      00411 ;@end Allocation info for local variables in function 'IIC_read_onebyte';
+                      00412 ;@Allocation info for local variables in function 'URAT_SendData'
+                      00413 ;@end Allocation info for local variables in function 'URAT_SendData';
+                      00414 ;@Allocation info for local variables in function 'main'
+                      00415 ;@end Allocation info for local variables in function 'main';
+                      00416 ;@Allocation info for local variables in function 'int_isr'
+                      00417 ;@end Allocation info for local variables in function 'int_isr';
+                      00418 
+                      00419 ;--------------------------------------------------------
+                      00420 ; overlayable items in internal ram 
+                      00421 ;--------------------------------------------------------
+                      00422 ;       udata_ovr
+                      00423 ;--------------------------------------------------------
+                      00424 ; reset vector 
+                      00425 ;--------------------------------------------------------
+                      00426 STARTUP code 0x0000
+0000   A000           00427         goto    _main
+                      00428 ;--------------------------------------------------------
+                      00429 ; interrupt and initialization code
+                      00430 ;--------------------------------------------------------
+                      00431 c_interrupt     code    0x8
+0008                  00432 __sdcc_interrupt
+                      00433 ;***
+                      00434 ;  pBlock Stats: dbName = I
+                      00435 ;***
+                      00436 ;entry:  _int_isr       ;Function start
+                      00437 ; 0 exit points
+                      00438 ;; Starting pCode block
+0008                  00439 _int_isr        ;Function start
+                      00440 ; 0 exit points
+                      00441 ;       .line   289; "7311c.c"  __endasm;
+0008   5600           00442         movra _acctemp
+0009   4400           00443         swapar _PFLAG
+000A   5600           00444         movra _pflagtemp
+                      00445         
+                      00446 ;       .line   291; "7311c.c"  if(T0IF)
+000B   E000           00447         JBSET   _INTFbits,0
+000C   A000           00448         GOTO    _00214_DS_
+                      00449 ;       .line   293; "7311c.c"  T0IF=0;
+000D   D000           00450         BCLR    _INTFbits,0
+                      00451 ;       .line   294; "7311c.c"  if(++time_1ms >= 40)
+000E   6600           00452         INCR    _time_1ms
+                      00453 ;;unsigned compare: left < lit(0x28=40), size=1
+000F   3C28           00454         MOVAI   0x28
+0010   4800           00455         RSUBAR  _time_1ms
+0011   E187           00456         JBSET   STATUS,0
+0012   A000           00457         GOTO    _00214_DS_
+                      00458 ;;genSkipc:3251: created from rifx:0022608C
+                      00459 ;       .line   296; "7311c.c"  time_1ms = 0;
+0013   7600           00460         CLRR    _time_1ms
+                      00461 ;       .line   297; "7311c.c"  F_time20ms = 1;
+0014   C000           00462         BSET    _flg,0
+0015                  00463 _00214_DS_
+                      00464 ;       .line   308; "7311c.c"  __endasm;
+0015   4400           00465         swapar _pflagtemp
+0016   5600           00466         movra _PFLAG
+0017   5800           00467         movar _acctemp
+                      00468         
+0018                  00469 END_OF_INTERRUPT
+0018   000D           00470         RETIE   
+                      00471 
+                      00472 ;--------------------------------------------------------
+                      00473 ; code
+                      00474 ;--------------------------------------------------------
+                      00475 code_7311c      code
+                      00476 ;***
+                      00477 ;  pBlock Stats: dbName = M
+                      00478 ;***
+                      00479 ;entry:  _main  ;Function start
+                      00480 ; 2 exit points
+                      00481 ;has an exit
+                      00482 ;functions called:
+                      00483 ;   _InitSub
+                      00484 ;   _delay
+                      00485 ;   _IIC_read_onebyte
+                      00486 ;   _URAT_SendData
+                      00487 ;   _InitSub
+                      00488 ;   _delay
+                      00489 ;   _IIC_read_onebyte
+                      00490 ;   _URAT_SendData
+                      00491 ;; Starting pCode block
+0000                  00492 _main   ;Function start
+                      00493 ; 2 exit points
+                      00494 ;       .line   241; "7311c.c"  SCL28 = 0; 
+0000   D200           00495         BCLR    _IOP1bits,1
+                      00496 ;       .line   242; "7311c.c"  GIE = 0;   
+0001   DE00           00497         BCLR    _MCRbits,7
+                      00498 ;       .line   243; "7311c.c"  InitSub();
+0002   8000           00499         CALL    _InitSub
+                      00500 ;       .line   244; "7311c.c"  GIE = 1;
+0003   CE00           00501         BSET    _MCRbits,7
+                      00502 ;       .line   245; "7311c.c"  SCL28 = 1;
+0004   C200           00503         BSET    _IOP1bits,1
+                      00504 ;       .line   247; "7311c.c"  delay(200);
+0005   3CC8           00505         MOVAI   0xc8
+0006   8000           00506         CALL    _delay
+0007                  00507 _00204_DS_
+                      00508 ;       .line   251; "7311c.c"  if(F_time20ms)
+0007   E000           00509         JBSET   _flg,0
+0008   A000           00510         GOTO    _00200_DS_
+                      00511 ;       .line   253; "7311c.c"  F_time20ms = 0;
+0009   D000           00512         BCLR    _flg,0
+                      00513 ;       .line   254; "7311c.c"  for(m=0;m<25;m++)
+000A   7600           00514         CLRR    _m
+                      00515 ;;unsigned compare: left < lit(0x19=25), size=1
+000B                  00516 _00206_DS_
+000B   3C19           00517         MOVAI   0x19
+000C   4800           00518         RSUBAR  _m
+000D   F187           00519         JBCLR   STATUS,0
+000E   A000           00520         GOTO    _00200_DS_
+                      00521 ;;genSkipc:3251: created from rifx:0022608C
+                      00522 ;       .line   256; "7311c.c"  IIC_read_onebyte(0x00);
+000F   3C00           00523         MOVAI   0x00
+0010   8000           00524         CALL    _IIC_read_onebyte
+                      00525 ;       .line   254; "7311c.c"  for(m=0;m<25;m++)
+0011   6600           00526         INCR    _m
+0012   A000           00527         GOTO    _00206_DS_
+0013                  00528 _00200_DS_
+                      00529 ;       .line   260; "7311c.c"  if(!GPIO12_MCU_EN)
+0013   F600           00530         JBCLR   _IOP1bits,3
+0014   A000           00531         GOTO    _00204_DS_
+                      00532 ;       .line   262; "7311c.c"  URAT_SendData();
+0015   8000           00533         CALL    _URAT_SendData
+0016   A000           00534         GOTO    _00204_DS_
+0017   000C           00535         RETURN  
+                      00536 ; exit point of _main
+                      00537 
+                      00538 ;***
+                      00539 ;  pBlock Stats: dbName = C
+                      00540 ;***
+                      00541 ;entry:  _URAT_SendData ;Function start
+                      00542 ; 2 exit points
+                      00543 ;has an exit
+                      00544 ;; Starting pCode block
+0018                  00545 _URAT_SendData  ;Function start
+                      00546 ; 2 exit points
+                      00547 ;       .line   231; "7311c.c"  }
+0018   000C           00548         RETURN  
+                      00549 ; exit point of _URAT_SendData
+                      00550 
+                      00551 ;***
+                      00552 ;  pBlock Stats: dbName = C
+                      00553 ;***
+                      00554 ;entry:  _IIC_read_onebyte      ;Function start
+                      00555 ; 2 exit points
+                      00556 ;has an exit
+                      00557 ;functions called:
+                      00558 ;   _I2C_Start
+                      00559 ;   _I2C_SendByte
+                      00560 ;   _I2C_Ack
+                      00561 ;   _I2C_SendByte
+                      00562 ;   _I2C_Ack
+                      00563 ;   _I2C_Start
+                      00564 ;   _I2C_SendByte
+                      00565 ;   _I2C_Ack
+                      00566 ;   _I2C_ReceiveByte
+                      00567 ;   _I2C_NoAck
+                      00568 ;   _I2C_Ack
+                      00569 ;   _I2C_NoAck
+                      00570 ;   _I2C_Stop
+                      00571 ;   _I2C_Start
+                      00572 ;   _I2C_SendByte
+                      00573 ;   _I2C_Ack
+                      00574 ;   _I2C_SendByte
+                      00575 ;   _I2C_Ack
+                      00576 ;   _I2C_Start
+                      00577 ;   _I2C_SendByte
+                      00578 ;   _I2C_Ack
+                      00579 ;   _I2C_ReceiveByte
+                      00580 ;   _I2C_NoAck
+                      00581 ;   _I2C_Ack
+                      00582 ;   _I2C_NoAck
+                      00583 ;   _I2C_Stop
+                      00584 ;4 compiler assigned registers:
+                      00585 ;   r0x1083
+                      00586 ;   r0x1084
+                      00587 ;   r0x1085
+                      00588 ;   r0x1086
+                      00589 ;; Starting pCode block
+0019                  00590 _IIC_read_onebyte       ;Function start
+                      00591 ; 2 exit points
+                      00592 ;       .line   186; "7311c.c"  void IIC_read_onebyte(uchar read_add)
+0019   5600           00593         MOVRA   r0x1083
+                      00594 ;       .line   191; "7311c.c"  I2C_Start();
+001A   8000           00595         CALL    _I2C_Start
+                      00596 ;       .line   192; "7311c.c"  I2C_SendByte(0x2a);       //器件地址
+001B   3C2A           00597         MOVAI   0x2a
+001C   8000           00598         CALL    _I2C_SendByte
+                      00599 ;       .line   193; "7311c.c"  I2C_Ack();
+001D   8000           00600         CALL    _I2C_Ack
+                      00601 ;       .line   195; "7311c.c"  I2C_SendByte(read_add);   //设置段内地址 
+001E   5800           00602         MOVAR   r0x1083
+001F   8000           00603         CALL    _I2C_SendByte
+                      00604 ;       .line   196; "7311c.c"  I2C_Ack();
+0020   8000           00605         CALL    _I2C_Ack
+                      00606 ;       .line   198; "7311c.c"  I2C_Start();
+0021   8000           00607         CALL    _I2C_Start
+                      00608 ;       .line   199; "7311c.c"  I2C_SendByte(0x2b); //读命令
+0022   3C2B           00609         MOVAI   0x2b
+0023   8000           00610         CALL    _I2C_SendByte
+                      00611 ;       .line   200; "7311c.c"  I2C_Ack();
+0024   8000           00612         CALL    _I2C_Ack
+                      00613 ;       .line   202; "7311c.c"  for(i=0;i<5;i++)
+0025   7600           00614         CLRR    r0x1083
+                      00615 ;;unsigned compare: left < lit(0x5=5), size=1
+0026                  00616 _00187_DS_
+0026   3C05           00617         MOVAI   0x05
+0027   4800           00618         RSUBAR  r0x1083
+0028   F187           00619         JBCLR   STATUS,0
+0029   A000           00620         GOTO    _00190_DS_
+                      00621 ;;genSkipc:3251: created from rifx:0022608C
+                      00622 ;       .line   205; "7311c.c"  Array[i+n] = I2C_ReceiveByte();
+002A   5800           00623         MOVAR   _n
+002B   7C00           00624         ADDAR   r0x1083
+002C   5600           00625         MOVRA   r0x1084
+002D   5800           00626         MOVAR   r0x1084
+002E   3F00           00627         ADDAI   (_Array + 0)
+002F   5600           00628         MOVRA   r0x1084
+0030   3C00           00629         MOVAI   high (_Array + 0)
+0031   F187           00630         JBCLR   STATUS,0
+0032   3F01           00631         ADDAI   0x01
+0033   5600           00632         MOVRA   r0x1085
+0034   8000           00633         CALL    _I2C_ReceiveByte
+0035   5600           00634         MOVRA   r0x1086
+0036   5800           00635         MOVAR   r0x1084
+0037   5784           00636         MOVRA   FSR
+0038   DF87           00637         BCLR    STATUS,7
+0039   F000           00638         JBCLR   r0x1085,0
+003A   CF87           00639         BSET    STATUS,7
+003B   5800           00640         MOVAR   r0x1086
+003C   5780           00641         MOVRA   INDF
+                      00642 ;       .line   206; "7311c.c"  if(i == 4)
+003D   5800           00643         MOVAR   r0x1083
+003E   3904           00644         XORAI   0x04
+003F   E587           00645         JBSET   STATUS,2
+0040   A000           00646         GOTO    _00185_DS_
+                      00647 ;       .line   208; "7311c.c"  I2C_NoAck();
+0041   8000           00648         CALL    _I2C_NoAck
+0042   A000           00649         GOTO    _00189_DS_
+0043                  00650 _00185_DS_
+                      00651 ;       .line   212; "7311c.c"  I2C_Ack();
+0043   8000           00652         CALL    _I2C_Ack
+0044                  00653 _00189_DS_
+                      00654 ;       .line   202; "7311c.c"  for(i=0;i<5;i++)
+0044   6600           00655         INCR    r0x1083
+0045   A000           00656         GOTO    _00187_DS_
+0046                  00657 _00190_DS_
+                      00658 ;       .line   215; "7311c.c"  n = n+5;
+0046   3C05           00659         MOVAI   0x05
+0047   7E00           00660         ADDRA   _n
+                      00661 ;       .line   220; "7311c.c"  I2C_NoAck();
+0048   8000           00662         CALL    _I2C_NoAck
+                      00663 ;       .line   221; "7311c.c"  I2C_Stop();   
+0049   8000           00664         CALL    _I2C_Stop
+004A   000C           00665         RETURN  
+                      00666 ; exit point of _IIC_read_onebyte
+                      00667 
+                      00668 ;***
+                      00669 ;  pBlock Stats: dbName = C
+                      00670 ;***
+                      00671 ;entry:  _IIC_write_onebyte     ;Function start
+                      00672 ; 2 exit points
+                      00673 ;has an exit
+                      00674 ;functions called:
+                      00675 ;   _I2C_Start
+                      00676 ;   _I2C_SendByte
+                      00677 ;   _I2C_Ack
+                      00678 ;   _I2C_SendByte
+                      00679 ;   _I2C_Ack
+                      00680 ;   _I2C_SendByte
+                      00681 ;   _I2C_Ack
+                      00682 ;   _I2C_Stop
+                      00683 ;   _I2C_Start
+                      00684 ;   _I2C_SendByte
+                      00685 ;   _I2C_Ack
+                      00686 ;   _I2C_SendByte
+                      00687 ;   _I2C_Ack
+                      00688 ;   _I2C_SendByte
+                      00689 ;   _I2C_Ack
+                      00690 ;   _I2C_Stop
+                      00691 ;3 compiler assigned registers:
+                      00692 ;   r0x1087
+                      00693 ;   STK00
+                      00694 ;   r0x1088
+                      00695 ;; Starting pCode block
+004B                  00696 _IIC_write_onebyte      ;Function start
+                      00697 ; 2 exit points
+                      00698 ;       .line   172; "7311c.c"  void IIC_write_onebyte(uchar write_add,uchar write_data)
+004B   5600           00699         MOVRA   r0x1087
+004C   5800           00700         MOVAR   STK00
+004D   5600           00701         MOVRA   r0x1088
+                      00702 ;       .line   174; "7311c.c"  I2C_Start();
+004E   8000           00703         CALL    _I2C_Start
+                      00704 ;       .line   175; "7311c.c"  I2C_SendByte(0x2a);       //器件地址
+004F   3C2A           00705         MOVAI   0x2a
+0050   8000           00706         CALL    _I2C_SendByte
+                      00707 ;       .line   176; "7311c.c"  I2C_Ack();
+0051   8000           00708         CALL    _I2C_Ack
+                      00709 ;       .line   178; "7311c.c"  I2C_SendByte(write_add);  //设置段内地址 
+0052   5800           00710         MOVAR   r0x1087
+0053   8000           00711         CALL    _I2C_SendByte
+                      00712 ;       .line   179; "7311c.c"  I2C_Ack();
+0054   8000           00713         CALL    _I2C_Ack
+                      00714 ;       .line   181; "7311c.c"  I2C_SendByte(write_data);  //写的数据
+0055   5800           00715         MOVAR   r0x1088
+0056   8000           00716         CALL    _I2C_SendByte
+                      00717 ;       .line   182; "7311c.c"  I2C_Ack();
+0057   8000           00718         CALL    _I2C_Ack
+                      00719 ;       .line   183; "7311c.c"  I2C_Stop();      
+0058   8000           00720         CALL    _I2C_Stop
+0059   000C           00721         RETURN  
+                      00722 ; exit point of _IIC_write_onebyte
+                      00723 
+                      00724 ;***
+                      00725 ;  pBlock Stats: dbName = C
+                      00726 ;***
+                      00727 ;entry:  _I2C_ReceiveByte       ;Function start
+                      00728 ; 2 exit points
+                      00729 ;has an exit
+                      00730 ;functions called:
+                      00731 ;   _I2C_delay
+                      00732 ;   _I2C_delay
+                      00733 ;   _I2C_delay
+                      00734 ;   _I2C_delay
+                      00735 ;2 compiler assigned registers:
+                      00736 ;   r0x1081
+                      00737 ;   r0x1082
+                      00738 ;; Starting pCode block
+005A                  00739 _I2C_ReceiveByte        ;Function start
+                      00740 ; 2 exit points
+                      00741 ;       .line   155; "7311c.c"  uchar ReceiveByte=0; 
+005A   7600           00742         CLRR    r0x1081
+                      00743 ;       .line   156; "7311c.c"  SDA_H;                                                    
+005B   DA00           00744         BCLR    _OEP1bits,5
+                      00745 ;       .line   157; "7311c.c"  for(i=0;i<8;i++)
+005C   7600           00746         CLRR    r0x1082
+                      00747 ;;unsigned compare: left < lit(0x8=8), size=1
+005D                  00748 _00172_DS_
+005D   3C08           00749         MOVAI   0x08
+005E   4800           00750         RSUBAR  r0x1082
+005F   F187           00751         JBCLR   STATUS,0
+0060   A000           00752         GOTO    _00175_DS_
+                      00753 ;;genSkipc:3251: created from rifx:0022608C
+                      00754 ;       .line   159; "7311c.c"  ReceiveByte<<=1;       
+0061   D187           00755         BCLR    STATUS,0
+0062   5200           00756         RLR     r0x1081
+                      00757 ;       .line   160; "7311c.c"  SCL_L; 
+0063   CC00           00758         BSET    _OEP1bits,6
+0064   DC00           00759         BCLR    _IOP1bits,6
+                      00760 ;       .line   161; "7311c.c"  I2C_delay(); 
+0065   8000           00761         CALL    _I2C_delay
+                      00762 ;       .line   162; "7311c.c"  SCL_H;                              //在SCL高电平期间读取数据
+0066   DC00           00763         BCLR    _OEP1bits,6
+                      00764 ;       .line   163; "7311c.c"  I2C_delay();                    
+0067   8000           00765         CALL    _I2C_delay
+                      00766 ;       .line   164; "7311c.c"  if(SDA_read) 
+0068   EA00           00767         JBSET   _IOP1bits,5
+0069   A000           00768         GOTO    _00174_DS_
+                      00769 ;       .line   165; "7311c.c"  ReceiveByte|=0x01; 
+006A   C000           00770         BSET    r0x1081,0
+006B                  00771 _00174_DS_
+                      00772 ;       .line   157; "7311c.c"  for(i=0;i<8;i++)
+006B   6600           00773         INCR    r0x1082
+006C   A000           00774         GOTO    _00172_DS_
+006D                  00775 _00175_DS_
+                      00776 ;       .line   168; "7311c.c"  SCL_L;                                     //数据读完后，将SCL拉低，等待下一位数据
+006D   CC00           00777         BSET    _OEP1bits,6
+006E   DC00           00778         BCLR    _IOP1bits,6
+                      00779 ;       .line   169; "7311c.c"  return ReceiveByte; 
+006F   5800           00780         MOVAR   r0x1081
+0070   000C           00781         RETURN  
+                      00782 ; exit point of _I2C_ReceiveByte
+                      00783 
+                      00784 ;***
+                      00785 ;  pBlock Stats: dbName = C
+                      00786 ;***
+                      00787 ;entry:  _I2C_SendByte  ;Function start
+                      00788 ; 2 exit points
+                      00789 ;has an exit
+                      00790 ;functions called:
+                      00791 ;   _I2C_delay
+                      00792 ;   _I2C_delay
+                      00793 ;   _I2C_delay
+                      00794 ;   _I2C_delay
+                      00795 ;   _I2C_delay
+                      00796 ;   _I2C_delay
+                      00797 ;2 compiler assigned registers:
+                      00798 ;   r0x1081
+                      00799 ;   r0x1082
+                      00800 ;; Starting pCode block
+0071                  00801 _I2C_SendByte   ;Function start
+                      00802 ; 2 exit points
+                      00803 ;       .line   130; "7311c.c"  void I2C_SendByte(uchar SendByte) //数据从高位到低位// 
+0071   5600           00804         MOVRA   r0x1081
+                      00805 ;       .line   133; "7311c.c"  for(i=0;i<8;i++)
+0072   7600           00806         CLRR    r0x1082
+                      00807 ;;unsigned compare: left < lit(0x8=8), size=1
+0073                  00808 _00162_DS_
+0073   3C08           00809         MOVAI   0x08
+0074   4800           00810         RSUBAR  r0x1082
+0075   F187           00811         JBCLR   STATUS,0
+0076   A000           00812         GOTO    _00165_DS_
+                      00813 ;;genSkipc:3251: created from rifx:0022608C
+                      00814 ;       .line   135; "7311c.c"  SCL_L;                    //SCL低电平期间，数据可改变
+0077   CC00           00815         BSET    _OEP1bits,6
+0078   DC00           00816         BCLR    _IOP1bits,6
+                      00817 ;       .line   136; "7311c.c"  I2C_delay(); 
+0079   8000           00818         CALL    _I2C_delay
+                      00819 ;       .line   137; "7311c.c"  if((SendByte)&0x80) 
+007A   EE00           00820         JBSET   r0x1081,7
+007B   A000           00821         GOTO    _00160_DS_
+                      00822 ;       .line   138; "7311c.c"  SDA_H;  
+007C   DA00           00823         BCLR    _OEP1bits,5
+007D   A000           00824         GOTO    _00161_DS_
+007E                  00825 _00160_DS_
+                      00826 ;       .line   140; "7311c.c"  SDA_L;    
+007E   CA00           00827         BSET    _OEP1bits,5
+007F                  00828 _00161_DS_
+007F   DA00           00829         BCLR    _IOP1bits,5
+                      00830 ;       .line   141; "7311c.c"  SendByte<<=1; 
+0080   D187           00831         BCLR    STATUS,0
+0081   5200           00832         RLR     r0x1081
+                      00833 ;       .line   142; "7311c.c"  I2C_delay(); 
+0082   8000           00834         CALL    _I2C_delay
+                      00835 ;       .line   143; "7311c.c"  SCL_H;                  //把数据送到SDA上后，拉高
+0083   DC00           00836         BCLR    _OEP1bits,6
+                      00837 ;       .line   144; "7311c.c"  I2C_delay(); 
+0084   8000           00838         CALL    _I2C_delay
+                      00839 ;       .line   133; "7311c.c"  for(i=0;i<8;i++)
+0085   6600           00840         INCR    r0x1082
+0086   A000           00841         GOTO    _00162_DS_
+0087                  00842 _00165_DS_
+                      00843 ;       .line   146; "7311c.c"  SCL_L;                          //数据送出后，SCL拉低
+0087   CC00           00844         BSET    _OEP1bits,6
+0088   DC00           00845         BCLR    _IOP1bits,6
+0089   000C           00846         RETURN  
+                      00847 ; exit point of _I2C_SendByte
+                      00848 
+                      00849 ;***
+                      00850 ;  pBlock Stats: dbName = C
+                      00851 ;***
+                      00852 ;entry:  _I2C_NoAck     ;Function start
+                      00853 ; 2 exit points
+                      00854 ;has an exit
+                      00855 ;functions called:
+                      00856 ;   _I2C_delay
+                      00857 ;   _I2C_delay
+                      00858 ;   _I2C_delay
+                      00859 ;   _I2C_delay
+                      00860 ;   _I2C_delay
+                      00861 ;   _I2C_delay
+                      00862 ;   _I2C_delay
+                      00863 ;   _I2C_delay
+                      00864 ;; Starting pCode block
+008A                  00865 _I2C_NoAck      ;Function start
+                      00866 ; 2 exit points
+                      00867 ;       .line   117; "7311c.c"  SCL_L; 
+008A   CC00           00868         BSET    _OEP1bits,6
+008B   DC00           00869         BCLR    _IOP1bits,6
+                      00870 ;       .line   118; "7311c.c"  I2C_delay(); 
+008C   8000           00871         CALL    _I2C_delay
+                      00872 ;       .line   119; "7311c.c"  SDA_H; 
+008D   DA00           00873         BCLR    _OEP1bits,5
+                      00874 ;       .line   120; "7311c.c"  I2C_delay(); 
+008E   8000           00875         CALL    _I2C_delay
+                      00876 ;       .line   121; "7311c.c"  SCL_H; 
+008F   DC00           00877         BCLR    _OEP1bits,6
+                      00878 ;       .line   122; "7311c.c"  I2C_delay(); 
+0090   8000           00879         CALL    _I2C_delay
+                      00880 ;       .line   123; "7311c.c"  SCL_L; 
+0091   CC00           00881         BSET    _OEP1bits,6
+0092   DC00           00882         BCLR    _IOP1bits,6
+                      00883 ;       .line   124; "7311c.c"  I2C_delay(); 
+0093   8000           00884         CALL    _I2C_delay
+0094   000C           00885         RETURN  
+                      00886 ; exit point of _I2C_NoAck
+                      00887 
+                      00888 ;***
+                      00889 ;  pBlock Stats: dbName = C
+                      00890 ;***
+                      00891 ;entry:  _I2C_Ack       ;Function start
+                      00892 ; 2 exit points
+                      00893 ;has an exit
+                      00894 ;functions called:
+                      00895 ;   _I2C_delay
+                      00896 ;   _I2C_delay
+                      00897 ;   _I2C_delay
+                      00898 ;   _I2C_delay
+                      00899 ;   _I2C_delay
+                      00900 ;   _I2C_delay
+                      00901 ;   _I2C_delay
+                      00902 ;   _I2C_delay
+                      00903 ;; Starting pCode block
+0095                  00904 _I2C_Ack        ;Function start
+                      00905 ; 2 exit points
+                      00906 ;       .line   103; "7311c.c"  SCL_L; 
+0095   CC00           00907         BSET    _OEP1bits,6
+0096   DC00           00908         BCLR    _IOP1bits,6
+                      00909 ;       .line   104; "7311c.c"  I2C_delay(); 
+0097   8000           00910         CALL    _I2C_delay
+                      00911 ;       .line   105; "7311c.c"  SDA_L; 
+0098   CA00           00912         BSET    _OEP1bits,5
+0099   DA00           00913         BCLR    _IOP1bits,5
+                      00914 ;       .line   106; "7311c.c"  I2C_delay(); 
+009A   8000           00915         CALL    _I2C_delay
+                      00916 ;       .line   107; "7311c.c"  SCL_H; 
+009B   DC00           00917         BCLR    _OEP1bits,6
+                      00918 ;       .line   108; "7311c.c"  I2C_delay(); 
+009C   8000           00919         CALL    _I2C_delay
+                      00920 ;       .line   109; "7311c.c"  SCL_L; 
+009D   CC00           00921         BSET    _OEP1bits,6
+009E   DC00           00922         BCLR    _IOP1bits,6
+                      00923 ;       .line   110; "7311c.c"  I2C_delay(); 
+009F   8000           00924         CALL    _I2C_delay
+00A0   000C           00925         RETURN  
+                      00926 ; exit point of _I2C_Ack
+                      00927 
+                      00928 ;***
+                      00929 ;  pBlock Stats: dbName = C
+                      00930 ;***
+                      00931 ;entry:  _I2C_Stop      ;Function start
+                      00932 ; 2 exit points
+                      00933 ;has an exit
+                      00934 ;functions called:
+                      00935 ;   _I2C_delay
+                      00936 ;   _I2C_delay
+                      00937 ;   _I2C_delay
+                      00938 ;   _I2C_delay
+                      00939 ;   _I2C_delay
+                      00940 ;   _I2C_delay
+                      00941 ;   _I2C_delay
+                      00942 ;   _I2C_delay
+                      00943 ;; Starting pCode block
+00A1                  00944 _I2C_Stop       ;Function start
+                      00945 ; 2 exit points
+                      00946 ;       .line   89; "7311c.c"   SDA_L;
+00A1   CA00           00947         BSET    _OEP1bits,5
+00A2   DA00           00948         BCLR    _IOP1bits,5
+                      00949 ;       .line   90; "7311c.c"   I2C_delay(); 
+00A3   8000           00950         CALL    _I2C_delay
+                      00951 ;       .line   91; "7311c.c"   SCL_H; 
+00A4   DC00           00952         BCLR    _OEP1bits,6
+                      00953 ;       .line   92; "7311c.c"   I2C_delay(); 
+00A5   8000           00954         CALL    _I2C_delay
+                      00955 ;       .line   93; "7311c.c"   SDA_H; 
+00A6   DA00           00956         BCLR    _OEP1bits,5
+                      00957 ;       .line   94; "7311c.c"   I2C_delay(); 
+00A7   8000           00958         CALL    _I2C_delay
+                      00959 ;       .line   95; "7311c.c"   SCL_L; 
+00A8   CC00           00960         BSET    _OEP1bits,6
+00A9   DC00           00961         BCLR    _IOP1bits,6
+                      00962 ;       .line   96; "7311c.c"   I2C_delay();
+00AA   8000           00963         CALL    _I2C_delay
+00AB   000C           00964         RETURN  
+                      00965 ; exit point of _I2C_Stop
+                      00966 
+                      00967 ;***
+                      00968 ;  pBlock Stats: dbName = C
+                      00969 ;***
+                      00970 ;entry:  _I2C_Start     ;Function start
+                      00971 ; 2 exit points
+                      00972 ;has an exit
+                      00973 ;functions called:
+                      00974 ;   _I2C_delay
+                      00975 ;   _I2C_delay
+                      00976 ;   _I2C_delay
+                      00977 ;   _I2C_delay
+                      00978 ;   _I2C_delay
+                      00979 ;   _I2C_delay
+                      00980 ;   _I2C_delay
+                      00981 ;   _I2C_delay
+                      00982 ;; Starting pCode block
+00AC                  00983 _I2C_Start      ;Function start
+                      00984 ; 2 exit points
+                      00985 ;       .line   75; "7311c.c"   SDA_H; 
+00AC   DA00           00986         BCLR    _OEP1bits,5
+                      00987 ;       .line   76; "7311c.c"   I2C_delay();
+00AD   8000           00988         CALL    _I2C_delay
+                      00989 ;       .line   77; "7311c.c"   SCL_H; 
+00AE   DC00           00990         BCLR    _OEP1bits,6
+                      00991 ;       .line   78; "7311c.c"   I2C_delay();      
+00AF   8000           00992         CALL    _I2C_delay
+                      00993 ;       .line   79; "7311c.c"   SDA_L; 
+00B0   CA00           00994         BSET    _OEP1bits,5
+00B1   DA00           00995         BCLR    _IOP1bits,5
+                      00996 ;       .line   80; "7311c.c"   I2C_delay();                                                    
+00B2   8000           00997         CALL    _I2C_delay
+                      00998 ;       .line   81; "7311c.c"   SCL_L; 
+00B3   CC00           00999         BSET    _OEP1bits,6
+00B4   DC00           01000         BCLR    _IOP1bits,6
+                      01001 ;       .line   82; "7311c.c"   I2C_delay();
+00B5   8000           01002         CALL    _I2C_delay
+00B6   000C           01003         RETURN  
+                      01004 ; exit point of _I2C_Start
+                      01005 
+                      01006 ;***
+                      01007 ;  pBlock Stats: dbName = C
+                      01008 ;***
+                      01009 ;entry:  _I2C_delay     ;Function start
+                      01010 ; 2 exit points
+                      01011 ;has an exit
+                      01012 ;1 compiler assigned register :
+                      01013 ;   r0x1080
+                      01014 ;; Starting pCode block
+00B7                  01015 _I2C_delay      ;Function start
+                      01016 ; 2 exit points
+                      01017 ;       .line   65; "7311c.c"   while(i)  
+00B7   3C96           01018         MOVAI   0x96
+00B8   5600           01019         MOVRA   r0x1080
+00B9                  01020 _00135_DS_
+00B9   3C00           01021         MOVAI   0x00
+00BA   5C00           01022         ORAR    r0x1080
+00BB   F587           01023         JBCLR   STATUS,2
+00BC   A000           01024         GOTO    _00138_DS_
+                      01025 ;       .line   67; "7311c.c"   i--;  
+00BD   6E00           01026         DECR    r0x1080
+00BE   A000           01027         GOTO    _00135_DS_
+00BF                  01028 _00138_DS_
+00BF   000C           01029         RETURN  
+                      01030 ; exit point of _I2C_delay
+                      01031 
+                      01032 ;***
+                      01033 ;  pBlock Stats: dbName = C
+                      01034 ;***
+                      01035 ;entry:  _delay ;Function start
+                      01036 ; 2 exit points
+                      01037 ;has an exit
+                      01038 ;2 compiler assigned registers:
+                      01039 ;   r0x1080
+                      01040 ;   r0x1081
+                      01041 ;; Starting pCode block
+00C0                  01042 _delay  ;Function start
+                      01043 ; 2 exit points
+                      01044 ;       .line   52; "7311c.c"   void delay(uchar x)
+00C0   5600           01045         MOVRA   r0x1080
+00C1                  01046 _00126_DS_
+                      01047 ;       .line   55; "7311c.c"   for(a=x;a>0;a--)
+00C1   3C00           01048         MOVAI   0x00
+00C2   5C00           01049         ORAR    r0x1080
+00C3   F587           01050         JBCLR   STATUS,2
+00C4   A000           01051         GOTO    _00130_DS_
+                      01052 ;       .line   56; "7311c.c"   for(b=110;b>0;b--);
+00C5   3C6E           01053         MOVAI   0x6e
+00C6   5600           01054         MOVRA   r0x1081
+00C7                  01055 _00122_DS_
+00C7   3C00           01056         MOVAI   0x00
+00C8   5C00           01057         ORAR    r0x1081
+00C9   F587           01058         JBCLR   STATUS,2
+00CA   A000           01059         GOTO    _00128_DS_
+00CB   6E00           01060         DECR    r0x1081
+00CC   A000           01061         GOTO    _00122_DS_
+00CD                  01062 _00128_DS_
+                      01063 ;       .line   55; "7311c.c"   for(a=x;a>0;a--)
+00CD   6E00           01064         DECR    r0x1080
+00CE   A000           01065         GOTO    _00126_DS_
+00CF                  01066 _00130_DS_
+00CF   000C           01067         RETURN  
+                      01068 ; exit point of _delay
+                      01069 
+                      01070 ;***
+                      01071 ;  pBlock Stats: dbName = C
+                      01072 ;***
+                      01073 ;entry:  _InitSub       ;Function start
+                      01074 ; 2 exit points
+                      01075 ;has an exit
+                      01076 ;functions called:
+                      01077 ;   _RamInit
+                      01078 ;   _IOPortInit
+                      01079 ;   _IRQInit
+                      01080 ;   _RamInit
+                      01081 ;   _IOPortInit
+                      01082 ;   _IRQInit
+                      01083 ;; Starting pCode block
+00D0                  01084 _InitSub        ;Function start
+                      01085 ; 2 exit points
+                      01086 ;       .line   46; "7311c.c"   RamInit();
+00D0   8000           01087         CALL    _RamInit
+                      01088 ;       .line   47; "7311c.c"   IOPortInit();
+00D1   8000           01089         CALL    _IOPortInit
+                      01090 ;       .line   48; "7311c.c"   IRQInit();        
+00D2   8000           01091         CALL    _IRQInit
+00D3   000C           01092         RETURN  
+                      01093 ; exit point of _InitSub
+                      01094 
+                      01095 ;***
+                      01096 ;  pBlock Stats: dbName = C
+                      01097 ;***
+                      01098 ;entry:  _RamInit       ;Function start
+                      01099 ; 2 exit points
+                      01100 ;has an exit
+                      01101 ;; Starting pCode block
+00D4                  01102 _RamInit        ;Function start
+                      01103 ; 2 exit points
+00D4                  01104 _00113_DS_
+                      01105 ;       .line   37; "7311c.c"   INDF0=0;
+00D4   7600           01106         CLRR    _INDF0
+                      01107 ;       .line   38; "7311c.c"   ++FSR0;
+00D5   6600           01108         INCR    _FSR0
+                      01109 ;       .line   39; "7311c.c"   if (FSR0)
+00D6   3C00           01110         MOVAI   0x00
+00D7   5C00           01111         ORAR    _FSR0
+00D8   E587           01112         JBSET   STATUS,2
+00D9   A000           01113         GOTO    _00113_DS_
+                      01114 ;       .line   41; "7311c.c"   goto RamInit;
+00DA   000C           01115         RETURN  
+                      01116 ; exit point of _RamInit
+                      01117 
+                      01118 ;***
+                      01119 ;  pBlock Stats: dbName = C
+                      01120 ;***
+                      01121 ;entry:  _IRQInit       ;Function start
+                      01122 ; 2 exit points
+                      01123 ;has an exit
+                      01124 ;; Starting pCode block
+00DB                  01125 _IRQInit        ;Function start
+                      01126 ; 2 exit points
+                      01127 ;       .line   29; "7311c.c"   T0CR = 0xe0;
+00DB   3CE0           01128         MOVAI   0xe0
+00DC   5600           01129         MOVRA   _T0CR
+                      01130 ;       .line   30; "7311c.c"   T0CNT = 6;
+00DD   3C06           01131         MOVAI   0x06
+00DE   5600           01132         MOVRA   _T0CNT
+                      01133 ;       .line   31; "7311c.c"   T0IE = 1;               
+00DF   C000           01134         BSET    _INTEbits,0
+00E0   000C           01135         RETURN  
+                      01136 ; exit point of _IRQInit
+                      01137 
+                      01138 ;***
+                      01139 ;  pBlock Stats: dbName = C
+                      01140 ;***
+                      01141 ;entry:  _IOPortInit    ;Function start
+                      01142 ; 2 exit points
+                      01143 ;has an exit
+                      01144 ;; Starting pCode block
+00E1                  01145 _IOPortInit     ;Function start
+                      01146 ; 2 exit points
+                      01147 ;       .line   21; "7311c.c"   OEP0 = 0;      
+00E1   7600           01148         CLRR    _OEP0
+                      01149 ;       .line   22; "7311c.c"   OEP1 = 0xf7;      //P1,3设置为输入，其余P1口全为输出
+00E2   3CF7           01150         MOVAI   0xf7
+00E3   5600           01151         MOVRA   _OEP1
+                      01152 ;       .line   23; "7311c.c"   PUP1 = 0;         
+00E4   7600           01153         CLRR    _PUP1
+                      01154 ;       .line   24; "7311c.c"   ANSEL0 = 0;
+00E5   7600           01155         CLRR    _ANSEL0
+                      01156 ;       .line   25; "7311c.c"   ANSEL1 = 0;             
+00E6   7600           01157         CLRR    _ANSEL1
+00E7   000C           01158         RETURN  
+                      01159 ; exit point of _IOPortInit
+                      01160 
+                      01161 
+                      01162 ;       code size estimation:
+                      01163 ;         243+    0 =   243 instructions (  486 byte)
+                      01164 
+                      01165         end
+gpasm-1.7.0_beta1 (Apr 28 2016)7311c.asm          2016-12-8  17:32:23          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+ADCR0                             000001B0
+ADCR1                             000001B1
+ADCR2                             000001B2
+ADRH                              000001B4
+ADRL                              000001B5
+ANSEL0                            000001B6
+ANSEL1                            000001B7
+DRVCR                             0000018C
+END_OF_INTERRUPT                  00000018
+FSR0                              00000184
+FSR1                              00000185
+HIBYTE                            00000183
+INDF0                             00000180
+INDF1                             00000181
+INDF2                             00000182
+INDF3                             00000189
+INTE                              0000018A
+INTF                              0000018B
+IOP0                              00000190
+IOP1                              00000194
+KBCR                              0000018E
+LVDCR                             000001AF
+MCR                               00000188
+OEP0                              00000191
+OEP1                              00000195
+OSCCALH                           000001FB
+OSCCALL                           000001FC
+OSCM                              000001AE
+PCL                               00000186
+PDP0                              00000193
+PDP1                              00000197
+PFLAG                             00000187
+PUP0                              00000192
+PUP1                              00000196
+PWM0DE                            000001A8
+PWM1DE                            000001A9
+PWM2DE                            000001AA
+PWMCR0                            000001AC
+PWMCR1                            000001AD
+STK00                             00000006
+STK01                             00000005
+STK02                             00000004
+STK03                             00000003
+STK04                             00000002
+STK05                             00000001
+STK06                             00000000
+T0CNT                             00000199
+T0CR                              00000198
+T0DATA                            0000019B
+T0LOAD                            0000019A
+T1CNT                             0000019D
+T1CR                              0000019C
+T1DATA                            0000019F
+T1LOAD                            0000019E
+T2CNT                             000001A1
+T2CR                              000001A0
+T2DATA                            000001A3
+T2LOAD                            000001A2
+T3CNT                             000001A5
+T3CR                              000001A4
+T3LOAD                            000001A6
+VBGCAL                            000001F8
+_00113_DS_                        000000D4
+_00122_DS_                        000000C7
+_00126_DS_                        000000C1
+_00128_DS_                        000000CD
+_00130_DS_                        000000CF
+_00135_DS_                        000000B9
+_00138_DS_                        000000BF
+_00160_DS_                        0000007E
+_00161_DS_                        0000007F
+_00162_DS_                        00000073
+_00165_DS_                        00000087
+_00172_DS_                        0000005D
+_00174_DS_                        0000006B
+_00175_DS_                        0000006D
+_00185_DS_                        00000043
+_00187_DS_                        00000026
+_00189_DS_                        00000044
+_00190_DS_                        00000046
+_00200_DS_                        00000013
+_00204_DS_                        00000007
+_00206_DS_                        0000000B
+_00214_DS_                        00000015
+_ADCR0                            00000000
+_ADCR0bits                        00000000
+_ADCR1                            00000000
+_ADCR1bits                        00000000
+_ADCR2                            00000000
+_ADCR2bits                        00000000
+_ADRH                             00000000
+_ADRHbits                         00000000
+_ADRL                             00000000
+_ADRLbits                         00000000
+_ANSEL0                           00000000
+_ANSEL0bits                       00000000
+_ANSEL1                           00000000
+_ANSEL1bits                       00000000
+_Array                            00000000
+_DRVCR                            00000000
+_DRVCRbits                        00000000
+_Delay10ms                        00000000
+_FSR                              00000000
+_FSR0                             00000000
+_FSR0bits                         00000000
+_FSR1                             00000000
+_FSR1bits                         00000000
+_HIBYTE                           00000000
+_HIBYTEbits                       00000000
+_I2C_Ack                          00000095
+_I2C_Delay10us                    00000000
+_I2C_NoAck                        0000008A
+_I2C_ReceiveByte                  0000005A
+_I2C_SendByte                     00000071
+_I2C_Start                        000000AC
+_I2C_Stop                         000000A1
+_I2C_delay                        000000B7
+_IIC_read_onebyte                 00000019
+_IIC_write_onebyte                0000004B
+_INDF                             00000000
+_INDF0                            00000000
+_INDF0bits                        00000000
+_INDF1                            00000000
+_INDF1bits                        00000000
+_INDF2                            00000000
+_INDF2bits                        00000000
+_INDF3                            00000000
+_INDF3bits                        00000000
+_INTE                             00000000
+_INTEbits                         00000000
+_INTF                             00000000
+_INTFbits                         00000000
+_IOP0                             00000000
+_IOP0bits                         00000000
+_IOP1                             00000000
+_IOP1bits                         00000000
+_IOPortInit                       000000E1
+_IRQInit                          000000DB
+_InitSub                          000000D0
+_KBCR                             00000000
+_KBCRbits                         00000000
+_LVDCR                            00000000
+_LVDCRbits                        00000000
+_MCR                              00000000
+_MCRbits                          00000000
+_OEP0                             00000000
+_OEP0bits                         00000000
+_OEP1                             00000000
+_OEP1bits                         00000000
+_OPCR0bits                        00000000
+_OSCCALH                          00000000
+_OSCCALHbits                      00000000
+_OSCCALL                          00000000
+_OSCCALLbits                      00000000
+_OSCM                             00000000
+_OSCMbits                         00000000
+_PCL                              00000000
+_PCLbits                          00000000
+_PDP0                             00000000
+_PDP0bits                         00000000
+_PDP1                             00000000
+_PDP1bits                         00000000
+_PFLAG                            00000000
+_PUP0                             00000000
+_PUP0bits                         00000000
+_PUP1                             00000000
+_PUP1bits                         00000000
+_PWM0DE                           00000000
+_PWM0DEbits                       00000000
+_PWM1DE                           00000000
+_PWM1DEbits                       00000000
+_PWM2DE                           00000000
+_PWMCR0                           00000000
+_PWMCR0bits                       00000000
+_PWMCR1                           00000000
+_PWMCR1bits                       00000000
+_RamInit                          000000D4
+_STATUS                           00000000
+_STATUSbits                       00000000
+_T0CNT                            00000000
+_T0CNTbits                        00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T0DATA                           00000000
+_T0DATAbits                       00000000
+_T0LOAD                           00000000
+_T0LOADbits                       00000000
+_T1CNT                            00000000
+_T1CNTbits                        00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DATA                           00000000
+_T1DATAbits                       00000000
+_T1LOAD                           00000000
+_T1LOADbits                       00000000
+_T2CNT                            00000000
+_T2CNTbits                        00000000
+_T2CR                             00000000
+_T2CRbits                         00000000
+_T2DATA                           00000000
+_T2DATAbits                       00000000
+_T2LOAD                           00000000
+_T2LOADbits                       00000000
+_T3CNT                            00000000
+_T3CNTbits                        00000000
+_T3CR                             00000000
+_T3CRbits                         00000000
+_T3LOAD                           00000000
+_T3LOADbits                       00000000
+_URAT_SendData                    00000018
+_VBGCAL                           00000000
+_VBGCALbits                       00000000
+__32P7311                         00000001
+__sdcc_interrupt                  00000008
+_acctemp                          00000000
+_delay                            000000C0
+_flg                              00000000
+_flg1                             00000000
+_flg2                             00000000
+_flg3                             00000000
+_int_isr                          00000008
+_m                                00000000
+_main                             00000000
+_n                                00000000
+_pflagtemp                        00000000
+_read_temp                        00000000
+_time_1ms                         00000000
+r0x1080                           00000000
+r0x1081                           00000001
+r0x1082                           00000002
+r0x1083                           00000005
+r0x1084                           00000006
+r0x1085                           00000007
+r0x1086                           00000008
+r0x1087                           00000003
+r0x1088                           00000004
+ADCHS0                            ADCR0,4
+ADCHS1                            ADCR0,5
+ADCHS2                            ADCR0,6
+ADCHS3                            ADCR0,7
+ADCKS0                            ADCR1,5
+ADCKS1                            ADCR1,6
+ADCKS2                            ADCR1,7
+ADEOC                             ADCR0,1
+ADIE                              INTE,6
+ADIF                              INTFLAG,6
+ADLEN                             ADCR0,3
+ADON                              ADCR0,0
+ADR0                              ADRL,0
+ADR1                              ADRL,1
+ADR10                             ADRH,6
+ADR11                             ADRH,7
+ADR2                              ADRL,2
+ADR3                              ADRL,3
+ADR4                              ADRH,0
+ADR5                              ADRH,1
+ADR6                              ADRH,2
+ADR7                              ADRH,3
+ADR8                              ADRH,4
+ADR9                              ADRH,5
+ADSMP0                            ADCR2,0
+ADSMP1                            ADCR2,1
+ADSMP2                            ADCR2,2
+ADSMP3                            ADCR2,3
+ADTST                             ADCR1,4
+BUZ0OE                            T0CR,5
+BUZ1OE                            T1CR,5
+BUZ2OE                            T2CR,5
+C                                 PFLAG,0
+CLKS                              OSCM,2
+DC                                PFLAG,1
+DRVS                              DRVCR,7
+FPWMEN                            PWMCR0,7
+FPWMF0                            PWMCR0,0
+FPWMF1                            PWMCR0,1
+FPWMR0                            PWMCR0,2
+FPWMR1                            PWMCR0,3
+FSR                               FSR0
+FSR00                             FSR0,0
+FSR01                             FSR0,1
+FSR02                             FSR0,2
+FSR03                             FSR0,3
+FSR04                             FSR0,4
+FSR05                             FSR0,5
+FSR06                             FSR0,6
+FSR07                             FSR0,7
+FSR10                             FSR1,0
+FSR11                             FSR1,1
+FSR12                             FSR1,2
+FSR13                             FSR1,3
+FSR14                             FSR1,4
+FSR15                             FSR1,5
+FSR16                             FSR1,6
+FSR17                             FSR1,7
+GIE                               MCR,7
+HFEN                              OSCM,0
+HIBYTE0                           HIBYTE,0
+HIBYTE1                           HIBYTE,1
+HIBYTE2                           HIBYTE,2
+HIBYTE3                           HIBYTE,3
+HIBYTE4                           HIBYTE,4
+HIBYTE5                           HIBYTE,5
+HIBYTE6                           HIBYTE,6
+HIBYTE7                           HIBYTE,7
+INDF                              INDF0
+INDF00                            INDF0,0
+INDF01                            INDF0,1
+INDF02                            INDF0,2
+INDF03                            INDF0,3
+INDF04                            INDF0,4
+INDF05                            INDF0,5
+INDF06                            INDF0,6
+INDF07                            INDF0,7
+INDF10                            INDF1,0
+INDF11                            INDF1,1
+INDF12                            INDF1,2
+INDF13                            INDF1,3
+INDF14                            INDF1,4
+INDF15                            INDF1,5
+INDF16                            INDF1,6
+INDF17                            INDF1,7
+INDF20                            INDF2,0
+INDF21                            INDF2,1
+INDF22                            INDF2,2
+INDF23                            INDF2,3
+INDF24                            INDF2,4
+INDF25                            INDF2,5
+INDF26                            INDF2,6
+INDF27                            INDF2,7
+INDF30                            INDF3,0
+INDF31                            INDF3,1
+INDF32                            INDF3,2
+INDF33                            INDF3,3
+INDF34                            INDF3,4
+INDF35                            INDF3,5
+INDF36                            INDF3,6
+INDF37                            INDF3,7
+INT0IE                            INTE,2
+INT0IF                            INTFLAG,2
+INT1IE                            INTE,3
+INT1IF                            INTFLAG,3
+INTECON                           INTE
+INTFLAG                           INTF
+KBCR0                             KBCR,0
+KBCR1                             KBCR,1
+KBCR2                             KBCR,2
+KBCR3                             KBCR,3
+KBCR4                             KBCR,4
+KBCR5                             KBCR,5
+KBCR6                             KBCR,6
+KBIE                              INTE,4
+KBIF                              INTFLAG,4
+LDRVS                             DRVCR,6
+LFEN                              OSCM,1
+LVDEN                             LVDCR,7
+LVDF                              LVDCR,0
+LVDS0                             LVDCR,3
+LVDS1                             LVDCR,4
+LVDS2                             LVDCR,5
+LVDS3                             LVDCR,6
+MINT00                            MCR,0
+MINT01                            MCR,1
+MINT10                            MCR,2
+MINT11                            MCR,3
+OSCCAL0                           OSCCALL,0
+OSCCAL1                           OSCCALL,1
+OSCCAL10                          OSCCALH,2
+OSCCAL2                           OSCCALL,2
+OSCCAL3                           OSCCALL,3
+OSCCAL4                           OSCCALL,4
+OSCCAL5                           OSCCALL,5
+OSCCAL6                           OSCCALL,6
+OSCCAL7                           OSCCALL,7
+OSCCAL8                           OSCCALH,0
+OSCCAL9                           OSCCALH,1
+P00ANS                            ANSEL0,0
+P00D                              IOP0,0
+P00OE                             OEP0,0
+P00PD                             PDP0,0
+P00PU                             PUP0,0
+P01ANS                            ANSEL0,1
+P01D                              IOP0,1
+P01OE                             OEP0,1
+P01PD                             PDP0,1
+P01PU                             PUP0,1
+P02ANS                            ANSEL0,2
+P02D                              IOP0,2
+P02OE                             OEP0,2
+P02PD                             PDP0,2
+P02PU                             PUP0,2
+P03ANS                            ANSEL0,3
+P03D                              IOP0,3
+P03OE                             OEP0,3
+P03PD                             PDP0,3
+P03PU                             PUP0,3
+P04ANS                            ANSEL0,4
+P04D                              IOP0,4
+P04OE                             OEP0,4
+P04PD                             PDP0,4
+P04PU                             PUP0,4
+P05ANS                            ANSEL0,5
+P05D                              IOP0,5
+P05OE                             OEP0,5
+P05PD                             PDP0,5
+P05PU                             PUP0,5
+P0HCON                            PUP0
+P10D                              IOP1,0
+P10OE                             OEP1,0
+P10PD                             PDP1,0
+P10PU                             PUP1,0
+P11ANS                            ANSEL0,6
+P11D                              IOP1,1
+P11OE                             OEP1,1
+P11PD                             PDP1,1
+P11PU                             PUP1,1
+P12ANS                            ANSEL0,7
+P12D                              IOP1,2
+P12OE                             OEP1,2
+P12PD                             PDP1,2
+P12PU                             PUP1,2
+P13D                              IOP1,3
+P13OE                             OEP1,3
+P13PD                             PDP1,3
+P13PU                             PUP1,3
+P14ANS                            ANSEL1,0
+P14D                              IOP1,4
+P14OE                             OEP1,4
+P14PD                             PDP1,4
+P14PU                             PUP1,4
+P15ANS                            ANSEL1,1
+P15D                              IOP1,5
+P15OE                             OEP1,5
+P15PD                             PDP1,5
+P15PU                             PUP1,5
+P16D                              IOP1,6
+P16OE                             OEP1,6
+P16PD                             PDP1,6
+P16PU                             PUP1,6
+P17D                              IOP1,7
+P17OE                             OEP1,7
+P17PD                             PDP1,7
+P17PU                             PUP1,7
+P1HCON                            PUP1
+PC0                               PCL,0
+PC1                               PCL,1
+PC2                               PCL,2
+PC3                               PCL,3
+PC4                               PCL,4
+PC5                               PCL,5
+PC6                               PCL,6
+PC7                               PCL,7
+PD                                MCR,4
+PDLYS0                            DRVCR,2
+PDLYS1                            DRVCR,3
+PDRVS                             DRVCR,5
+PDRVS0                            DRVCR,4
+PMODE0                            PWMCR1,0
+PMODE1                            PWMCR1,1
+PMODE2                            PWMCR1,2
+PSPDS0                            DRVCR,0
+PSPDS1                            DRVCR,1
+PWM0DE0                           PWM0DE,0
+PWM0DE1                           PWM0DE,1
+PWM0DE2                           PWM0DE,2
+PWM0INV                           PWMCR0,4
+PWM0OE                            T0CR,6
+PWM1DE0                           PWM1DE,0
+PWM1DE1                           PWM1DE,1
+PWM1DE2                           PWM1DE,2
+PWM1INV                           PWMCR0,5
+PWM1OE                            T1CR,6
+PWM2DE0                           PWM2DE,0
+PWM2DE1                           PWM2DE,1
+PWM2DE2                           PWM2DE,2
+PWM2INV                           PWMCR0,6
+PWM2OE                            T2CR,6
+RESS0                             ADCR1,3
+STATUS                            PFLAG
+STBH                              OSCM,4
+STBL                              OSCM,5
+T0                                MCR,5
+T0C0                              T0CNT,0
+T0C1                              T0CNT,1
+T0C2                              T0CNT,2
+T0C3                              T0CNT,3
+T0C4                              T0CNT,4
+T0C5                              T0CNT,5
+T0C6                              T0CNT,6
+T0C7                              T0CNT,7
+T0DATA0                           T0DATA,0
+T0DATA1                           T0DATA,1
+T0DATA2                           T0DATA,2
+T0DATA3                           T0DATA,3
+T0DATA4                           T0DATA,4
+T0DATA5                           T0DATA,5
+T0DATA6                           T0DATA,6
+T0DATA7                           T0DATA,7
+T0IE                              INTE,0
+T0IF                              INTFLAG,0
+T0LOAD0                           T0LOAD,0
+T0LOAD1                           T0LOAD,1
+T0LOAD2                           T0LOAD,2
+T0LOAD3                           T0LOAD,3
+T0LOAD4                           T0LOAD,4
+T0LOAD5                           T0LOAD,5
+T0LOAD6                           T0LOAD,6
+T0LOAD7                           T0LOAD,7
+T0PR0                             T0CR,0
+T0PR1                             T0CR,1
+T0PR2                             T0CR,2
+T0PS0                             T0CR,3
+T0PS1                             T0CR,4
+T1C0                              T1CNT,0
+T1C1                              T1CNT,1
+T1C2                              T1CNT,2
+T1C3                              T1CNT,3
+T1C4                              T1CNT,4
+T1C5                              T1CNT,5
+T1C6                              T1CNT,6
+T1C7                              T1CNT,7
+T1DATA0                           T1DATA,0
+T1DATA1                           T1DATA,1
+T1DATA2                           T1DATA,2
+T1DATA3                           T1DATA,3
+T1DATA4                           T1DATA,4
+T1DATA5                           T1DATA,5
+T1DATA6                           T1DATA,6
+T1DATA7                           T1DATA,7
+T1IE                              INTE,1
+T1IF                              INTFLAG,1
+T1LOAD0                           T1LOAD,0
+T1LOAD1                           T1LOAD,1
+T1LOAD2                           T1LOAD,2
+T1LOAD3                           T1LOAD,3
+T1LOAD4                           T1LOAD,4
+T1LOAD5                           T1LOAD,5
+T1LOAD6                           T1LOAD,6
+T1LOAD7                           T1LOAD,7
+T1PR0                             T1CR,0
+T1PR1                             T1CR,1
+T1PR2                             T1CR,2
+T1PS0                             T1CR,3
+T1PS1                             T1CR,4
+T2C0                              T2CNT,0
+T2C1                              T2CNT,1
+T2C2                              T2CNT,2
+T2C3                              T2CNT,3
+T2C4                              T2CNT,4
+T2C5                              T2CNT,5
+T2C6                              T2CNT,6
+T2C7                              T2CNT,7
+T2DATA0                           T2DATA,0
+T2DATA1                           T2DATA,1
+T2DATA2                           T2DATA,2
+T2DATA3                           T2DATA,3
+T2DATA4                           T2DATA,4
+T2DATA5                           T2DATA,5
+T2DATA6                           T2DATA,6
+T2DATA7                           T2DATA,7
+T2IE                              INTE,5
+T2IF                              INTFLAG,5
+T2LOAD0                           T2LOAD,0
+T2LOAD1                           T2LOAD,1
+T2LOAD2                           T2LOAD,2
+T2LOAD3                           T2LOAD,3
+T2LOAD4                           T2LOAD,4
+T2LOAD5                           T2LOAD,5
+T2LOAD6                           T2LOAD,6
+T2LOAD7                           T2LOAD,7
+T2PR0                             T2CR,0
+T2PR1                             T2CR,1
+T2PR2                             T2CR,2
+T2PS0                             T2CR,3
+T2PS1                             T2CR,4
+T3C0                              T3CNT,0
+T3C1                              T3CNT,1
+T3C2                              T3CNT,2
+T3C3                              T3CNT,3
+T3C4                              T3CNT,4
+T3C5                              T3CNT,5
+T3C6                              T3CNT,6
+T3C7                              T3CNT,7
+T3IE                              INTE,7
+T3IF                              INTFLAG,7
+T3LOAD0                           T3LOAD,0
+T3LOAD1                           T3LOAD,1
+T3LOAD2                           T3LOAD,2
+T3LOAD3                           T3LOAD,3
+T3LOAD4                           T3LOAD,4
+T3LOAD5                           T3LOAD,5
+T3LOAD6                           T3LOAD,6
+T3LOAD7                           T3LOAD,7
+T3PR0                             T3CR,0
+T3PR1                             T3CR,1
+T3PR2                             T3CR,2
+T3PS0                             T3CR,3
+T3PS1                             T3CR,4
+TC0EN                             T0CR,7
+TC1EN                             T1CR,7
+TC2EN                             T2CR,7
+TC3EN                             T3CR,7
+TMRCKS0                           PWMCR1,3
+TMRCKS1                           PWMCR1,4
+VBGCAL0                           VBGCAL,0
+VBGCAL1                           VBGCAL,1
+VBGCAL2                           VBGCAL,2
+VBGCAL3                           VBGCAL,3
+VBGCAL4                           VBGCAL,4
+VBGCAL5                           VBGCAL,5
+VBGCAL6                           VBGCAL,6
+VBGCAL7                           VBGCAL,7
+VRS0                              ADCR1,0
+VRS1                              ADCR1,1
+VRS2                              ADCR1,2
+Z                                 PFLAG,2
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

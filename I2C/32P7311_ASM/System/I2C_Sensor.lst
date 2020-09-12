@@ -1,0 +1,1788 @@
+gpasm-1.7.0_beta1 (Apr 28 2016)I2C_Sensor.asm     2016-12-7  11:35:18          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 
+                      00002 ;  ******************************************************************************
+                      00003 ;  * @file    I2C communication
+                      00004 ;  * @author  YB
+                      00005 ;  * @version V1.0
+                      00006 ;  * @date    2016-11-27
+                      00007 ;  * @brief   
+                      00008 ;  ******************************************************************************
+                      00009 ;  * @attention 
+                      00010 ;  *     
+                      00011 ;  *  platform:sinomcu MC30P6060  SOP8
+                      00012 ;  *  web: www.sinimcu.com
+                      00013 ;  *
+                      00014 ;  ******************************************************************************
+                      00015 
+                      00016 #include "mc32p7311.inc"
+                      00001 
+                      00002 
+                      00003 ;mc32p7311 header file
+                      00004 ;
+                      00005 ; 
+                      00006 
+                      00007 ;define must write at first row
+                      00008        
+  00000180            00009 INDF0   EQU     0x180
+  00000181            00010 INDF1   EQU     0x181
+  00000182            00011 INDF2   EQU     0x182
+  00000183            00012 HIBYTE  EQU     0x183
+  00000184            00013 FSR0    EQU     0x184
+  00000185            00014 FSR1    EQU     0x185
+  00000186            00015 PCL     EQU     0x186
+  00000187            00016 PFLAG   EQU     0x187
+  00000188            00017 MCR     EQU     0x188
+  00000189            00018 INDF3   EQU     0x189   
+  0000018A            00019 INTE    EQU     0x18A
+  0000018B            00020 INTF    EQU     0x18B
+  0000018C            00021 DRVCR   EQU     0x18C
+  0000018E            00022 KBCR    EQU     0x18E
+                      00023 
+  00000190            00024 IOP0    EQU     0x190
+  00000191            00025 OEP0    EQU     0x191
+  00000192            00026 PUP0    EQU     0x192
+  00000193            00027 PDP0    EQU     0x193
+  00000194            00028 IOP1    EQU     0x194
+  00000195            00029 OEP1    EQU     0x195
+  00000196            00030 PUP1    EQU     0x196
+  00000197            00031 PDP1    EQU     0x197
+                      00032 
+  00000198            00033 T0CR    EQU     0x198
+  00000199            00034 T0CNT   EQU     0x199
+  0000019A            00035 T0LOAD  EQU     0x19A
+  0000019B            00036 T0DATA  EQU     0x19B
+  0000019C            00037 T1CR    EQU     0x19C
+  0000019D            00038 T1CNT   EQU     0x19D
+  0000019E            00039 T1LOAD  EQU     0x19E
+  0000019F            00040 T1DATA  EQU     0x19F
+                      00041 
+  000001A0            00042 T2CR    EQU     0x1A0
+  000001A1            00043 T2CNT   EQU     0x1A1
+  000001A2            00044 T2LOAD  EQU     0x1A2
+  000001A3            00045 T2DATA  EQU     0x1A3
+  000001A4            00046 T3CR    EQU     0x1A4
+  000001A5            00047 T3CNT   EQU     0x1A5
+  000001A6            00048 T3LOAD  EQU     0x1A6
+                      00049 
+  000001A8            00050 PWM0DE  EQU     0x1A8
+  000001A9            00051 PWM1DE  EQU     0x1A9
+  000001AA            00052 PWM2DE  EQU     0x1AA
+  000001AC            00053 PWMCR0  EQU     0x1AC
+  000001AD            00054 PWMCR1  EQU     0x1AD
+  000001AE            00055 OSCM    EQU     0x1AE
+  000001AF            00056 LVDCR   EQU     0x1AF
+                      00057 
+  000001B0            00058 ADCR0   EQU     0x1B0
+  000001B1            00059 ADCR1   EQU     0x1B1
+  000001B2            00060 ADCR2   EQU     0x1B2
+                      00061 
+  000001B4            00062 ADRH    EQU     0x1B4
+  000001B5            00063 ADRL    EQU     0x1B5
+  000001B6            00064 ANSEL0  EQU     0x1B6
+  000001B7            00065 ANSEL1  EQU     0x1B7
+                      00066 
+  000001F8            00067 VBGCAL  EQU     0x1F8
+  000001FB            00068 OSCCALH EQU     0x1FB
+  000001FC            00069 OSCCALL EQU     0x1FC
+                      00070 
+                      00071 #define         STATUS          PFLAG
+                      00072 #define         INDF              INDF0
+                      00073 #define         FSR                 FSR0
+                      00074 #define         P0HCON          PUP0
+                      00075 #define         P1HCON          PUP1
+                      00076 #define         INTECON         INTE
+                      00077 #define         INTFLAG   INTF  
+                      00078 
+                      00079 
+                      00080 ;INDF0
+                      00081 #define         INDF07          INDF0,7
+                      00082 #define         INDF06          INDF0,6
+                      00083 #define         INDF05          INDF0,5
+                      00084 #define         INDF04          INDF0,4
+                      00085 #define         INDF03          INDF0,3
+                      00086 #define         INDF02          INDF0,2
+                      00087 #define         INDF01          INDF0,1
+                      00088 #define         INDF00          INDF0,0
+                      00089 
+                      00090 ;INDF1
+                      00091 #define         INDF17          INDF1,7
+                      00092 #define         INDF16          INDF1,6
+                      00093 #define         INDF15          INDF1,5
+                      00094 #define         INDF14          INDF1,4
+                      00095 #define         INDF13          INDF1,3
+                      00096 #define         INDF12          INDF1,2
+                      00097 #define         INDF11          INDF1,1
+                      00098 #define         INDF10          INDF1,0
+                      00099 
+                      00100 ;INDF2
+                      00101 #define         INDF27          INDF2,7
+                      00102 #define         INDF26          INDF2,6
+                      00103 #define         INDF25          INDF2,5
+                      00104 #define         INDF24          INDF2,4
+                      00105 #define         INDF23          INDF2,3
+                      00106 #define         INDF22          INDF2,2
+                      00107 #define         INDF21          INDF2,1
+                      00108 #define         INDF20          INDF2,0
+                      00109 
+                      00110 ;HIBYTE
+                      00111 #define         HIBYTE7         HIBYTE,7
+                      00112 #define         HIBYTE6         HIBYTE,6
+                      00113 #define         HIBYTE5         HIBYTE,5
+                      00114 #define         HIBYTE4         HIBYTE,4
+                      00115 #define         HIBYTE3         HIBYTE,3
+                      00116 #define         HIBYTE2         HIBYTE,2
+                      00117 #define         HIBYTE1         HIBYTE,1
+                      00118 #define         HIBYTE0         HIBYTE,0
+                      00119 
+                      00120 ;FSR0
+                      00121 #define         FSR07           FSR0,7
+                      00122 #define         FSR06           FSR0,6
+                      00123 #define         FSR05           FSR0,5
+                      00124 #define         FSR04           FSR0,4
+                      00125 #define         FSR03           FSR0,3
+                      00126 #define         FSR02           FSR0,2
+                      00127 #define         FSR01           FSR0,1
+                      00128 #define         FSR00           FSR0,0
+                      00129 
+                      00130 ;FSR1
+                      00131 #define         FSR17           FSR1,7
+                      00132 #define         FSR16           FSR1,6
+                      00133 #define         FSR15           FSR1,5
+                      00134 #define         FSR14           FSR1,4
+                      00135 #define         FSR13           FSR1,3
+                      00136 #define         FSR12           FSR1,2
+                      00137 #define         FSR11           FSR1,1
+                      00138 #define         FSR10           FSR1,0
+                      00139 
+                      00140 ;PCL
+                      00141 #define         PC7             PCL,7
+                      00142 #define         PC6             PCL,6
+                      00143 #define         PC5             PCL,5
+                      00144 #define         PC4             PCL,4
+                      00145 #define         PC3             PCL,3
+                      00146 #define         PC2             PCL,2
+                      00147 #define         PC1             PCL,1
+                      00148 #define         PC0             PCL,0
+                      00149 
+                      00150 ;pflag bit 
+                      00151 #define         Z               PFLAG,2
+                      00152 #define         DC              PFLAG,1
+                      00153 #define         C               PFLAG,0
+                      00154 
+                      00155 ;MCR 
+                      00156 #define         GIE             MCR,7
+                      00157 #define         T0              MCR,5
+                      00158 #define         PD              MCR,4
+                      00159 #define         MINT11          MCR,3
+                      00160 #define         MINT10          MCR,2
+                      00161 #define         MINT01          MCR,1
+                      00162 #define         MINT00          MCR,0
+                      00163 
+                      00164 ;INDF3
+                      00165 #define         INDF37          INDF3,7
+                      00166 #define         INDF36          INDF3,6
+                      00167 #define         INDF35          INDF3,5
+                      00168 #define         INDF34          INDF3,4
+                      00169 #define         INDF33          INDF3,3
+                      00170 #define         INDF32          INDF3,2
+                      00171 #define         INDF31          INDF3,1
+                      00172 #define         INDF30          INDF3,0
+                      00173 
+                      00174 ;INTE
+                      00175 #define         T3IE    INTE,7
+                      00176 #define         ADIE    INTE,6
+                      00177 #define         T2IE    INTE,5
+                      00178 #define         KBIE    INTE,4
+                      00179 #define         INT1IE  INTE,3
+                      00180 #define         INT0IE  INTE,2
+                      00181 #define         T1IE    INTE,1
+                      00182 #define         T0IE    INTE,0
+                      00183 
+                      00184 ;INTF
+                      00185 #define         T3IF    INTFLAG,7
+                      00186 #define         ADIF    INTFLAG,6 
+                      00187 #define         T2IF    INTFLAG,5
+                      00188 #define         KBIF    INTFLAG,4
+                      00189 #define         INT1IF  INTFLAG,3
+                      00190 #define         INT0IF  INTFLAG,2
+                      00191 #define         T1IF    INTFLAG,1
+                      00192 #define         T0IF    INTFLAG,0
+                      00193 
+                      00194 ;DRVCR
+                      00195 #define         DRVS    DRVCR,7
+                      00196 #define         LDRVS   DRVCR,6 
+                      00197 #define         PDRVS   DRVCR,5
+                      00198 #define         PDRVS0  DRVCR,4
+                      00199 #define         PDLYS1  DRVCR,3
+                      00200 #define         PDLYS0  DRVCR,2
+                      00201 #define         PSPDS1  DRVCR,1
+                      00202 #define         PSPDS0  DRVCR,0
+                      00203 
+                      00204 ;KBCR
+                      00205 #define         KBCR6   KBCR,6 
+                      00206 #define         KBCR5   KBCR,5
+                      00207 #define         KBCR4   KBCR,4
+                      00208 #define         KBCR3   KBCR,3
+                      00209 #define         KBCR2   KBCR,2
+                      00210 #define         KBCR1   KBCR,1
+                      00211 #define         KBCR0   KBCR,0
+                      00212 
+                      00213 ;IOP0
+                      00214 #define         P05D    IOP0,5
+                      00215 #define         P04D    IOP0,4
+                      00216 #define         P03D    IOP0,3
+                      00217 #define         P02D    IOP0,2
+                      00218 #define         P01D    IOP0,1
+                      00219 #define         P00D    IOP0,0
+                      00220 
+                      00221 ;OEP0
+                      00222 #define         P05OE    OEP0,5
+                      00223 #define         P04OE    OEP0,4
+                      00224 #define         P03OE    OEP0,3
+                      00225 #define         P02OE    OEP0,2
+                      00226 #define         P01OE    OEP0,1
+                      00227 #define         P00OE    OEP0,0
+                      00228 
+                      00229 ;PUP0
+                      00230 #define         P05PU    PUP0,5
+                      00231 #define         P04PU    PUP0,4
+                      00232 #define         P03PU    PUP0,3
+                      00233 #define         P02PU    PUP0,2
+                      00234 #define         P01PU    PUP0,1
+                      00235 #define         P00PU    PUP0,0
+                      00236 
+                      00237 ;PDP0
+                      00238 #define         P05PD    PDP0,5
+                      00239 #define         P04PD    PDP0,4
+                      00240 #define         P03PD    PDP0,3
+                      00241 #define         P02PD    PDP0,2
+                      00242 #define         P01PD    PDP0,1
+                      00243 #define         P00PD    PDP0,0
+                      00244 
+                      00245 ;IOP1
+                      00246 #define         P17D    IOP1,7
+                      00247 #define         P16D    IOP1,6
+                      00248 #define         P15D    IOP1,5
+                      00249 #define         P14D    IOP1,4
+                      00250 #define         P13D    IOP1,3
+                      00251 #define         P12D    IOP1,2
+                      00252 #define         P11D    IOP1,1
+                      00253 #define         P10D    IOP1,0
+                      00254 
+                      00255 ;OEP1
+                      00256 #define         P17OE    OEP1,7
+                      00257 #define         P16OE    OEP1,6
+                      00258 #define         P15OE    OEP1,5
+                      00259 #define         P14OE    OEP1,4
+                      00260 #define         P13OE    OEP1,3
+                      00261 #define         P12OE    OEP1,2
+                      00262 #define         P11OE    OEP1,1
+                      00263 #define         P10OE    OEP1,0
+                      00264 
+                      00265 ;PUP1
+                      00266 #define         P17PU    PUP1,7
+                      00267 #define         P16PU    PUP1,6
+                      00268 #define         P15PU    PUP1,5
+                      00269 #define         P14PU    PUP1,4
+                      00270 #define         P13PU    PUP1,3
+                      00271 #define         P12PU    PUP1,2
+                      00272 #define         P11PU    PUP1,1
+                      00273 #define         P10PU    PUP1,0
+                      00274 
+                      00275 ;PDP1
+                      00276 #define         P17PD    PDP1,7
+                      00277 #define         P16PD    PDP1,6
+                      00278 #define         P15PD    PDP1,5
+                      00279 #define         P14PD    PDP1,4
+                      00280 #define         P13PD    PDP1,3
+                      00281 #define         P12PD    PDP1,2
+                      00282 #define         P11PD    PDP1,1
+                      00283 #define         P10PD    PDP1,0
+                      00284 
+                      00285 ;T0CR
+                      00286 #define         TC0EN           T0CR,7
+                      00287 #define         PWM0OE          T0CR,6
+                      00288 #define         BUZ0OE          T0CR,5
+                      00289 #define         T0PS1           T0CR,4
+                      00290 #define         T0PS0           T0CR,3
+                      00291 #define         T0PR2           T0CR,2
+                      00292 #define         T0PR1           T0CR,1
+                      00293 #define         T0PR0           T0CR,0
+                      00294 
+                      00295 ;T0CNT
+                      00296 #define         T0C7    T0CNT,7
+                      00297 #define         T0C6    T0CNT,6
+                      00298 #define         T0C5    T0CNT,5
+                      00299 #define         T0C4    T0CNT,4
+                      00300 #define         T0C3    T0CNT,3
+                      00301 #define         T0C2    T0CNT,2
+                      00302 #define         T0C1    T0CNT,1
+                      00303 #define         T0C0    T0CNT,0
+                      00304 
+                      00305 ;T0LOAD
+                      00306 #define         T0LOAD7    T0LOAD,7
+                      00307 #define         T0LOAD6    T0LOAD,6
+                      00308 #define         T0LOAD5    T0LOAD,5
+                      00309 #define         T0LOAD4    T0LOAD,4
+                      00310 #define         T0LOAD3    T0LOAD,3
+                      00311 #define         T0LOAD2    T0LOAD,2
+                      00312 #define         T0LOAD1    T0LOAD,1
+                      00313 #define         T0LOAD0    T0LOAD,0
+                      00314 
+                      00315 ;T0DATA
+                      00316 #define         T0DATA7    T0DATA,7
+                      00317 #define         T0DATA6    T0DATA,6
+                      00318 #define         T0DATA5    T0DATA,5
+                      00319 #define         T0DATA4    T0DATA,4
+                      00320 #define         T0DATA3    T0DATA,3
+                      00321 #define         T0DATA2    T0DATA,2
+                      00322 #define         T0DATA1    T0DATA,1
+                      00323 #define         T0DATA0    T0DATA,0
+                      00324 
+                      00325 ;T1CR
+                      00326 #define         TC1EN           T1CR,7
+                      00327 #define         PWM1OE          T1CR,6
+                      00328 #define         BUZ1OE          T1CR,5
+                      00329 #define         T1PS1           T1CR,4
+                      00330 #define         T1PS0           T1CR,3
+                      00331 #define         T1PR2           T1CR,2
+                      00332 #define         T1PR1           T1CR,1
+                      00333 #define         T1PR0           T1CR,0
+                      00334 
+                      00335 ;T1CNT
+                      00336 #define         T1C7    T1CNT,7
+                      00337 #define         T1C6    T1CNT,6
+                      00338 #define         T1C5    T1CNT,5
+                      00339 #define         T1C4    T1CNT,4
+                      00340 #define         T1C3    T1CNT,3
+                      00341 #define         T1C2    T1CNT,2
+                      00342 #define         T1C1    T1CNT,1
+                      00343 #define         T1C0    T1CNT,0
+                      00344 
+                      00345 ;T1LOAD
+                      00346 #define         T1LOAD7    T1LOAD,7
+                      00347 #define         T1LOAD6    T1LOAD,6
+                      00348 #define         T1LOAD5    T1LOAD,5
+                      00349 #define         T1LOAD4    T1LOAD,4
+                      00350 #define         T1LOAD3    T1LOAD,3
+                      00351 #define         T1LOAD2    T1LOAD,2
+                      00352 #define         T1LOAD1    T1LOAD,1
+                      00353 #define         T1LOAD0    T1LOAD,0
+                      00354 
+                      00355 ;T1DATA
+                      00356 #define         T1DATA7    T1DATA,7
+                      00357 #define         T1DATA6    T1DATA,6
+                      00358 #define         T1DATA5    T1DATA,5
+                      00359 #define         T1DATA4    T1DATA,4
+                      00360 #define         T1DATA3    T1DATA,3
+                      00361 #define         T1DATA2    T1DATA,2
+                      00362 #define         T1DATA1    T1DATA,1
+                      00363 #define         T1DATA0    T1DATA,0
+                      00364 
+                      00365 ;T2CR
+                      00366 #define         TC2EN           T2CR,7
+                      00367 #define         PWM2OE          T2CR,6
+                      00368 #define         BUZ2OE          T2CR,5
+                      00369 #define         T2PS1           T2CR,4
+                      00370 #define         T2PS0           T2CR,3
+                      00371 #define         T2PR2           T2CR,2
+                      00372 #define         T2PR1           T2CR,1
+                      00373 #define         T2PR0           T2CR,0
+                      00374 
+                      00375 ;T2CNT
+                      00376 #define         T2C7    T2CNT,7
+                      00377 #define         T2C6    T2CNT,6
+                      00378 #define         T2C5    T2CNT,5
+                      00379 #define         T2C4    T2CNT,4
+                      00380 #define         T2C3    T2CNT,3
+                      00381 #define         T2C2    T2CNT,2
+                      00382 #define         T2C1    T2CNT,1
+                      00383 #define         T2C0    T2CNT,0
+                      00384 
+                      00385 ;T2LOAD
+                      00386 #define         T2LOAD7    T2LOAD,7
+                      00387 #define         T2LOAD6    T2LOAD,6
+                      00388 #define         T2LOAD5    T2LOAD,5
+                      00389 #define         T2LOAD4    T2LOAD,4
+                      00390 #define         T2LOAD3    T2LOAD,3
+                      00391 #define         T2LOAD2    T2LOAD,2
+                      00392 #define         T2LOAD1    T2LOAD,1
+                      00393 #define         T2LOAD0    T2LOAD,0
+                      00394 
+                      00395 ;T2DATA
+                      00396 #define         T2DATA7    T2DATA,7
+                      00397 #define         T2DATA6    T2DATA,6
+                      00398 #define         T2DATA5    T2DATA,5
+                      00399 #define         T2DATA4    T2DATA,4
+                      00400 #define         T2DATA3    T2DATA,3
+                      00401 #define         T2DATA2    T2DATA,2
+                      00402 #define         T2DATA1    T2DATA,1
+                      00403 #define         T2DATA0    T2DATA,0
+                      00404 
+                      00405 ;T3CR
+                      00406 #define         TC3EN           T3CR,7
+                      00407 #define         T3PS1           T3CR,4
+                      00408 #define         T3PS0           T3CR,3
+                      00409 #define         T3PR2           T3CR,2
+                      00410 #define         T3PR1           T3CR,1
+                      00411 #define         T3PR0           T3CR,0
+                      00412 
+                      00413 ;T3CNT
+                      00414 #define         T3C7    T3CNT,7
+                      00415 #define         T3C6    T3CNT,6
+                      00416 #define         T3C5    T3CNT,5
+                      00417 #define         T3C4    T3CNT,4
+                      00418 #define         T3C3    T3CNT,3
+                      00419 #define         T3C2    T3CNT,2
+                      00420 #define         T3C1    T3CNT,1
+                      00421 #define         T3C0    T3CNT,0
+                      00422 
+                      00423 ;T3LOAD
+                      00424 #define         T3LOAD7    T3LOAD,7
+                      00425 #define         T3LOAD6    T3LOAD,6
+                      00426 #define         T3LOAD5    T3LOAD,5
+                      00427 #define         T3LOAD4    T3LOAD,4
+                      00428 #define         T3LOAD3    T3LOAD,3
+                      00429 #define         T3LOAD2    T3LOAD,2
+                      00430 #define         T3LOAD1    T3LOAD,1
+                      00431 #define         T3LOAD0    T3LOAD,0
+                      00432 
+                      00433 ;PWM0DE
+                      00434 #define         PWM0DE2    PWM0DE,2
+                      00435 #define         PWM0DE1    PWM0DE,1
+                      00436 #define         PWM0DE0    PWM0DE,0
+                      00437 
+                      00438 ;PWM1DE
+                      00439 #define         PWM1DE2    PWM1DE,2
+                      00440 #define         PWM1DE1    PWM1DE,1
+                      00441 #define         PWM1DE0    PWM1DE,0
+                      00442 
+                      00443 ;PWM2DE
+                      00444 #define         PWM2DE2    PWM2DE,2
+                      00445 #define         PWM2DE1    PWM2DE,1
+                      00446 #define         PWM2DE0    PWM2DE,0
+                      00447 
+                      00448 ;PWMCR0
+                      00449 #define         FPWMEN     PWMCR0,7
+                      00450 #define         PWM2INV    PWMCR0,6
+                      00451 #define         PWM1INV    PWMCR0,5
+                      00452 #define         PWM0INV    PWMCR0,4
+                      00453 #define         FPWMR1     PWMCR0,3
+                      00454 #define         FPWMR0     PWMCR0,2
+                      00455 #define         FPWMF1     PWMCR0,1
+                      00456 #define         FPWMF0     PWMCR0,0
+                      00457 
+                      00458 ;PWMCR1
+                      00459 #define         TMRCKS1    PWMCR1,4
+                      00460 #define         TMRCKS0    PWMCR1,3
+                      00461 #define         PMODE2     PWMCR1,2
+                      00462 #define         PMODE1     PWMCR1,1
+                      00463 #define         PMODE0     PWMCR1,0
+                      00464 
+                      00465 ;OSCM
+                      00466 #define         STBL    OSCM,5
+                      00467 #define         STBH    OSCM,4
+                      00468 #define         CLKS    OSCM,2
+                      00469 #define         LFEN    OSCM,1
+                      00470 #define         HFEN    OSCM,0          
+                      00471 
+                      00472 ;LVDCR
+                      00473 #define         LVDEN    LVDCR,7
+                      00474 #define         LVDS3    LVDCR,6
+                      00475 #define         LVDS2    LVDCR,5
+                      00476 #define         LVDS1    LVDCR,4
+                      00477 #define         LVDS0    LVDCR,3
+                      00478 #define         LVDF     LVDCR,0
+                      00479 
+                      00480 ;ADCR0
+                      00481 #define         ADCHS3    ADCR0,7
+                      00482 #define         ADCHS2    ADCR0,6
+                      00483 #define         ADCHS1    ADCR0,5
+                      00484 #define         ADCHS0    ADCR0,4
+                      00485 #define         ADLEN     ADCR0,3
+                      00486 #define         ADEOC     ADCR0,1
+                      00487 #define         ADON      ADCR0,0
+                      00488 
+                      00489 ;ADCR1
+                      00490 #define         ADCKS2    ADCR1,7
+                      00491 #define         ADCKS1    ADCR1,6
+                      00492 #define         ADCKS0    ADCR1,5
+                      00493 #define         ADTST     ADCR1,4
+                      00494 #define         RESS0     ADCR1,3
+                      00495 #define         VRS2      ADCR1,2
+                      00496 #define         VRS1      ADCR1,1
+                      00497 #define         VRS0      ADCR1,0
+                      00498 
+                      00499 ;ADCR2
+                      00500 #define         ADSMP3    ADCR2,3
+                      00501 #define         ADSMP2    ADCR2,2
+                      00502 #define         ADSMP1    ADCR2,1
+                      00503 #define         ADSMP0    ADCR2,0
+                      00504 
+                      00505 ;ADRH
+                      00506 #define         ADR11     ADRH,7
+                      00507 #define         ADR10     ADRH,6
+                      00508 #define         ADR9      ADRH,5
+                      00509 #define         ADR8      ADRH,4
+                      00510 #define         ADR7      ADRH,3
+                      00511 #define         ADR6      ADRH,2
+                      00512 #define         ADR5      ADRH,1
+                      00513 #define         ADR4      ADRH,0
+                      00514 
+                      00515 ;ADRL
+                      00516 #define         ADR3      ADRL,3
+                      00517 #define         ADR2      ADRL,2
+                      00518 #define         ADR1      ADRL,1
+                      00519 #define         ADR0      ADRL,0
+                      00520 
+                      00521 ;ANSEL0
+                      00522 #define         P12ANS    ANSEL0,7
+                      00523 #define         P11ANS    ANSEL0,6
+                      00524 #define         P05ANS    ANSEL0,5
+                      00525 #define         P04ANS    ANSEL0,4
+                      00526 #define         P03ANS    ANSEL0,3
+                      00527 #define         P02ANS    ANSEL0,2
+                      00528 #define         P01ANS    ANSEL0,1
+                      00529 #define         P00ANS    ANSEL0,0
+                      00530 
+                      00531 ;ANSEL1
+                      00532 #define         P15ANS    ANSEL1,1
+                      00533 #define         P14ANS    ANSEL1,0
+                      00534 
+                      00535 ;VBGCAL
+                      00536 #define         VBGCAL7    VBGCAL,7
+                      00537 #define         VBGCAL6    VBGCAL,6
+                      00538 #define         VBGCAL5    VBGCAL,5
+                      00539 #define         VBGCAL4    VBGCAL,4
+                      00540 #define         VBGCAL3    VBGCAL,3
+                      00541 #define         VBGCAL2    VBGCAL,2
+                      00542 #define         VBGCAL1    VBGCAL,1
+                      00543 #define         VBGCAL0    VBGCAL,0
+                      00544 
+                      00545 ;OSCCALL
+                      00546 #define         OSCCAL7    OSCCALL,7
+                      00547 #define         OSCCAL6    OSCCALL,6
+                      00548 #define         OSCCAL5    OSCCALL,5
+                      00549 #define         OSCCAL4    OSCCALL,4
+                      00550 #define         OSCCAL3    OSCCALL,3
+                      00551 #define         OSCCAL2    OSCCALL,2
+                      00552 #define         OSCCAL1    OSCCALL,1
+                      00553 #define         OSCCAL0    OSCCALL,0
+                      00554 
+                      00555 ;OSCCALH
+                      00556 #define         OSCCAL10   OSCCALH,2
+                      00557 #define         OSCCAL9    OSCCALH,1
+                      00558 #define         OSCCAL8    OSCCALH,0
+                      00017 
+                      00018 
+                      00019 ;---------------------------- I/O define -----------------------------
+                      00020 ;IO-pin define
+  00000007            00021 GPR   EQU   0x07
+                      00022 #define SDA28            IOP0,4
+                      00023 #define SCL28            IOP1,1
+                      00024 #define GPIO12_MCU_EN    IOP1,3
+                      00025 #define SENSOR_SDA       IOP1,5   ;sda和scl  sensor i2c interface
+                      00026 #define SENSOR_SCL       IOP1,6
+                      00027 ;-------------------------constant define -------------------------
+                      00028 ;Constant
+                      00029 ;--------------------------variable define -------------------------
+                      00030 ;Definition of variable
+                      00031 
+                      00032 cblock     0x10
+                      00033                   
+                      00034         acc_temp             ;存放ACC的值
+                      00035         status_temp          ;存放 STATES的值 
+                      00036         key_count1    
+                      00037     time_base_1ms        ;用于时间的设置
+                      00038     time_base_30ms
+                      00039         time_base_100ms
+                      00040     time_base_10ms                                                      
+                      00041         KeyFlag              ;按键标志位寄存器                        
+                      00042         address              ;从机器件地址
+                      00043         write_value          ;写到24C02里的数值
+                      00044         read_value           ;从24C02读回的数值
+                      00045         responsnum           ;应答等待时长
+                      00046         data                 ;数据缓存区（数据的传送）
+                      00047         temp                 ;数据暂存区（数据的保护）
+                      00048         w8num                ;写8位（一个字节）的循环次数
+                      00049         r8num                ;读8位（一个字节）的循环次数
+                      00050         read_temp            ;读回的数值的暂存
+                      00051         delay_num            ;延时循环次数
+                      00052         read_back            ;读回来的值，可以在“观察窗”中看此值                                                                                               
+                      00053 
+                      00054         Array:124
+                      00055         _status
+                      00056         Xout_M
+                      00057         Xout_L
+                      00058         Yout_M
+                      00059         Yout_L
+                      00060         ArrayCnt
+                      00061         R1
+                      00062         R2
+                      00063         R3
+                      00064         R7
+                      00065         R8
+                      00066         R9
+                      00067         RA
+                      00068         RB
+                      00069         RC
+                      00070         RD
+                      00071         RE
+                      00072         RF
+                      00073   endc
+                      00074 
+                      00075 ;-------------------------KeyFlag  define -------------------------
+                      00076 ;Flag bit
+                      00077 
+                      00078 #define F_tim_20ms    KeyFlag,0
+                      00079 #define F_tim_500ms   KeyFlag,1
+                      00080 
+                      00081 ;++++++++++++++++++++++++
+                      00082 ;ROM区
+                      00083 ;++++++++++++++++++++++++
+                      00084 
+                      00085         ORG             0x3ff 
+03FF   DF88           00086     bclr        GIE
+                      00087         ORG             0x00
+0000   A000           00088         goto    START
+                      00089 
+                      00090 ;/************************************************
+                      00091 ;  * @brief          IRQ
+                      00092 ;  * @param      
+                      00093 ;  * @retval
+                      00094 ;  ***********************************************/
+                      00095         org             0x08      
+                      00096                    
+0008                  00097 InterruptVector:
+                      00098 
+0008   5610           00099     movra   acc_temp                                       
+0009   4587           00100     swapar  STATUS               
+000A   5611           00101     movra   status_temp                                     
+                      00102             
+000B                  00103 TIM0_IRQ: 
+                      00104                                                                                                                                            
+000B   E18B           00105     jbset   T0IF                          
+000C   A000           00106     goto    ExitInterrupt
+000D   D18B           00107         bclr    T0IF 
+                      00108                                                                                 
+000E                  00109 ExitInterrupt:
+                      00110 
+000E   4411           00111     swapar  status_temp                               
+000F   5787           00112     movra   STATUS                                       
+0010   4610           00113     swapr   acc_temp
+0011   4410           00114     swapar  acc_temp
+0012   5810           00115     movar   acc_temp
+0013   000D           00116     retie
+                      00117 
+0014                  00118 START:   
+0014   DF88           00119         bclr    GIE
+0015   8000           00120     call    IOPortInit
+0016   8000           00121     call    RamInit
+0017   8000           00122     call    SysInit
+0018   76A4           00123         clrr    ArrayCnt 
+0019   CF88           00124     bset    GIE
+                      00125 
+001A                  00126 MAIN:            
+001A   8000           00127     call    WriteValue
+001B   0000           00128         nop  
+001C   8000           00129         call    ReadValue 
+001D   8000           00130         call    DataStorage                                                           
+001E   A000           00131     goto    MAIN     
+                      00132             
+001F                  00133 ReadValue:
+001F   DF88           00134     bclr    GIE
+0020   8000           00135     call    read_add
+0021   CF88           00136     bset    GIE
+0022   000C           00137     return
+                      00138 
+0023                  00139 DataStorage:
+                      00140 
+0023   3C0A           00141         movai   0x0a ;125
+0024   48A4           00142         rsubar  ArrayCnt
+0025   F187           00143         jbclr   C
+0026   000C           00144         return
+0027   58A4           00145         movar   ArrayCnt
+0028   3F23           00146         addai   (Array+0)
+0029   56A5           00147         movra   R1
+002A   3C00           00148         movai   high(Array+0)
+002B   F187           00149         jbclr   C
+002C   3F01           00150         addai   0x01
+002D   56A6           00151         movra   R2
+002E   58A5           00152         movar   R1
+002F   5784           00153         movra   FSR0
+                      00154         
+0030   3C00           00155         movai   0
+0031   40A7           00156         xorar   R3
+0032   F587           00157         jbclr   Z
+0033   A000           00158         goto    Data_0
+0034   3C01           00159         movai   1
+0035   40A7           00160         xorar   R3
+0036   F587           00161         jbclr   Z
+0037   A000           00162         goto    Data_1
+0038   3C02           00163         movai   2
+0039   40A7           00164         xorar   R3
+003A   F587           00165         jbclr   Z
+003B   A000           00166         goto    Data_2
+003C   3C03           00167         movai   3
+003D   40A7           00168         xorar   R3
+003E   F587           00169         jbclr   Z
+003F   A000           00170         goto    Data_3
+0040   3C04           00171         movai   4
+0041   40A7           00172         xorar   R3
+0042   F587           00173         jbclr   Z
+0043   A000           00174         goto    Data_4
+0044   000C           00175         return
+                      00176 
+0045                  00177 Data_0:
+0045   589F           00178         movar   _status
+0046   5780           00179         movra   INDF0
+0047   66A4           00180         incr    ArrayCnt
+0048   66A7           00181         incr    R3
+0049   A000           00182         goto    DataStorage     
+                      00183 
+004A                  00184 Data_1:
+                      00185    ;    movar   Xout_M
+004A   3C01           00186         movai   1
+004B   5780           00187         movra   INDF0
+004C   66A4           00188         incr    ArrayCnt
+004D   66A7           00189         incr    R3
+004E   A000           00190         goto    DataStorage
+                      00191 
+004F                  00192 Data_2:
+                      00193         ;movar          Xout_L
+004F   3C02           00194         movai   2
+0050   5780           00195         movra   INDF0
+0051   66A4           00196         incr    ArrayCnt
+0052   66A7           00197         incr    R3
+0053   A000           00198         goto    DataStorage
+                      00199 
+0054                  00200 Data_3:
+                      00201         ;movar          Yout_M
+0054   3C03           00202         movai   3
+0055   5780           00203         movra   INDF0
+0056   66A4           00204         incr    ArrayCnt
+0057   66A7           00205         incr    R3
+0058   A000           00206         goto    DataStorage 
+                      00207 
+0059                  00208 Data_4:
+                      00209         ;movar          Yout_L
+0059   3C04           00210         movai   4
+005A   5780           00211         movra   INDF0
+005B   66A4           00212         incr    ArrayCnt
+005C   76A7           00213         clrr    R3
+005D   000C           00214         return 
+                      00215 
+                      00216 
+                      00217 ;/************************************************
+                      00218 ;  * @brief   IOPortInit
+                      00219 ;  * @param      
+                      00220 ;  * @retval
+                      00221 ;  ***********************************************/
+005E                  00222 IOPortInit:
+                      00223 
+005E   7791           00224         clrr    OEP0      
+005F   3CF7           00225     movai   0xf7          ;
+0060   5795           00226     movra   OEP1          ;P1,3设置为输入，其余P1口全为输出
+0061   3C00           00227     movai   0x00
+0062   5796           00228     movra   PUP1
+0063   3C00           00229     movai   0x00          
+0064   57B6           00230     movra   ANSEL0
+0065   57B7           00231         movra   ANSEL1                               
+0066   000C           00232     return
+                      00233                    
+                      00234 ;/************************************************
+                      00235 ;  * @brief   RamInit
+                      00236 ;  * @param      
+                      00237 ;  * @retval
+                      00238 ;  ***********************************************/ 
+                      00239   
+0067                  00240 RamInit:
+0067   7785           00241         clrr    FSR1           
+0068   3CFF           00242         movai   0xff
+0069   5784           00243         movra   FSR0
+006A                  00244 clrram_loop:
+006A   7780           00245         clrr    INDF
+006B   6B84           00246         djzr    FSR0 
+006C   A000           00247         goto    clrram_loop 
+006D   000C           00248         return
+                      00249        
+                      00250 ;/************************************************
+                      00251 ;  * @brief   SysInit
+                      00252 ;  * @param      
+                      00253 ;  * @retval
+                      00254 ;  ***********************************************/  
+                      00255 
+006E                  00256 SysInit:
+                      00257 
+006E   3C02           00258     movai       0x02        ;预分频给T0，分频率为8   
+006F   5798           00259     movra   T0CR        ;250*2T/4M*8=1ms
+0070   3C06           00260     movai   6
+0071   5799           00261     movra   T0CNT 
+0072   C18A           00262     bset    T0IE 
+0073   3C04           00263     movai   0x04
+0074   000C           00264     return                        
+                      00265 
+                      00266 ;/************************************************
+                      00267 ;  * @brief    WriteValue
+                      00268 ;  * @param      
+                      00269 ;  * @retval
+                      00270 ;  ***********************************************/
+                      00271     
+0075                  00272 WriteValue:
+0075   DF88           00273         bclr    GIE
+0076   8000           00274         call    initSig
+0077   3C0D           00275         movai   0x0d
+0078   5618           00276         movra   address
+0079   3C00           00277         movai   0x00
+007A   5619           00278         movra   write_value         
+007B   8000           00279         call    write_add
+007C   8000           00280         call    delay1;如果是先写数据，然后再读数据，这个延时一定是需要的，而且是ms级延时
+007D   8000           00281         call    delay1
+007E   8000           00282         call    delay1
+007F   CF88           00283         bset    GIE                     
+0080   000C           00284         return 
+                      00285 
+                      00286 ;************************
+                      00287 ;Function Name: 往24C02里面写字节
+                      00288 ;Description: 开始信号之后；先写器件地址+0；再写24C02内存储地址；然后写存储数据；最后写停止信号
+                      00289 ;@register: 
+                      00290 ;@param:          
+                      00291 ;@param:     
+                      00292 ;************************ 
+                      00293 
+0081                  00294 write_add:
+0081   8000           00295     call        startSig
+0082   3CA0           00296     movai   0xa0;1010 0000
+0083   561C           00297     movra   data
+0084   8000           00298     call    write_byte
+0085   8000           00299     call    ackSig
+0086   5818           00300     movar   address
+0087   561C           00301     movra   data
+0088   8000           00302     call    write_byte
+0089   8000           00303     call    ackSig
+008A   5819           00304     movar   write_value
+008B   561C           00305     movra   data
+008C   8000           00306     call    write_byte
+008D   8000           00307     call    ackSig
+008E   8000           00308     call    stopSig
+008F   0000           00309         nop
+0090   000C           00310     return  
+                      00311 
+                      00312 ;************************
+                      00313 ;Function Name: 从24C02里面读字节
+                      00314 ;Description: 开始信号之后；先写器件地址+0；再写24C02内存储地址；然后写开始信号
+                      00315 ;             再写器件地址+1；再读字节；最后写停止信号
+                      00316 ;@register: 
+                      00317 ;@param:          
+                      00318 ;@param:     
+                      00319 ;************************ 
+                      00320 
+0091                  00321 read_add:
+0091   8000           00322     call        startSig
+0092   3C2A           00323     movai   0x2a
+0093   561C           00324     movra   data
+0094   8000           00325     call    write_byte
+0095   8000           00326     call    ackSig
+0096   3C02           00327     movai   0x02
+0097   5618           00328     movra   address
+0098   5818           00329     movar   address
+0099   561C           00330     movra   data                
+009A   8000           00331     call    write_byte
+009B   8000           00332     call    ackSig
+009C   8000           00333     call    startSig
+009D   3C2B           00334     movai   0x2b
+009E   561C           00335     movra   data
+009F   8000           00336     call    write_byte
+00A0   8000           00337     call    ackSig
+                      00338 
+00A1   8000           00339     call    read_byte
+00A2   8000           00340     call    ackSig
+00A3   5820           00341     movar   read_temp
+00A4   569F           00342     movra   _status
+                      00343 
+00A5   8000           00344     call    read_byte
+00A6   8000           00345     call    ackSig
+00A7   5820           00346     movar   read_temp
+00A8   56A0           00347     movra   Xout_M
+                      00348 
+00A9   8000           00349     call    read_byte
+00AA   8000           00350     call    ackSig
+00AB   5820           00351     movar   read_temp
+00AC   56A1           00352     movra   Xout_L
+                      00353 
+00AD   8000           00354     call    read_byte
+00AE   8000           00355     call    ackSig
+00AF   5820           00356     movar   read_temp
+00B0   56A2           00357     movra   Yout_M
+                      00358 
+00B1   8000           00359     call    read_byte
+                      00360     ;call    ackSig
+00B2   5820           00361     movar   read_temp
+00B3   56A3           00362     movra   Yout_L
+                      00363 
+                      00364 ;    call    read_byte
+                      00365 ;    call    ackSig
+                      00366 ;    movar   read_temp
+                      00367 ;    movra   R7
+                      00368 ;
+                      00369 ;    call    read_byte
+                      00370 ;    call    ackSig
+                      00371 ;    movar   read_temp
+                      00372 ;    movra   R8
+                      00373 ;
+                      00374 ;    call    read_byte
+                      00375 ;    call    ackSig
+                      00376 ;    movar   read_temp
+                      00377 ;    movra   R9
+                      00378 ;
+                      00379 ;    call    read_byte
+                      00380 ;    call    ackSig
+                      00381 ;    movar   read_temp
+                      00382 ;    movra   RA
+                      00383 ;
+                      00384 ;    call    read_byte
+                      00385 ;    call    ackSig
+                      00386 ;    movar   read_temp
+                      00387 ;    movra   RB
+                      00388 ;
+                      00389 ;    call    read_byte
+                      00390 ;    call    ackSig
+                      00391 ;    movar   read_temp
+                      00392 ;    movra   RC
+                      00393 ;
+                      00394 ;    call    read_byte
+                      00395 ;    call    ackSig
+                      00396 ;    movar   read_temp
+                      00397 ;    movra   RD
+                      00398 ;
+                      00399 ;    call    read_byte
+                      00400 ;    call    ackSig
+                      00401 ;    movar   read_temp
+                      00402 ;    movra   RE
+                      00403 ;
+                      00404 ;    call    read_byte
+                      00405 ;    ;call    ackSig
+                      00406 ;    movar   read_temp
+                      00407 ;    movra   RF
+                      00408 
+00B4   8000           00409     call    noackSig
+00B5   8000           00410     call    stopSig
+00B6   0000           00411         nop 
+00B7   000C           00412     return                                                          
+                      00413 ;/************************************************
+                      00414 ;  * @brief    initSig
+                      00415 ;  * @param      
+                      00416 ;  * @retval
+                      00417 ;  ***********************************************/ 
+00B8                  00418 initSig:
+00B8   CB94           00419     bset        SENSOR_SDA
+00B9   8000           00420     call    delay
+00BA   CD94           00421     bset    SENSOR_SCL
+00BB   8000           00422     call    delay
+00BC   000C           00423     return 
+                      00424             
+                      00425 ;************************
+                      00426 ;Function Name: startSig
+                      00427 ;Description: 开始信号
+                      00428 ;@register: 
+                      00429 ;@param:          
+                      00430 ;@param:     
+                      00431 ;************************  
+00BD                  00432 startSig:
+00BD   CB94           00433     bset        SENSOR_SDA
+00BE   8000           00434     call    delay
+00BF   CD94           00435     bset    SENSOR_SCL
+00C0   8000           00436     call    delay
+00C1   DB94           00437     bclr    SENSOR_SDA
+00C2   8000           00438     call    delay
+00C3   000C           00439     return
+                      00440             
+                      00441 ;************************
+                      00442 ;Function Name: stopSig
+                      00443 ;Description: 停止信号
+                      00444 ;@register: 
+                      00445 ;@param:          
+                      00446 ;@param:     
+                      00447 ;************************  
+                      00448 
+00C4                  00449 stopSig:
+00C4   DB94           00450     bclr    SENSOR_SDA
+00C5   8000           00451     call    delay
+00C6   CD94           00452     bset    SENSOR_SCL
+00C7   8000           00453     call    delay
+00C8   CB94           00454     bset    SENSOR_SDA
+00C9   8000           00455     call    delay
+00CA   000C           00456     return
+                      00457             
+                      00458 ;************************
+                      00459 ;Function Name: ackSig
+                      00460 ;Description: 停止信号
+                      00461 ;@register: 
+                      00462 ;@param:          
+                      00463 ;@param:     
+                      00464 ;************************
+00CB                  00465 ackSig:
+00CB   DD94           00466     bclr        SENSOR_SCL
+00CC   8000           00467     call    delay
+00CD   DB94           00468     bclr    SENSOR_SDA
+00CE   8000           00469     call    delay
+00CF   CD94           00470     bset    SENSOR_SCL
+00D0   8000           00471     call    delay
+00D1   DD94           00472     bclr    SENSOR_SCL
+00D2   8000           00473     call    delay
+00D3   000C           00474     return
+                      00475 ;************************
+                      00476 ;Function Name: noackSig
+                      00477 ;Description: 停止信号
+                      00478 ;@register: 
+                      00479 ;@param:          
+                      00480 ;@param:     
+                      00481 ;************************
+00D4                  00482 noackSig:
+00D4   DD94           00483     bclr    SENSOR_SCL
+00D5   8000           00484     call    delay
+00D6   CB94           00485     bset    SENSOR_SDA
+00D7   8000           00486     call    delay
+00D8   CD94           00487     bset    SENSOR_SCL
+00D9   8000           00488     call    delay
+00DA   DD94           00489     bclr    SENSOR_SCL
+00DB   8000           00490     call    delay
+00DC   000C           00491     return
+                      00492              
+                      00493 ;************************
+                      00494 ;Function Name: responsSig
+                      00495 ;Description: ;应答信号，如果sda信号为低，直接应答；如果sda信号为高，循环一段时间，应答。
+                      00496 ;@register: 
+                      00497 ;@param:          
+                      00498 ;@param:     
+                      00499 ;************************           
+                      00500 
+00DD                  00501 responsSig:
+00DD   CD94           00502     bset        SENSOR_SCL
+00DE   8000           00503     call    delay
+00DF                  00504 responsCheck:
+00DF   EB94           00505     jbset   SENSOR_SDA
+00E0   A000           00506     goto    responsOK
+00E1   661B           00507     incr    responsnum
+00E2   3CFA           00508     movai   250
+00E3   481B           00509     rsubar  responsnum
+00E4   E187           00510     jbset   C
+00E5   A000           00511     goto    responsCheck
+00E6                  00512 responsOK:
+00E6   761B           00513     clrr    responsnum
+00E7   DD94           00514     bclr    SENSOR_SCL
+00E8   8000           00515     call    delay
+00E9   000C           00516     return
+                      00517             
+                      00518 ;************************
+                      00519 ;Function Name: write_byte
+                      00520 ;Description: 写字节
+                      00521 ;@register: 
+                      00522 ;@param:          
+                      00523 ;@param:     
+                      00524 ;************************  
+                      00525 
+00EA                  00526 write_byte:
+00EA   581C           00527     movar       data
+00EB   561D           00528     movra   temp
+00EC                  00529 w8begin:
+00EC   661E           00530     incr    w8num
+00ED   3C09           00531     movai   9
+00EE   481E           00532     rsubar  w8num
+00EF   F187           00533     jbclr   C
+00F0   A000           00534     goto    w8end
+00F1   DD94           00535     bclr    SENSOR_SCL
+00F2   8000           00536     call    delay
+00F3   521D           00537     rlr     temp
+00F4   F187           00538     jbclr   C
+00F5   A000           00539     goto    $+3
+00F6   DB94           00540     bclr    SENSOR_SDA
+00F7   A000           00541     goto    $+2
+00F8   CB94           00542     bset    SENSOR_SDA
+00F9   8000           00543     call    delay
+00FA   CD94           00544     bset    SENSOR_SCL
+00FB   8000           00545     call    delay
+00FC   A000           00546     goto    w8begin     
+00FD                  00547 w8end:
+00FD   761E           00548     clrr    w8num
+00FE   DD94           00549     bclr    SENSOR_SCL
+00FF   8000           00550     call    delay
+0100   CB94           00551     bset    SENSOR_SDA
+0101   8000           00552     call    delay
+0102   000C           00553     return
+                      00554             
+                      00555 ;************************
+                      00556 ;Function Name: read_byte
+                      00557 ;Description: 读字节需要先将P15（sda）设置成输入，结束之后P15再设置成输出
+                      00558 ;@register: 
+                      00559 ;@param:          
+                      00560 ;@param:     
+                      00561 ;************************  
+                      00562 
+0103                  00563 read_byte:
+0103   3CD7           00564     movai       0xD7;
+0104   5795           00565     movra   OEP1
+                      00566 
+0105   DD94           00567     bclr        SENSOR_SCL
+0106   8000           00568     call    delay
+0107   CB94           00569     bset    SENSOR_SDA
+0108   8000           00570     call    delay
+0109                  00571 r8begin: 
+0109   661F           00572     incr    r8num
+010A   3C09           00573     movai   9
+010B   481F           00574     rsubar  r8num
+010C   F187           00575     jbclr   C
+010D   A000           00576     goto    r8end
+010E   CD94           00577     bset    SENSOR_SCL
+010F   8000           00578     call    delay
+0110   EB94           00579     jbset   SENSOR_SDA
+0111   A000           00580     goto    $+2
+0112   A000           00581     goto    $+3
+0113   D187           00582     bclr    C
+0114   A000           00583     goto    $+2
+0115   C187           00584     bset    C
+0116   5220           00585     rlr     read_temp
+0117   DD94           00586     bclr    SENSOR_SCL
+0118   8000           00587     call    delay
+0119   A000           00588     goto    r8begin
+011A                  00589 r8end:
+011A   761F           00590     clrr    r8num
+                      00591     ;movar   read_temp
+                      00592     ;movra   read_value
+011B   3CF7           00593     movai       0xF7;
+011C   5795           00594     movra   OEP1
+011D   000C           00595     return
+                      00596     
+                      00597 
+                      00598             
+                      00599   
+                      00600 
+                      00601 ;************************
+                      00602 ;Function Name: delay
+                      00603 ;Description: us级延时
+                      00604 ;@register: 
+                      00605 ;@param:          
+                      00606 ;@param:     
+                      00607 ;************************             
+                      00608 
+011E                  00609 delay:
+011E   0000           00610     nop
+011F   0000           00611     nop
+0120   0000           00612     nop
+0121   0000           00613     nop
+0122   0000           00614     nop
+0123   0000           00615     nop
+0124   0000           00616     nop
+0125   0000           00617     nop
+0126   0000           00618     nop
+0127   0000           00619     nop
+0128   0000           00620     nop
+0129   0000           00621     nop
+012A   0000           00622     nop
+012B   0000           00623     NOP
+                      00624     ;nop
+                      00625     ;NOP
+                      00626     ;nop
+012C   0000           00627     nop
+012D   0000           00628     nop
+012E   0000           00629     nop
+012F   000C           00630     return
+                      00631     
+                      00632 ;************************
+                      00633 ;Function Name: delay1
+                      00634 ;Description: ms级延时
+                      00635 ;如果是先写数据，然后再读数据，这个延时一定是需要的，而且是ms级延时
+                      00636 ;这个延时占用CPU资源，可以使用定时器，注意定时中断的开关设置
+                      00637 ;@register: 
+                      00638 ;@param:          
+                      00639 ;@param:     
+                      00640 ;************************     
+                      00641 
+0130                  00642 delay1:
+0130   3CFF           00643     movai       255
+0131   5621           00644     movra   delay_num
+0132                  00645 delay11:
+0132   0000           00646     nop
+0133   0000           00647     nop
+0134   0000           00648     nop
+0135   0000           00649     nop
+0136   0000           00650     nop
+0137   0000           00651     nop
+0138   0000           00652     nop
+0139   0000           00653     nop
+013A   0000           00654     nop
+013B   0000           00655     nop
+013C   0000           00656     nop
+013D   0000           00657     nop
+013E   0000           00658     nop
+013F   0000           00659     nop
+0140   0000           00660     nop
+0141   0000           00661     nop
+0142   0000           00662     nop
+0143   0000           00663     nop
+0144   0000           00664     nop
+0145   0000           00665     nop
+0146   0000           00666     nop
+0147   0000           00667     nop
+0148   0000           00668     nop
+0149   0000           00669     nop
+014A   0000           00670     nop
+014B   0000           00671     nop
+014C   0000           00672     nop
+014D   0000           00673     nop
+014E   0000           00674     nop
+014F   0000           00675     nop
+0150   0000           00676     nop
+0151   0000           00677     nop
+0152   0000           00678     nop
+0153   0000           00679     nop
+0154   0000           00680     nop
+0155   0000           00681     nop
+0156   0000           00682     nop
+0157   0000           00683     nop
+0158   0000           00684     nop
+0159   0000           00685     nop 
+                      00686  
+015A   6A21           00687     djzr        delay_num
+015B   A000           00688     goto    delay11
+015C   000C           00689     return                                
+                      00690                    
+                      00691    en
+gpasm-1.7.0_beta1 (Apr 28 2016)I2C_Sensor.asm     2016-12-7  11:35:18          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+ADCR0                             000001B0
+ADCR1                             000001B1
+ADCR2                             000001B2
+ADRH                              000001B4
+ADRL                              000001B5
+ANSEL0                            000001B6
+ANSEL1                            000001B7
+Array                             00000023
+ArrayCnt                          000000A4
+DRVCR                             0000018C
+DataStorage                       00000023
+Data_0                            00000045
+Data_1                            0000004A
+Data_2                            0000004F
+Data_3                            00000054
+Data_4                            00000059
+ExitInterrupt                     0000000E
+FSR0                              00000184
+FSR1                              00000185
+GPR                               00000007
+HIBYTE                            00000183
+INDF0                             00000180
+INDF1                             00000181
+INDF2                             00000182
+INDF3                             00000189
+INTE                              0000018A
+INTF                              0000018B
+IOP0                              00000190
+IOP1                              00000194
+IOPortInit                        0000005E
+InterruptVector                   00000008
+KBCR                              0000018E
+KeyFlag                           00000017
+LVDCR                             000001AF
+MAIN                              0000001A
+MCR                               00000188
+OEP0                              00000191
+OEP1                              00000195
+OSCCALH                           000001FB
+OSCCALL                           000001FC
+OSCM                              000001AE
+PCL                               00000186
+PDP0                              00000193
+PDP1                              00000197
+PFLAG                             00000187
+PUP0                              00000192
+PUP1                              00000196
+PWM0DE                            000001A8
+PWM1DE                            000001A9
+PWM2DE                            000001AA
+PWMCR0                            000001AC
+PWMCR1                            000001AD
+R1                                000000A5
+R2                                000000A6
+R3                                000000A7
+R7                                000000A8
+R8                                000000A9
+R9                                000000AA
+RA                                000000AB
+RB                                000000AC
+RC                                000000AD
+RD                                000000AE
+RE                                000000AF
+RF                                000000B0
+RamInit                           00000067
+ReadValue                         0000001F
+START                             00000014
+SysInit                           0000006E
+T0CNT                             00000199
+T0CR                              00000198
+T0DATA                            0000019B
+T0LOAD                            0000019A
+T1CNT                             0000019D
+T1CR                              0000019C
+T1DATA                            0000019F
+T1LOAD                            0000019E
+T2CNT                             000001A1
+T2CR                              000001A0
+T2DATA                            000001A3
+T2LOAD                            000001A2
+T3CNT                             000001A5
+T3CR                              000001A4
+T3LOAD                            000001A6
+TIM0_IRQ                          0000000B
+VBGCAL                            000001F8
+WriteValue                        00000075
+Xout_L                            000000A1
+Xout_M                            000000A0
+Yout_L                            000000A3
+Yout_M                            000000A2
+_.org_8_00F5                      000000F5
+_.org_8_00F7                      000000F7
+_.org_8_0111                      00000111
+_.org_8_0112                      00000112
+_.org_8_0114                      00000114
+__32P64                           00000001
+_status                           0000009F
+acc_temp                          00000010
+ackSig                            000000CB
+address                           00000018
+clrram_loop                       0000006A
+data                              0000001C
+delay                             0000011E
+delay1                            00000130
+delay11                           00000132
+delay_num                         00000021
+initSig                           000000B8
+key_count1                        00000012
+noackSig                          000000D4
+r8begin                           00000109
+r8end                             0000011A
+r8num                             0000001F
+read_add                          00000091
+read_back                         00000022
+read_byte                         00000103
+read_temp                         00000020
+read_value                        0000001A
+responsCheck                      000000DF
+responsOK                         000000E6
+responsSig                        000000DD
+responsnum                        0000001B
+startSig                          000000BD
+status_temp                       00000011
+stopSig                           000000C4
+temp                              0000001D
+time_base_100ms                   00000015
+time_base_10ms                    00000016
+time_base_1ms                     00000013
+time_base_30ms                    00000014
+w8begin                           000000EC
+w8end                             000000FD
+w8num                             0000001E
+write_add                         00000081
+write_byte                        000000EA
+write_value                       00000019
+ADCHS0                            ADCR0,4
+ADCHS1                            ADCR0,5
+ADCHS2                            ADCR0,6
+ADCHS3                            ADCR0,7
+ADCKS0                            ADCR1,5
+ADCKS1                            ADCR1,6
+ADCKS2                            ADCR1,7
+ADEOC                             ADCR0,1
+ADIE                              INTE,6
+ADIF                              INTFLAG,6
+ADLEN                             ADCR0,3
+ADON                              ADCR0,0
+ADR0                              ADRL,0
+ADR1                              ADRL,1
+ADR10                             ADRH,6
+ADR11                             ADRH,7
+ADR2                              ADRL,2
+ADR3                              ADRL,3
+ADR4                              ADRH,0
+ADR5                              ADRH,1
+ADR6                              ADRH,2
+ADR7                              ADRH,3
+ADR8                              ADRH,4
+ADR9                              ADRH,5
+ADSMP0                            ADCR2,0
+ADSMP1                            ADCR2,1
+ADSMP2                            ADCR2,2
+ADSMP3                            ADCR2,3
+ADTST                             ADCR1,4
+BUZ0OE                            T0CR,5
+BUZ1OE                            T1CR,5
+BUZ2OE                            T2CR,5
+C                                 PFLAG,0
+CLKS                              OSCM,2
+DC                                PFLAG,1
+DRVS                              DRVCR,7
+FPWMEN                            PWMCR0,7
+FPWMF0                            PWMCR0,0
+FPWMF1                            PWMCR0,1
+FPWMR0                            PWMCR0,2
+FPWMR1                            PWMCR0,3
+FSR                               FSR0
+FSR00                             FSR0,0
+FSR01                             FSR0,1
+FSR02                             FSR0,2
+FSR03                             FSR0,3
+FSR04                             FSR0,4
+FSR05                             FSR0,5
+FSR06                             FSR0,6
+FSR07                             FSR0,7
+FSR10                             FSR1,0
+FSR11                             FSR1,1
+FSR12                             FSR1,2
+FSR13                             FSR1,3
+FSR14                             FSR1,4
+FSR15                             FSR1,5
+FSR16                             FSR1,6
+FSR17                             FSR1,7
+F_tim_20ms                        KeyFlag,0
+F_tim_500ms                       KeyFlag,1
+GIE                               MCR,7
+GPIO12_MCU_EN                     IOP1,3
+HFEN                              OSCM,0
+HIBYTE0                           HIBYTE,0
+HIBYTE1                           HIBYTE,1
+HIBYTE2                           HIBYTE,2
+HIBYTE3                           HIBYTE,3
+HIBYTE4                           HIBYTE,4
+HIBYTE5                           HIBYTE,5
+HIBYTE6                           HIBYTE,6
+HIBYTE7                           HIBYTE,7
+INDF                              INDF0
+INDF00                            INDF0,0
+INDF01                            INDF0,1
+INDF02                            INDF0,2
+INDF03                            INDF0,3
+INDF04                            INDF0,4
+INDF05                            INDF0,5
+INDF06                            INDF0,6
+INDF07                            INDF0,7
+INDF10                            INDF1,0
+INDF11                            INDF1,1
+INDF12                            INDF1,2
+INDF13                            INDF1,3
+INDF14                            INDF1,4
+INDF15                            INDF1,5
+INDF16                            INDF1,6
+INDF17                            INDF1,7
+INDF20                            INDF2,0
+INDF21                            INDF2,1
+INDF22                            INDF2,2
+INDF23                            INDF2,3
+INDF24                            INDF2,4
+INDF25                            INDF2,5
+INDF26                            INDF2,6
+INDF27                            INDF2,7
+INDF30                            INDF3,0
+INDF31                            INDF3,1
+INDF32                            INDF3,2
+INDF33                            INDF3,3
+INDF34                            INDF3,4
+INDF35                            INDF3,5
+INDF36                            INDF3,6
+INDF37                            INDF3,7
+INT0IE                            INTE,2
+INT0IF                            INTFLAG,2
+INT1IE                            INTE,3
+INT1IF                            INTFLAG,3
+INTECON                           INTE
+INTFLAG                           INTF
+KBCR0                             KBCR,0
+KBCR1                             KBCR,1
+KBCR2                             KBCR,2
+KBCR3                             KBCR,3
+KBCR4                             KBCR,4
+KBCR5                             KBCR,5
+KBCR6                             KBCR,6
+KBIE                              INTE,4
+KBIF                              INTFLAG,4
+LDRVS                             DRVCR,6
+LFEN                              OSCM,1
+LVDEN                             LVDCR,7
+LVDF                              LVDCR,0
+LVDS0                             LVDCR,3
+LVDS1                             LVDCR,4
+LVDS2                             LVDCR,5
+LVDS3                             LVDCR,6
+MINT00                            MCR,0
+MINT01                            MCR,1
+MINT10                            MCR,2
+MINT11                            MCR,3
+OSCCAL0                           OSCCALL,0
+OSCCAL1                           OSCCALL,1
+OSCCAL10                          OSCCALH,2
+OSCCAL2                           OSCCALL,2
+OSCCAL3                           OSCCALL,3
+OSCCAL4                           OSCCALL,4
+OSCCAL5                           OSCCALL,5
+OSCCAL6                           OSCCALL,6
+OSCCAL7                           OSCCALL,7
+OSCCAL8                           OSCCALH,0
+OSCCAL9                           OSCCALH,1
+P00ANS                            ANSEL0,0
+P00D                              IOP0,0
+P00OE                             OEP0,0
+P00PD                             PDP0,0
+P00PU                             PUP0,0
+P01ANS                            ANSEL0,1
+P01D                              IOP0,1
+P01OE                             OEP0,1
+P01PD                             PDP0,1
+P01PU                             PUP0,1
+P02ANS                            ANSEL0,2
+P02D                              IOP0,2
+P02OE                             OEP0,2
+P02PD                             PDP0,2
+P02PU                             PUP0,2
+P03ANS                            ANSEL0,3
+P03D                              IOP0,3
+P03OE                             OEP0,3
+P03PD                             PDP0,3
+P03PU                             PUP0,3
+P04ANS                            ANSEL0,4
+P04D                              IOP0,4
+P04OE                             OEP0,4
+P04PD                             PDP0,4
+P04PU                             PUP0,4
+P05ANS                            ANSEL0,5
+P05D                              IOP0,5
+P05OE                             OEP0,5
+P05PD                             PDP0,5
+P05PU                             PUP0,5
+P0HCON                            PUP0
+P10D                              IOP1,0
+P10OE                             OEP1,0
+P10PD                             PDP1,0
+P10PU                             PUP1,0
+P11ANS                            ANSEL0,6
+P11D                              IOP1,1
+P11OE                             OEP1,1
+P11PD                             PDP1,1
+P11PU                             PUP1,1
+P12ANS                            ANSEL0,7
+P12D                              IOP1,2
+P12OE                             OEP1,2
+P12PD                             PDP1,2
+P12PU                             PUP1,2
+P13D                              IOP1,3
+P13OE                             OEP1,3
+P13PD                             PDP1,3
+P13PU                             PUP1,3
+P14ANS                            ANSEL1,0
+P14D                              IOP1,4
+P14OE                             OEP1,4
+P14PD                             PDP1,4
+P14PU                             PUP1,4
+P15ANS                            ANSEL1,1
+P15D                              IOP1,5
+P15OE                             OEP1,5
+P15PD                             PDP1,5
+P15PU                             PUP1,5
+P16D                              IOP1,6
+P16OE                             OEP1,6
+P16PD                             PDP1,6
+P16PU                             PUP1,6
+P17D                              IOP1,7
+P17OE                             OEP1,7
+P17PD                             PDP1,7
+P17PU                             PUP1,7
+P1HCON                            PUP1
+PC0                               PCL,0
+PC1                               PCL,1
+PC2                               PCL,2
+PC3                               PCL,3
+PC4                               PCL,4
+PC5                               PCL,5
+PC6                               PCL,6
+PC7                               PCL,7
+PD                                MCR,4
+PDLYS0                            DRVCR,2
+PDLYS1                            DRVCR,3
+PDRVS                             DRVCR,5
+PDRVS0                            DRVCR,4
+PMODE0                            PWMCR1,0
+PMODE1                            PWMCR1,1
+PMODE2                            PWMCR1,2
+PSPDS0                            DRVCR,0
+PSPDS1                            DRVCR,1
+PWM0DE0                           PWM0DE,0
+PWM0DE1                           PWM0DE,1
+PWM0DE2                           PWM0DE,2
+PWM0INV                           PWMCR0,4
+PWM0OE                            T0CR,6
+PWM1DE0                           PWM1DE,0
+PWM1DE1                           PWM1DE,1
+PWM1DE2                           PWM1DE,2
+PWM1INV                           PWMCR0,5
+PWM1OE                            T1CR,6
+PWM2DE0                           PWM2DE,0
+PWM2DE1                           PWM2DE,1
+PWM2DE2                           PWM2DE,2
+PWM2INV                           PWMCR0,6
+PWM2OE                            T2CR,6
+RESS0                             ADCR1,3
+SCL28                             IOP1,1
+SDA28                             IOP0,4
+SENSOR_SCL                        IOP1,6
+SENSOR_SDA                        IOP1,5
+STATUS                            PFLAG
+STBH                              OSCM,4
+STBL                              OSCM,5
+T0                                MCR,5
+T0C0                              T0CNT,0
+T0C1                              T0CNT,1
+T0C2                              T0CNT,2
+T0C3                              T0CNT,3
+T0C4                              T0CNT,4
+T0C5                              T0CNT,5
+T0C6                              T0CNT,6
+T0C7                              T0CNT,7
+T0DATA0                           T0DATA,0
+T0DATA1                           T0DATA,1
+T0DATA2                           T0DATA,2
+T0DATA3                           T0DATA,3
+T0DATA4                           T0DATA,4
+T0DATA5                           T0DATA,5
+T0DATA6                           T0DATA,6
+T0DATA7                           T0DATA,7
+T0IE                              INTE,0
+T0IF                              INTFLAG,0
+T0LOAD0                           T0LOAD,0
+T0LOAD1                           T0LOAD,1
+T0LOAD2                           T0LOAD,2
+T0LOAD3                           T0LOAD,3
+T0LOAD4                           T0LOAD,4
+T0LOAD5                           T0LOAD,5
+T0LOAD6                           T0LOAD,6
+T0LOAD7                           T0LOAD,7
+T0PR0                             T0CR,0
+T0PR1                             T0CR,1
+T0PR2                             T0CR,2
+T0PS0                             T0CR,3
+T0PS1                             T0CR,4
+T1C0                              T1CNT,0
+T1C1                              T1CNT,1
+T1C2                              T1CNT,2
+T1C3                              T1CNT,3
+T1C4                              T1CNT,4
+T1C5                              T1CNT,5
+T1C6                              T1CNT,6
+T1C7                              T1CNT,7
+T1DATA0                           T1DATA,0
+T1DATA1                           T1DATA,1
+T1DATA2                           T1DATA,2
+T1DATA3                           T1DATA,3
+T1DATA4                           T1DATA,4
+T1DATA5                           T1DATA,5
+T1DATA6                           T1DATA,6
+T1DATA7                           T1DATA,7
+T1IE                              INTE,1
+T1IF                              INTFLAG,1
+T1LOAD0                           T1LOAD,0
+T1LOAD1                           T1LOAD,1
+T1LOAD2                           T1LOAD,2
+T1LOAD3                           T1LOAD,3
+T1LOAD4                           T1LOAD,4
+T1LOAD5                           T1LOAD,5
+T1LOAD6                           T1LOAD,6
+T1LOAD7                           T1LOAD,7
+T1PR0                             T1CR,0
+T1PR1                             T1CR,1
+T1PR2                             T1CR,2
+T1PS0                             T1CR,3
+T1PS1                             T1CR,4
+T2C0                              T2CNT,0
+T2C1                              T2CNT,1
+T2C2                              T2CNT,2
+T2C3                              T2CNT,3
+T2C4                              T2CNT,4
+T2C5                              T2CNT,5
+T2C6                              T2CNT,6
+T2C7                              T2CNT,7
+T2DATA0                           T2DATA,0
+T2DATA1                           T2DATA,1
+T2DATA2                           T2DATA,2
+T2DATA3                           T2DATA,3
+T2DATA4                           T2DATA,4
+T2DATA5                           T2DATA,5
+T2DATA6                           T2DATA,6
+T2DATA7                           T2DATA,7
+T2IE                              INTE,5
+T2IF                              INTFLAG,5
+T2LOAD0                           T2LOAD,0
+T2LOAD1                           T2LOAD,1
+T2LOAD2                           T2LOAD,2
+T2LOAD3                           T2LOAD,3
+T2LOAD4                           T2LOAD,4
+T2LOAD5                           T2LOAD,5
+T2LOAD6                           T2LOAD,6
+T2LOAD7                           T2LOAD,7
+T2PR0                             T2CR,0
+T2PR1                             T2CR,1
+T2PR2                             T2CR,2
+T2PS0                             T2CR,3
+T2PS1                             T2CR,4
+T3C0                              T3CNT,0
+T3C1                              T3CNT,1
+T3C2                              T3CNT,2
+T3C3                              T3CNT,3
+T3C4                              T3CNT,4
+T3C5                              T3CNT,5
+T3C6                              T3CNT,6
+T3C7                              T3CNT,7
+T3IE                              INTE,7
+T3IF                              INTFLAG,7
+T3LOAD0                           T3LOAD,0
+T3LOAD1                           T3LOAD,1
+T3LOAD2                           T3LOAD,2
+T3LOAD3                           T3LOAD,3
+T3LOAD4                           T3LOAD,4
+T3LOAD5                           T3LOAD,5
+T3LOAD6                           T3LOAD,6
+T3LOAD7                           T3LOAD,7
+T3PR0                             T3CR,0
+T3PR1                             T3CR,1
+T3PR2                             T3CR,2
+T3PS0                             T3CR,3
+T3PS1                             T3CR,4
+TC0EN                             T0CR,7
+TC1EN                             T1CR,7
+TC2EN                             T2CR,7
+TC3EN                             T3CR,7
+TMRCKS0                           PWMCR1,3
+TMRCKS1                           PWMCR1,4
+VBGCAL0                           VBGCAL,0
+VBGCAL1                           VBGCAL,1
+VBGCAL2                           VBGCAL,2
+VBGCAL3                           VBGCAL,3
+VBGCAL4                           VBGCAL,4
+VBGCAL5                           VBGCAL,5
+VBGCAL6                           VBGCAL,6
+VBGCAL7                           VBGCAL,7
+VRS0                              ADCR1,0
+VRS1                              ADCR1,1
+VRS2                              ADCR1,2
+Z                                 PFLAG,2
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+
